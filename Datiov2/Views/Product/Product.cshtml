@@ -1,0 +1,449 @@
+﻿
+@using Datiov2.Models
+
+@model Datiov2.Models.ProductModel
+
+@{
+    ViewData["Title"] = "Product";
+    var product = Model;
+
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="main.css" type="text/css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mängder av teknikprodukter">
+  <meta name="keywords" content="AMD, Ryzen 5 7600, processor, datio">
+  <meta name="author" content="Datio">
+
+  <link rel="icon" type="image/x-icon" href="bilder/icons8-my-computer-16.png">
+
+
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+  <title>AMD Ryzen 5 7600</title>
+</head>
+
+<body>
+  <div class="main-container">
+    <div class="mini-header">
+      <div class="mini_header_content">
+        <a href="favoriter.html"><span class="material-icons-outlined" id="favoriter">favorite_border</span></a>
+        <span class="material-icons-outlined" id="light_mode_button" onclick="darkmode()">light_mode</span>
+        <span class="material-icons-outlined" id="dark_mode_button" onclick="darkmode()">dark_mode</span>
+
+        <h6 class="mini_header_text">Privat</h6>
+        <h6 class="mini_header_text" id="mini_header_text_right">Företag</h6>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="header">
+        <!--Mobilmeny-->
+        <div class="mobile_menu_button" onclick="meny_funktion()">
+          <span class="material-icons-outlined" id="mobile_menu_icon">menu</span>
+
+          <div class="meny_alternativ">
+            <a href="kategori.html" class="mobile_category">Datorer</a>
+            <a href="kategori.html" class="mobile_category">Bildskärmar</a>
+            <a href="kategori.html" class="mobile_category">Hem/fritid</a>
+            <a href="kategori.html" class="mobile_category">Kameror</a>
+            <a href="kategori.html" class="mobile_category">Kontor</a>
+            <a href="kategori.html" class="mobile_category">Mobil</a>
+            <a href="favoriter.html" class="mobile_category">Önskelista</a>
+            <a href="logga_in.html" class="mobile_category">Mitt konto</a>
+            <a href="#" class="mobile_category">Kundservice</a>
+            <a href="#" class="mobile_category" onclick="darkmode()">Byt tema</a>
+          </div>
+        </div>
+
+        <a href="index.html"><img src="bilder/logotyp_datio_stor_transparent.png" alt="Datio logotyp"
+            id="datio_logo"></a>
+
+        <form class="form_search">
+          <input type="text" placeholder="Sök..." class="search">
+          <button type="submit" class="sök_knapp">
+            <span class="material-icons-outlined" id="search_icon">
+              search
+            </span>
+          </button>
+        </form>
+
+        <form method="get" action="logga_in.html" class="form_konto">
+          <button type="submit" class="konto">
+            <span class="material-icons-outlined" id="account_icon">person_outline</span>
+            <span id="account_text">Mitt konto</span>
+          </button>
+        </form>
+
+        <form method="get" action="kundvagn.html" class="form_kundvagn">
+          <button type="submit" class="kundvagn">
+            <span class="material-icons-outlined" id="shopping_cart_icon">shopping_cart</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="nav">
+        <ul>
+          <li class="dropdown" id="menu_link2">
+            <a href="kategori.html" id="menu_link"><span class="material-icons-outlined" id="menu_icon">menu</span></a>
+            <a href="kategori.html" class="dropdown-knapp" id="all_categories_text">Alla kategorier &#8964;</a>
+          </li>
+          <li class="dropdown">
+            <a href="kategori.html" class="dropdown-knapp">Datorer</a>
+          </li>
+          <li class="dropdown">
+            <a href="kategori.html" class="dropdown-knapp">Bildskärmar</a>
+          </li>
+
+          <li class="dropdown">
+            <a href="kategori.html" class="dropdown-knapp">Hem/fritid</a>
+          </li>
+
+          <li class="dropdown">
+            <a href="kategori.html" class="dropdown-knapp">Kameror</a>
+          </li>
+
+          <li class="dropdown">
+            <a href="kategori.html" class="dropdown-knapp">Kontor</a>
+          </li>
+          <li class="dropdown">
+            <a href="kategori.html" class="dropdown-knapp">Mobil</a>
+          </li>
+        </ul>
+      </div>
+
+      <!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
+
+      <div class="produkt_sida_upper">
+        <div class="produkt_bild_box">
+          <img src="bilder/1728141-amd-ryzen-65w-5-pib-right-1260x709.webp" id="produkt_sida_bild"
+            alt="produktbild av produkt X">
+        </div>
+
+
+@*                 <img src="@product.ProductImage" alt="@product.ProductDescription">
+                <h2>@product.ProductName</h2>
+                <h3>@product.ProductPrice kr</h3>
+                <h4 class="stock_text">
+                    <span class="stock_dot"></span> i lager: @product.ProductStock
+                </h4> *@
+
+        <div class="produkt_beställning_box">
+          <h1>@product.ProductName</h1>
+          <h2>2 990 kr</h2>
+          <h3>Lagerstatus: <span class="stock_dot_product"></span></h3>
+          <h4>
+            Antal:
+            <input type="number" id="antal" min="1" max="100" value="1">
+          </h4>
+
+          <div class="produkt_knappar">
+            <button type="button" id="produkt_köp_knapp">
+              Lägg i kundvagn
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="produkt_sida_down">
+        <div class="produkt_beskrivning_box">
+          <h2>Produktbeskrivning</h2>
+          <br>
+
+          <p class="produkt_beskrivning_text">
+            <span class="bold">Kraftfull prestanda</span><br>
+            Nya AMD Ryzen 5 7600 processorn driver de mest krävande spelen och
+            laddar tunga arbetsuppgifter som videorendering snabbare.
+            Processorn har utrustats med 6 st kärnor, 12 st trådar, boost på
+            upp till 5,1 GHz och 38 MB cache. Allt du behöver för bättre
+            spelprestanda och snabbare arbetsflöden.
+          </p>
+          <br>
+
+          <p class="produkt_beskrivning_text">
+            <span class="bold">Stöd för DDR5</span><br>
+            Med den senaste DDR-standarden (DDR5) erbjuder Ryzen 7000-serien
+            en extra boost i prestanda, speciellt ifall du arbetar med stora
+            videofiler och foton. Processorn stöder RAM-minnen med en frekvens
+            på upp till 5200MHz.
+          </p>
+          <br>
+
+          <p class="produkt_beskrivning_text">
+            <span class="bold">De senaste teknologierna</span><br>
+            7:e generationens Ryzen-processorer har stöd för PCIe 5.0
+            lagringstöd, AMDs EXPO-teknik, Precision Boost 2 och Precision
+            Boost Overdrive. Överklocka enkelt processorn i AMDs Ryzen
+            Master-verktyg med nya one-click överklockning.
+          </p>
+          <br>
+
+          <h2>Produktvideor</h2>
+          <br>
+          <video class="video" controls poster="bilder/1728141-amd-ryzen-65w-5-pib-right-1260x709.webp">
+            <source src="videor/amdPromoVid.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <br>
+          <iframe class="video" src="https://www.youtube-nocookie.com/embed/CTiRNnSg0jA" title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <br>
+
+        <div class="produkt_specifikationer">
+          <h2>Tekniska specifikationer</h2>
+          <br>
+          <table class="table">
+            <tr>
+              <th>Processor</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>Antal kärnor</td>
+              <td>6 kärnor</td>
+            </tr>
+            <tr>
+              <td>Antal trådar</td>
+              <td>12 trådar</td>
+            </tr>
+            <tr>
+              <td>Cache</td>
+              <td>38 MB</td>
+            </tr>
+            <tr>
+              <td>Cacheinformation</td>
+              <td>
+                <p>L3 - 32 MB</p>
+                <p>L2 - 6 MB</p>
+              </td>
+            </tr>
+            <tr>
+              <td>Kvantitet</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>Klockfrekvens</td>
+              <td>3.8 GHz</td>
+            </tr>
+            <tr>
+              <td>Max. turbohastighet</td>
+              <td>5.1 GHz</td>
+            </tr>
+            <tr>
+              <td>Kompatibel processorsockel</td>
+              <td>AM5</td>
+            </tr>
+            <tr>
+              <td>Tillverkninsprocess</td>
+              <td>5 nm</td>
+            </tr>
+            <tr>
+              <td>Termisk avledningseffekt</td>
+              <td>65 W</td>
+            </tr>
+            <tr>
+              <td>PCI-expressrevision</td>
+              <td>5.0</td>
+            </tr>
+            <tr>
+              <td>Överclockningsstöd</td>
+              <td>Ja</td>
+            </tr>
+            <tr>
+              <td>Integrerad grafik</td>
+              <td>Ja</td>
+            </tr>
+          </table>
+          <br>
+          <br>
+          <br>
+
+          <table class="table">
+            <tr>
+              <th>Diverse</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>Inkluderade tillbehör</td>
+              <td>AMD Wraith Stealth Cooler</td>
+            </tr>
+            <tr>
+              <td>Förpackningstyp</td>
+              <td>Processor in a box (PIB)</td>
+            </tr>
+          </table>
+
+          <br>
+          <br>
+          <br>
+
+
+          <table class="table">
+            <tr>
+              <th>Allmänt</th>
+              <th></th>
+            </tr>
+            <tr>
+              <td>Produkttyp</td>
+              <td>Processor</td>
+            </tr>
+
+            <tr>
+              <td>Tillverkare</td>
+              <td>AMD</td>
+            </tr>
+
+            <tr>
+              <td>Producentens garanti (månader)</td>
+              <td>36</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <h3 class="product_showcase_type_text">Liknande produkter</h3>
+      <div class="product_field">
+        <div class="product_grid">
+          <div class="produkt_box">
+            <a href="produkt.html">
+              <img src="bilder/ryzen_transparent_s.png" alt="Produktbild av produkt x">
+              <h2>AMD Ryzen 5 7600</h2>
+              <h3>2990 kr</h3>
+              <h4 class="stock_text">
+                <span class="stock_dot"></span> i lager: 9
+              </h4>
+            </a>
+          </div>
+
+          <div class="produkt_box">
+            <a href="produkt.html">
+              <img src="bilder/ryzen_transparent_s.png" alt="Produktbild av produkt x">
+              <h2>AMD Ryzen 5 7600</h2>
+              <h3>2990 kr</h3>
+              <h4 class="stock_text">
+                <span class="stock_dot"></span> i lager: 9
+              </h4>
+            </a>
+          </div>
+
+          <div class="produkt_box">
+            <a href="produkt.html">
+              <img src="bilder/ryzen_transparent_s.png" alt="Produktbild av produkt x">
+              <h2>AMD Ryzen 5 7600</h2>
+              <h3>2990 kr</h3>
+              <h4 class="stock_text">
+                <span class="stock_dot"></span> i lager: 9
+              </h4>
+            </a>
+          </div>
+
+          <div class="produkt_box">
+            <a href="produkt.html">
+              <img src="bilder/ryzen_transparent_s.png" alt="Produktbild av produkt x">
+              <h2>AMD Ryzen 5 7600</h2>
+              <h3>2990 kr</h3>
+              <h4 class="stock_text">
+                <span class="stock_dot"></span> i lager: 9
+              </h4>
+            </a>
+          </div>
+
+          <div class="produkt_box">
+            <a href="produkt.html">
+              <img src="bilder/ryzen_transparent_s.png" alt="Produktbild av produkt x">
+              <h2>AMD Ryzen 5 7600</h2>
+              <h3>2990 kr</h3>
+              <h4 class="stock_text">
+                <span class="stock_dot"></span> i lager: 9
+              </h4>
+            </a>
+          </div>
+        </div>
+        <a class="next_products">&#10095;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer_down">
+      <div class="footer_box" id="sociala_medier_box">
+        <h2>Följ oss</h2>
+
+        <div class="sociala_medier_box">
+          <a id="yt" class="sociala_medier" href="http://Youtube.com" target="_blank"><img class="sociala_medier"
+              src="bilder/youtube.png" alt=""></a>
+
+          <a class="sociala_medier" href="http://Twitter.com" target="_blank"><img class="sociala_medier"
+              src="bilder/twitter.png" alt=""></a>
+
+          <a class="sociala_medier" href="http://Facebook.com" target="_blank"><img class="sociala_medier"
+              src="bilder/facebook.png" alt=""></a>
+
+          <a class="sociala_medier" href="http://Instagram.com" target="_blank"><img class="sociala_medier"
+              src="bilder/instagram.png" alt=""></a>
+        </div>
+
+        <h3>Nyhetsbrev</h3>
+
+        <input id="nyhetsbrev" type="email">
+        <input id="button_prenumerera" type="button" value="Prenumerera">
+
+        <h4 id="copyright">Copyright 2023 Datio</h4>
+      </div>
+    </div>
+
+    <div class="footer_upper">
+      <div class="footer_box" id="kontakt_box">
+        <h2>Kontakt</h2>
+        <h3 class="footer_text">
+          <span class="material-icons-outlined" id="email_icon"> email </span>info@datio.nu
+        </h3>
+        <br>
+        <h3 class="footer_text">
+          <span class="material-icons-outlined" id="phone_icon"> phone </span>073 725 85 99
+        </h3>
+        <br>
+        <br>
+        <h4>Måndag - Fredag: 09-18</h4>
+        <h4>Lördag: 11 - 16</h4>
+        <h4>Söndag: Stängt</h4>
+      </div>
+
+      <div class="footer_box">
+        <h2>Information</h2>
+
+        <a class="information_länk" href="#">FAQ - Frågor och Svar</a>
+        <a class="information_länk" href="#">Felanmälan och återköp</a>
+        <a class="information_länk" href="#">Försäljningsvilkor</a>
+        <a class="information_länk" href="#">Företagsförsäljning</a>
+        <a class="information_länk" href="#">Om Datio</a>
+
+        <img src="bilder/mastercard.png" class="betalningsmetod_logo" alt="">
+        <img src="bilder/visa.png" class="betalningsmetod_logo" alt="">
+        <img src="bilder/klarna.png" class="betalningsmetod_logo" alt="">
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+
+</body>
+
+</html>
