@@ -266,7 +266,7 @@ using Microsoft.AspNetCore.Mvc; *@
                         @foreach (var product in category.Products)
                         {
                             <div class="produkt_box">
-                                <a href="@Url.Action("Product", "ProductController", new { id = product.ProductID })">
+                                <a href="@Url.Action("Product", "Product", new { id = product.ProductID })">
                                     <img src="@product.ProductImage" alt="@product.ProductDescription">
                                     <h2>@product.ProductName</h2>
                                     <h3>@product.ProductPrice kr</h3>
