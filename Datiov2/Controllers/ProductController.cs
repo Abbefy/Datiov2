@@ -22,7 +22,41 @@ namespace Datiov2.Controllers
         public ActionResult Product(int id)
         {
             var product = productMethods.GetProductById(id);
+
+            var random = new Random();
+            var randomProducts = new List<ProductModel>();
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    randomProducts.Add(productMethods.GetProductById(random.Next(1, productMethods.GetNumberOfProducts())));
+
+            //}
+            //ViewBag.RandomProducts = randomProducts;
+
+
+
+            var totalProducts = productMethods.GetNumberOfProducts();
+            while (randomProducts.Count < 5)
+            {
+                var randomId = random.Next(1, totalProducts);
+                if (randomId != id && !randomProducts.Any(p => p.ProductID == randomId))
+                {
+                    var randomProduct = productMethods.GetProductById(randomId);
+                    if (randomProduct != null)
+                    {
+                        randomProducts.Add(randomProduct);
+                    }
+                }
+            }
+            ViewBag.RandomProducts = randomProducts;
+
+
             return View(product);
+        }
+
+        public IActionResult ShowRandomProducts(int amountOfRandomProducts)
+        {
+            List<ProductModel> products = productMethods.GetRandomProducts(amountOfRandomProducts);
+            return View(products);
         }
 
         // GET: ProductController/Details/5

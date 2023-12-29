@@ -13,6 +13,8 @@ namespace Datiov2.Models
         public int ProductStock { get; set; }
         public int ProductCategoryID { get; set; }
 
+
+
     }
 }
 

@@ -130,6 +130,67 @@ namespace Datiov2.Data
             return product;
         }
 
+        public List<ProductModel> GetRandomProducts(int amountOfRandomProducts)
+        {
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+            string sqlString = "SELECT TOP (@amountOfRandomProducts) * FROM Products ORDER BY NEWID()";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+            dbCommand.Parameters.AddWithValue("@amountOfRandomProducts", amountOfRandomProducts);
+            dbConnection.Open();
+            SqlDataReader dbReader = dbCommand.ExecuteReader();
+
+            List<ProductModel> products = new List<ProductModel>();
+            while (dbReader.Read())
+            {
+                ProductModel product = new ProductModel
+                {
+                    ProductID = (int)dbReader["ProductID"],
+                    ProductName = dbReader["ProductName"].ToString(),
+                    ProductImage = dbReader["ProductImage"].ToString(),
+                    ProductDescription = dbReader["ProductDescription"].ToString(),
+                    ProductPrice = (int)dbReader["ProductPrice"],
+                    ProductStock = (int)dbReader["ProductStock"],
+                    ProductCategoryID = (int)dbReader["ProductCategoryID"]
+                };
+                products.Add(product);
+            }
+            dbConnection.Close();
+            return products;
+        }
+
+        public int GetNumberOfProducts()
+        {
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+            string sqlString = "SELECT COUNT(*) FROM Products";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+            dbConnection.Open();
+            int numberOfProducts = (int)dbCommand.ExecuteScalar();
+            dbConnection.Close();
+            return numberOfProducts;
+        }
+
+        public void AddProduct(ProductModel product)
+        {
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+            string sqlString = "INSERT INTO Products (ProductName, ProductImage, ProductDescription, ProductPrice, ProductStock, ProductCategoryID) VALUES (@productName, @productImage, @productDescription, @productPrice, @productStock, @productCategoryID)";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+            dbCommand.Parameters.AddWithValue("@productName", product.ProductName);
+            dbCommand.Parameters.AddWithValue("@productImage", product.ProductImage);
+            dbCommand.Parameters.AddWithValue("@productDescription", product.ProductDescription);
+            dbCommand.Parameters.AddWithValue("@productPrice", product.ProductPrice);
+            dbCommand.Parameters.AddWithValue("@productStock", product.ProductStock);
+            dbCommand.Parameters.AddWithValue("@productCategoryID", product.ProductCategoryID);
+            dbConnection.Open();
+            dbCommand.ExecuteNonQuery();
+            dbConnection.Close();
+        }
+
 
 
 
