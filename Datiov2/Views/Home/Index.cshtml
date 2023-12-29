@@ -165,13 +165,15 @@ using Microsoft.AspNetCore.Mvc; *@
                     </button>
                 </form>
 
-                <form method="get" action="logga_in.html" class="form_konto">
+                <form method="get" action="/User/Login" class="form_konto">
                     <button type="submit" class="konto">
                         <span class="material-icons-outlined" id="account_icon">person_outline</span>
                         <span id="account_text">Mitt konto</span>
                     </button>
                 </form>
 
+@*                 href="@Url.Action("Login", "User")">
+ *@
                 <form method="get" action="kundvagn.html" class="form_kundvagn">
                     <button type="submit" class="kundvagn" id="shopping_cart_button">
                         <span class="material-icons-outlined" id="shopping_cart_icon" onmouseover="goToCartNudge()">shopping_cart</span>

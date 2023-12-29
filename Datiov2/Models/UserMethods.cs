@@ -18,7 +18,7 @@ namespace Datiov2.Models
             SqlConnection dbConnection = new SqlConnection();
             dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
             string sqlString = "INSERT INTO Users (UserName, UserFirstName, UserLastName, UserPass, UserEmail, UserType) VALUES (@UserName, @UserFirstName, @UserLastName, @UserPass, @UserEmail, @UserType)";
-
+            dbConnection.Open();
             SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
             dbCommand.Parameters.AddWithValue("@UserName", user.UserName);
             dbCommand.Parameters.AddWithValue("@UserFirstName", user.UserFirstName);
@@ -26,22 +26,12 @@ namespace Datiov2.Models
             dbCommand.Parameters.AddWithValue("@UserPass", user.UserPass);
             dbCommand.Parameters.AddWithValue("@UserEmail", user.UserEmail);
             dbCommand.Parameters.AddWithValue("@UserType", user.UserType);
-
-            try
-            {
-                dbConnection.Open();
-                dbCommand.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                dbConnection.Close();
-            }
+            dbCommand.ExecuteNonQuery();
+            dbConnection.Close();
 
         }
+
+           
 
 
     }
