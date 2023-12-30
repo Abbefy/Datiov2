@@ -74,10 +74,11 @@ namespace Datiov2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult searchProducts(string search)
+        public IActionResult Search(string search)
         {
             List<ProductModel> foundProducts = productMethods.SearchForProducts(search);
             ViewBag.FoundProducts = foundProducts;
+            ViewBag.Search = search;
             return View(foundProducts);
             
         }

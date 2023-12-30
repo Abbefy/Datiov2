@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-//using Microsoft.Data.SqlClient;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Diagnostics;
+
+
 
 namespace Datiov2.Controllers
 {
@@ -42,10 +46,12 @@ namespace Datiov2.Controllers
                 return View();
             }
 
-            //HttpContext.Session.SetString("UserName", userLogin.UserName);
-            //HttpContext.Session.SetString("UserType", userLogin.UserType);
 
-            return View();
+            HttpContext.Session.SetString("UserName", userLogin.UserName);
+            HttpContext.Session.SetInt32("UserType", userLogin.UserType);
+
+            return RedirectToAction("Account", "User", userLogin);
+
         }
 
         [HttpGet]
@@ -84,6 +90,11 @@ namespace Datiov2.Controllers
         [HttpGet]
         public IActionResult Account(UserModel user)
         {
+            if (HttpContext.Session.GetString("UserName") == null)
+            {
+                return RedirectToAction("Login", "User");
+            } 
+
             UserModel userAccount = new UserModel();
             string error = "";
 
@@ -98,10 +109,34 @@ namespace Datiov2.Controllers
             return View(userAccount);
         }
 
+        //[HttpPost]
+        //public IActionResult Account(UserModel user)
+        //{
+        //    if (HttpContext.Session.GetString("UserName") == null)
+        //    {
+        //        return RedirectToAction("Login", "User");
+        //    }
+
+        //    UserModel userAccount = new UserModel();
+        //    string error = "";
+
+        //    userAccount = userMethods.GetAccount(user.UserID, out error);
+
+        //    if (userAccount == null)
+        //    {
+        //        ViewBag.Error = error;
+        //        return View();
+        //    }
+
+        //    return View(userAccount);
+        //}
 
 
 
-      
+
+
+
+
 
         // GET: UserController/Details/5
         public ActionResult Details(int id)

@@ -4,6 +4,7 @@
     ViewData["Title"] = "Search";
     var foundProducts = ViewBag.FoundProducts;
 
+
 }
 
 
@@ -12,283 +13,291 @@
 <html lang="en">
 
 <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="~/css/main.css" type="text/css">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Mängder av teknikprodukter">
-        <meta name="keywords" content="Dator, teknik, hårdvara, datio">
-        <meta name="author" content="Datio">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mängder av teknikprodukter">
+    <meta name="keywords" content="Dator, teknik, hårdvara, datio">
+    <meta name="author" content="Datio">
 
-        <link rel="icon" type="image/x-icon" href="~/bilder/icons8-my-computer-16.png">
+    <link rel="icon" type="image/x-icon" href="~/bilder/icons8-my-computer-16.png">
 
 
-        <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
-        <title>Kategorier</title>
+    <title>Kategorier</title>
 </head>
 
 <body>
-        <div class="main-container">
-                <div class="mini-header">
-                        <div class="mini_header_content">
-                                <a href="favoriter.html"><span class="material-icons-outlined" id="favoriter">favorite_border</span></a>
+    <div class="main-container">
+        <div class="mini-header">
+            <div class="mini_header_content">
+                <a href="favoriter.html"><span class="material-icons-outlined" id="favoriter">favorite_border</span></a>
 
-                                <span class="material-icons-outlined" id="light_mode_button"
-                                        onclick="darkmode()">light_mode</span>
-                                <span class="material-icons-outlined" id="dark_mode_button"
-                                        onclick="darkmode()">dark_mode</span>
+                <span class="material-icons-outlined" id="light_mode_button"
+                      onclick="darkmode()">light_mode</span>
+                <span class="material-icons-outlined" id="dark_mode_button"
+                      onclick="darkmode()">dark_mode</span>
 
-                                <h6 class="mini_header_text">Privat</h6>
-                                <h6 class="mini_header_text" id="mini_header_text_right">Företag</h6>
-                        </div>
-                </div>
-
-                <div class="content-container">
-                        <div class="header">
-                                <!--Mobilmeny-->
-                                <div class="mobile_menu_button" onclick="meny_funktion()">
-                                        <span class="material-icons-outlined" id="mobile_menu_icon">menu</span>
-
-                                        <div class="meny_alternativ">
-                                                <a href="kategori.html" class="mobile_category">Datorer</a>
-                                                <a href="kategori.html" class="mobile_category">Bildskärmar</a>
-                                                <a href="kategori.html" class="mobile_category">Hem/fritid</a>
-                                                <a href="kategori.html" class="mobile_category">Kameror</a>
-                                                <a href="kategori.html" class="mobile_category">Kontor</a>
-                                                <a href="kategori.html" class="mobile_category">Mobil</a>
-                                                <a href="favoriter.html" class="mobile_category">Önskelista</a>
-                                                <a href="logga_in.html" class="mobile_category">Mitt konto</a>
-                                                <a href="#" class="mobile_category">Kundservice</a>
-                                                <a href="#" class="mobile_category" onclick="darkmode()">Byt tema</a>
-
-                                        </div>
-                                </div>
-
-                                <a href="index.html"><img src="/bilder/logotyp_datio_stor_transparent.png"
-                                                alt="Datio logotyp" id="datio_logo"></a>
-
-                                <form class="form_search">
-                                        <input type="text" placeholder="Sök..." class="search">
-                                        <button type="submit" class="sök_knapp">
-                                                <span class="material-icons-outlined" id="search_icon">
-                                                        search
-                                                </span>
-                                        </button>
-                                </form>
-
-                                <form method="get" action="logga_in.html" class="form_konto">
-                                        <button type="submit" class="konto">
-                                                <span class="material-icons-outlined"
-                                                        id="account_icon">person_outline</span>
-                                                <span id="account_text">Mitt konto</span>
-                                        </button>
-                                </form>
-
-                                <form method="get" action="kundvagn.html" class="form_kundvagn">
-                                        <button type="submit" class="kundvagn">
-                                                <span class="material-icons-outlined"
-                                                        id="shopping_cart_icon">shopping_cart</span>
-                                        </button>
-                                </form>
-                        </div>
-
-                        <div class="nav">
-                                <ul>
-                                        <li class="dropdown" id="menu_link2">
-                                                <a href="kategori.html" id="menu_link"><span
-                                                                class="material-icons-outlined"
-                                                                id="menu_icon">menu</span></a>
-                                                <a href="kategori.html" class="dropdown-knapp"
-                                                        id="all_categories_text">Alla kategorier &#8964;</a>
-                                        </li>
-                                        <li class="dropdown">
-                                                <a href="kategori.html" class="dropdown-knapp">Datorer</a>
-                                        </li>
-                                        <li class="dropdown">
-                                                <a href="kategori.html" class="dropdown-knapp">Bildskärmar</a>
-                                        </li>
-
-                                        <li class="dropdown">
-                                                <a href="kategori.html" class="dropdown-knapp">Hem/fritid</a>
-                                        </li>
-
-                                        <li class="dropdown">
-                                                <a href="kategori.html" class="dropdown-knapp">Kameror</a>
-                                        </li>
-
-                                        <li class="dropdown">
-                                                <a href="kategori.html" class="dropdown-knapp">Kontor</a>
-                                        </li>
-                                        <li class="dropdown">
-                                                <a href="kategori.html" class="dropdown-knapp">Mobil</a>
-                                        </li>
-                                </ul>
-                        </div>
-
-                        <!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
-
-                        <div class="product_category_page">
-                                <h3 class="product_category_type_text">
-                                        Kategorier/Datorer/Datorkomponenter
-                                </h3>
-
-                                <div class="filter">
-                                        <div class="filter_button">
-                                                <button class="">Filter</button>
-                                        </div>
-                                        <div class="filter_type">
-                                                <select name="brand" class="brand">
-                                                        <option value="">Produkttyp</option>
-                                                        <option value="">Processor</option>
-                                                        <option value="">Grafikkort</option>
-                                                        <option value="">Moderkort</option>
-                                                        <option value="">Nätaggregat</option>
-                                                        <option value="">Chassi</option>
-                                                        <option value="">Kylning</option>
-                                                </select>
-                                        </div>
-                                        <div class="filter_type">
-                                                <select name="brand" class="brand">
-                                                        <option value="">Varumärken</option>
-                                                        <option value="">AMD</option>
-                                                        <option value="">Intel</option>
-                                                        <option value="">Nvidia</option>
-                                                        <option value="">Asus</option>
-                                                        <option value="">MSI</option>
-                                                </select>
-                                        </div>
-                                        <div class="filter_type">
-                                                <select name="brand" class="brand">
-                                                        <option value="">Pris</option>
-                                                </select>
-                                        </div>
-                                        <div class="filter_type">
-                                                <select name="brand" class="brand">
-                                                        <option value="">Tillgänglighet</option>
-                                                        <option value="">Online (Allt)</option>
-                                                        <option value="">Online (i lager)</option>
-                                                        <option value="">Butikslager</option>
-                                                </select>
-                                        </div>
-                                </div>
-
-                                <div class="product_sort">
-                                        <h4 class="amount_products">Visar: 24 produkter</h4>
-
-                                        <div class="vy">
-                                                <button onclick="category_view_small()">
-                                                        <span class="material-icons-outlined"> grid_view </span>
-                                                </button>
-                                                <button onclick="category_view_large()">
-                                                        <span class="material-icons-outlined"> grid_on </span>
-                                                </button>
-                                        </div>
-
-                                        <div class="sort_div">
-                                                <label for="sort">Sortera efter: </label>
-                                                <select name="sortering" id="sort">
-                                                        <option value="Relevans">Relevans</option>
-                                                        <option value="Lägsta pris">Lägsta pris</option>
-                                                        <option value="Högsta pris">Högsta pris</option>
-                                                        <option value="Bästsäljare">Bästsäljare</option>
-                                                        <option value="Nyheter">Nyheter</option>
-                                                        <option value="Namn (A-Ö)">Namn (A-Ö)</option>
-                                                </select>
-                                        </div>
-                                </div>
-
-                                <div class="product_category_field">
-                                    @foreach (var product in foundProducts)
-                                    {
-                                        <div class="product_category_box">
-                                                <a href="produkt.html">
-                                                        <img class="product_category_image" src="@product.ProductImage" alt="">
-                                                </a>
-                                                <a href="produkt.html">
-                                                        <h4 class="product_category_name">@product.ProductName</h4>
-                                                </a>
-                                                <h4 class="product_category_price">@product.ProductPrice kr</h4>
-                                                <button class="product_category_button">Lägg i varukorg</button>
-                                        </div>
-                                    }
-  
-                                </div>
-                        </div>
-                </div>
+                <h6 class="mini_header_text">Privat</h6>
+                <h6 class="mini_header_text" id="mini_header_text_right">Företag</h6>
+            </div>
         </div>
 
-        <div class="footer">
-                <div class="footer_down">
-                        <div class="footer_box" id="sociala_medier_box">
-                                <h2>Följ oss</h2>
+        <div class="content-container">
+            <div class="header">
+                <!--Mobilmeny-->
+                <div class="mobile_menu_button" onclick="meny_funktion()">
+                    <span class="material-icons-outlined" id="mobile_menu_icon">menu</span>
 
-                                <div class="sociala_medier_box">
-                                        <a id="yt" class="sociala_medier" href="http://Youtube.com" target="_blank"><img
-                                                        class="sociala_medier" src="/bilder/youtube.png" alt=""></a>
+                    <div class="meny_alternativ">
+                        <a href="kategori.html" class="mobile_category">Datorer</a>
+                        <a href="kategori.html" class="mobile_category">Bildskärmar</a>
+                        <a href="kategori.html" class="mobile_category">Hem/fritid</a>
+                        <a href="kategori.html" class="mobile_category">Kameror</a>
+                        <a href="kategori.html" class="mobile_category">Kontor</a>
+                        <a href="kategori.html" class="mobile_category">Mobil</a>
+                        <a href="favoriter.html" class="mobile_category">Önskelista</a>
+                        <a href="logga_in.html" class="mobile_category">Mitt konto</a>
+                        <a href="#" class="mobile_category">Kundservice</a>
+                        <a href="#" class="mobile_category" onclick="darkmode()">Byt tema</a>
 
-                                        <a class="sociala_medier" href="http://Twitter.com" target="_blank"><img
-                                                        class="sociala_medier" src="/bilder/twitter.png" alt=""></a>
-
-                                        <a class="sociala_medier" href="http://Facebook.com" target="_blank"><img
-                                                        class="sociala_medier" src="/bilder/facebook.png" alt=""></a>
-
-                                        <a class="sociala_medier" href="http://Instagram.com" target="_blank"><img
-                                                        class="sociala_medier" src="/bilder/instagram.png" alt=""></a>
-                                </div>
-
-                                <h3>Nyhetsbrev</h3>
-
-                                <input id="nyhetsbrev" type="email">
-                                <input id="button_prenumerera" type="button" value="Prenumerera">
-
-                                <h4 id="copyright"> Copyright 2023 Datio</h4>
-                        </div>
+                    </div>
                 </div>
 
-                <div class="footer_upper">
-                        <div class="footer_box" id="kontakt_box">
-                                <h2>Kontakt</h2>
-                                <h3 class="footer_text">
-                                        <span class="material-icons-outlined" id="email_icon"> email
-                                        </span>info@datio.nu
-                                </h3>
-                                <br>
-                                <h3 class="footer_text">
-                                        <span class="material-icons-outlined" id="phone_icon"> phone </span>073 725 85
-                                        99
-                                </h3>
-                                <br>
-                                <br>
-                                <h4>Måndag - Fredag: 09-18</h4>
-                                <h4>Lördag: 11 - 16</h4>
-                                <h4>Söndag: Stängt</h4>
-                        </div>
+                <a href="index.html">
+                    <img src="/bilder/logotyp_datio_stor_transparent.png"
+                         alt="Datio logotyp" id="datio_logo">
+                </a>
 
-                        <div class="footer_box">
-                                <h2>Information</h2>
+                <form class="form_search">
+                    <input type="text" placeholder="Sök..." class="search">
+                    <button type="submit" class="sök_knapp">
+                        <span class="material-icons-outlined" id="search_icon">
+                            search
+                        </span>
+                    </button>
+                </form>
 
-                                <a class="information_länk" href="#">FAQ - Frågor och Svar</a>
-                                <a class="information_länk" href="#">Felanmälan och återköp</a>
-                                <a class="information_länk" href="#">Försäljningsvilkor</a>
-                                <a class="information_länk" href="#">Företagsförsäljning</a>
-                                <a class="information_länk" href="#">Om Datio</a>
+                <form method="get" action="logga_in.html" class="form_konto">
+                    <button type="submit" class="konto">
+                        <span class="material-icons-outlined"
+                              id="account_icon">person_outline</span>
+                        <span id="account_text">Mitt konto</span>
+                    </button>
+                </form>
 
-                                <img src="/bilder/mastercard.png" class="betalningsmetod_logo" alt="">
-                                <img src="/bilder/visa.png" class="betalningsmetod_logo" alt="">
-                                <img src="/bilder/klarna.png" class="betalningsmetod_logo" alt="">
-                        </div>
+                <form method="get" action="kundvagn.html" class="form_kundvagn">
+                    <button type="submit" class="kundvagn">
+                        <span class="material-icons-outlined"
+                              id="shopping_cart_icon">shopping_cart</span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="nav">
+                <ul>
+                    <li class="dropdown" id="menu_link2">
+                        <a href="kategori.html" id="menu_link">
+                            <span class="material-icons-outlined"
+                                  id="menu_icon">menu</span>
+                        </a>
+                        <a href="kategori.html" class="dropdown-knapp"
+                           id="all_categories_text">Alla kategorier &#8964;</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="kategori.html" class="dropdown-knapp">Datorer</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="kategori.html" class="dropdown-knapp">Bildskärmar</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="kategori.html" class="dropdown-knapp">Hem/fritid</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="kategori.html" class="dropdown-knapp">Kameror</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="kategori.html" class="dropdown-knapp">Kontor</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="kategori.html" class="dropdown-knapp">Mobil</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
+
+            <div class="product_category_page">
+                <h3 class="product_category_type_text">
+                    Sökning: @ViewBag.Search
+                </h3>
+
+                <div class="filter">
+                    <div class="filter_button">
+                        <button class="">Filter</button>
+                    </div>
+                    <div class="filter_type">
+                        <select name="brand" class="brand">
+                            <option value="">Produkttyp</option>
+                            <option value="">Processor</option>
+                            <option value="">Grafikkort</option>
+                            <option value="">Moderkort</option>
+                            <option value="">Nätaggregat</option>
+                            <option value="">Chassi</option>
+                            <option value="">Kylning</option>
+                        </select>
+                    </div>
+                    <div class="filter_type">
+                        <select name="brand" class="brand">
+                            <option value="">Varumärken</option>
+                            <option value="">AMD</option>
+                            <option value="">Intel</option>
+                            <option value="">Nvidia</option>
+                            <option value="">Asus</option>
+                            <option value="">MSI</option>
+                        </select>
+                    </div>
+                    <div class="filter_type">
+                        <select name="brand" class="brand">
+                            <option value="">Pris</option>
+                        </select>
+                    </div>
+                    <div class="filter_type">
+                        <select name="brand" class="brand">
+                            <option value="">Tillgänglighet</option>
+                            <option value="">Online (Allt)</option>
+                            <option value="">Online (i lager)</option>
+                            <option value="">Butikslager</option>
+                        </select>
+                    </div>
                 </div>
+
+                <div class="product_sort">
+                    <h4 class="amount_products">Visar: 24 produkter</h4>
+
+                    <div class="vy">
+                        <button onclick="category_view_small()">
+                            <span class="material-icons-outlined"> grid_view </span>
+                        </button>
+                        <button onclick="category_view_large()">
+                            <span class="material-icons-outlined"> grid_on </span>
+                        </button>
+                    </div>
+
+                    <div class="sort_div">
+                        <label for="sort">Sortera efter: </label>
+                        <select name="sortering" id="sort">
+                            <option value="Relevans">Relevans</option>
+                            <option value="Lägsta pris">Lägsta pris</option>
+                            <option value="Högsta pris">Högsta pris</option>
+                            <option value="Bästsäljare">Bästsäljare</option>
+                            <option value="Nyheter">Nyheter</option>
+                            <option value="Namn (A-Ö)">Namn (A-Ö)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product_category_field">
+                    @foreach (var product in foundProducts)
+                    {
+                        <div class="product_category_box">
+                            <a href="@Url.Action("Product", "Product", new { id = product.ProductID })">
+                                <img src="@product.ProductImage" alt="@product.ProductDescription">
+                                <h2>@product.ProductName</h2>
+                                <h3>@product.ProductPrice kr</h3>
+                                <h4 class="stock_text">
+                                    <span class="stock_dot"></span> i lager: @product.ProductStock
+                                </h4>
+                            </a>
+                        </div>
+                    }
+
+                </div>
+            </div>
         </div>
-        <script src="~/js/script.js"></script>
+    </div>
+
+    <div class="footer">
+        <div class="footer_down">
+            <div class="footer_box" id="sociala_medier_box">
+                <h2>Följ oss</h2>
+
+                <div class="sociala_medier_box">
+                    <a id="yt" class="sociala_medier" href="http://Youtube.com" target="_blank">
+                        <img class="sociala_medier" src="/bilder/youtube.png" alt="">
+                    </a>
+
+                    <a class="sociala_medier" href="http://Twitter.com" target="_blank">
+                        <img class="sociala_medier" src="/bilder/twitter.png" alt="">
+                    </a>
+
+                    <a class="sociala_medier" href="http://Facebook.com" target="_blank">
+                        <img class="sociala_medier" src="/bilder/facebook.png" alt="">
+                    </a>
+
+                    <a class="sociala_medier" href="http://Instagram.com" target="_blank">
+                        <img class="sociala_medier" src="/bilder/instagram.png" alt="">
+                    </a>
+                </div>
+
+                <h3>Nyhetsbrev</h3>
+
+                <input id="nyhetsbrev" type="email">
+                <input id="button_prenumerera" type="button" value="Prenumerera">
+
+                <h4 id="copyright"> Copyright 2023 Datio</h4>
+            </div>
+        </div>
+
+        <div class="footer_upper">
+            <div class="footer_box" id="kontakt_box">
+                <h2>Kontakt</h2>
+                <h3 class="footer_text">
+                    <span class="material-icons-outlined" id="email_icon">
+                        email
+                    </span>info@datio.nu
+                </h3>
+                <br>
+                <h3 class="footer_text">
+                    <span class="material-icons-outlined" id="phone_icon"> phone </span>073 725 85
+                    99
+                </h3>
+                <br>
+                <br>
+                <h4>Måndag - Fredag: 09-18</h4>
+                <h4>Lördag: 11 - 16</h4>
+                <h4>Söndag: Stängt</h4>
+            </div>
+
+            <div class="footer_box">
+                <h2>Information</h2>
+
+                <a class="information_länk" href="#">FAQ - Frågor och Svar</a>
+                <a class="information_länk" href="#">Felanmälan och återköp</a>
+                <a class="information_länk" href="#">Försäljningsvilkor</a>
+                <a class="information_länk" href="#">Företagsförsäljning</a>
+                <a class="information_länk" href="#">Om Datio</a>
+
+                <img src="/bilder/mastercard.png" class="betalningsmetod_logo" alt="">
+                <img src="/bilder/visa.png" class="betalningsmetod_logo" alt="">
+                <img src="/bilder/klarna.png" class="betalningsmetod_logo" alt="">
+            </div>
+        </div>
+    </div>
+    <script src="~/js/script.js"></script>
 
 </body>
 
