@@ -77,6 +77,7 @@ namespace Datiov2.Controllers
         public IActionResult searchProducts(string search)
         {
             List<ProductModel> foundProducts = productMethods.SearchForProducts(search);
+            ViewBag.FoundProducts = foundProducts;
             return View(foundProducts);
             
         }
