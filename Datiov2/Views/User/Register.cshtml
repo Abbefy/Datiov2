@@ -5,7 +5,8 @@
 
 }
 
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -63,33 +64,51 @@
                 </a>
             </div>
 
+
             <div class="main_logga_in">
                 <div class="inloggningsruta">
-                    <a class="go_back_mobile" href="@Url.Action(" Index", "Home" )">&#10094;</a>
                     <h3 id="logga_in_text">Skapa nytt konto</h3>
-                    <form method="post" action="/User/Register">
+                    <form asp-action="Register" method="post">
+
                         <input class="inloggning_input" type="text" asp-for="UserName" required placeholder="Användarnamn">
                         <input class="inloggning_input" type="text" asp-for="UserFirstName" required placeholder="Förnamn">
                         <input class="inloggning_input" type="text" asp-for="UserLastName" required placeholder="Efternamn">
                         <input class="inloggning_input" type="email" asp-for="UserEmail" required placeholder="E-postadress">
-                        <input class="inloggning_input" type="password" asp-for="UserPass" required placeholder="Lösenord">
+                        <input class="inloggning_input" type="password" asp-for="UserPass" required placeholder="Lösenord"> 
+
+@*                         <input class="inloggning_input" asp-for="UserID" placeholder="AnvändarID">
+                        <input class="inloggning_input" asp-for="UserName" placeholder="Användarnamn">
+                        <input class="inloggning_input" asp-for="UserFirstName" placeholder="Förnamn">
+                        <input class="inloggning_input" asp-for="UserLastName" placeholder="Efternamn">
+                        <input class="inloggning_input" asp-for="UserPass" placeholder="Lösenord">
+                        <input class="inloggning_input" asp-for="UserEmail" placeholder="E-postadress">
+                        <input class="inloggning_input" asp-for="UserType" placeholder="Användartyp"> *@
+
+
                         <br>
                         <br>
+                        
                         <select class="inloggning_input" asp-for="UserType">
-                            <option value="1">Privatperson</option>
-                            <option value="2">Administratör</option>
-                            @*<option value="3">Företag</option>*@
+
+                        <option value="1">Privatperson</option>
+
+                        <option value="2">Administratör</option>
+                        @*<option value="3">Företag</option>*@
+
                         </select>
+                        
+
 
                         <div class="remember_me">
-                            <label class="remember_me_text">
-                                Jag accepterar
-                                <span id="medlemsvillkor">medlemsvillkoren</span>.
-                            </label>
-                            <input class="checkbox" required type="checkbox">
-                        </div>
+                        <label class="remember_me_text">
+                        Jag accepterar
+                        <span id="medlemsvillkor">medlemsvillkoren</span>.
+                        </label>
+                        <input class="checkbox"  type="checkbox">
+                        </div> 
 
                         <input id="skapa_konto_knapp" type="submit" value="Skapa konto">
+
                     </form>
                 </div>
             </div>
@@ -104,22 +123,22 @@
                 <div class="sociala_medier_box">
                     <a id="yt" class="sociala_medier" href="http://Youtube.com" target="_blank">
                         <img class="sociala_medier"
-                             src="bilder/youtube.png" alt="">
+                             src="/bilder/youtube.png" alt="">
                     </a>
 
                     <a class="sociala_medier" href="http://Twitter.com" target="_blank">
                         <img class="sociala_medier"
-                             src="bilder/twitter.png" alt="">
+                             src="/bilder/twitter.png" alt="">
                     </a>
 
                     <a class="sociala_medier" href="http://Facebook.com" target="_blank">
                         <img class="sociala_medier"
-                             src="bilder/facebook.png" alt="">
+                             src="/bilder/facebook.png" alt="">
                     </a>
 
                     <a class="sociala_medier" href="http://Instagram.com" target="_blank">
                         <img class="sociala_medier"
-                             src="bilder/instagram.png" alt="">
+                             src="/bilder/instagram.png" alt="">
                     </a>
                 </div>
 
@@ -164,8 +183,9 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="~/script.js"></script>
 
 </body>
 
 </html>
+

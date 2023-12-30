@@ -59,6 +59,30 @@ namespace Datiov2.Controllers
             return View(products);
         }
 
+        [HttpGet]
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct(ProductModel product)
+        {
+            productMethods.AddProduct(product);
+
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult searchProducts(string search)
+        {
+            List<ProductModel> foundProducts = productMethods.SearchForProducts(search);
+            return View(foundProducts);
+            
+        }
+
+
+
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {

@@ -4,14 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc; *@
 
-@* @model IEnumerable<Datiov2.Models.ProductModel>
+@* @model IEnumerable<Datiov2.Models.CategoryModel>
  *@
+
+
+
 
 @model List<Datiov2.Models.CategoryModel>
 
 
 @{
     ViewData["Title"] = "Index";
+
+
+
+
 }
 
 @* <h1>Index</h1>
@@ -156,8 +163,8 @@ using Microsoft.AspNetCore.Mvc; *@
                 <a href="@Url.Action("Index", "Home")"> <img src="bilder/logotyp_datio_stor_transparent.png" alt="Logotyp" id="datio_logo"> </a>
 
 
-                <form class="form_search">
-                    <input type="text" placeholder="Sök..." class="search">
+                <form class="form_search" action="/Product/Search" method="get">
+                    <input type="text" name="search" placeholder="Sök bland @ViewBag.TotalProducts produkter..." class="search">
                     <button type="submit" class="sök_knapp">
                         <span class="material-icons-outlined" id="search_icon">
                             search
@@ -172,8 +179,8 @@ using Microsoft.AspNetCore.Mvc; *@
                     </button>
                 </form>
 
-@*                 href="@Url.Action("Login", "User")">
- *@
+                @*                 href="@Url.Action("Login", "User")">
+                *@
                 <form method="get" action="kundvagn.html" class="form_kundvagn">
                     <button type="submit" class="kundvagn" id="shopping_cart_button">
                         <span class="material-icons-outlined" id="shopping_cart_icon" onmouseover="goToCartNudge()">shopping_cart</span>
@@ -273,7 +280,7 @@ using Microsoft.AspNetCore.Mvc; *@
                                 </a>
                             </div>
 
-                            
+
                         }
                     </div>
                 </div>

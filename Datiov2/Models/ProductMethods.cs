@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using Datiov2.Models; // Ensure this is the correct namespace for ProductModel
-using System.Data;
-using System.Data.SqlClient;
 using System.Data.Common;
-using Microsoft.Data.SqlClient;
+
 
 
 
@@ -128,6 +126,36 @@ namespace Datiov2.Data
             }
             dbConnection.Close();
             return product;
+        }
+
+        public List<ProductModel> SearchForProducts(string search)
+        {
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+            string sqlString = "SELECT * FROM Products WHERE ProductName LIKE @search OR ProductDescription LIKE @search";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+            dbCommand.Parameters.AddWithValue("@search", "%" + search + "%");
+            dbConnection.Open();
+            SqlDataReader dbReader = dbCommand.ExecuteReader();
+
+            List<ProductModel> products = new List<ProductModel>();
+            while (dbReader.Read())
+            {
+                ProductModel product = new ProductModel
+                {
+                    ProductID = (int)dbReader["ProductID"],
+                    ProductName = dbReader["ProductName"].ToString(),
+                    ProductImage = dbReader["ProductImage"].ToString(),
+                    ProductDescription = dbReader["ProductDescription"].ToString(),
+                    ProductPrice = (int)dbReader["ProductPrice"],
+                    ProductStock = (int)dbReader["ProductStock"],
+                    ProductCategoryID = (int)dbReader["ProductCategoryID"]
+                };
+                products.Add(product);
+            }
+            dbConnection.Close();
+            return products;
         }
 
         public List<ProductModel> GetRandomProducts(int amountOfRandomProducts)

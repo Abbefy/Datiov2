@@ -1,34 +1,154 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using Datiov2.Models; // Ensure this is the correct namespace for ProductModel
-using System.Data;
-using System.Data.SqlClient;
-using System.Data.Common;
-using Microsoft.Data.SqlClient;
+//using Microsoft.Data.SqlClient;
+using Datiov2.Data;
+using Datiov2.Models;
+using System;
+
 
 
 namespace Datiov2.Models
 {
     public class UserMethods
     {
-        public void AddUser(UserModel user)
+        //public readonly ILogger<UserMethods> _logger;
+
+        //public UserMethods(ILogger<UserMethods> logger)
+        //{
+        //    _logger = logger;
+
+        //}
+
+
+        public int Register(UserModel user, out string error)
         {
             SqlConnection dbConnection = new SqlConnection();
             dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
-            string sqlString = "INSERT INTO Users (UserName, UserFirstName, UserLastName, UserPass, UserEmail, UserType) VALUES (@UserName, @UserFirstName, @UserLastName, @UserPass, @UserEmail, @UserType)";
-            dbConnection.Open();
+
+            string sqlString = "INSERT INTO dbo.Users (UserName, UserFirstName, UserLastName, UserPass, UserEmail, UserType) VALUES (@UserName, @UserFirstName, @UserLastName, @UserPass, @UserEmail, @UserType)";
             SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
             dbCommand.Parameters.AddWithValue("@UserName", user.UserName);
             dbCommand.Parameters.AddWithValue("@UserFirstName", user.UserFirstName);
             dbCommand.Parameters.AddWithValue("@UserLastName", user.UserLastName);
             dbCommand.Parameters.AddWithValue("@UserPass", user.UserPass);
             dbCommand.Parameters.AddWithValue("@UserEmail", user.UserEmail);
             dbCommand.Parameters.AddWithValue("@UserType", user.UserType);
-            dbCommand.ExecuteNonQuery();
-            dbConnection.Close();
 
+            try
+            {
+                dbConnection.Open();
+                int insert = dbCommand.ExecuteNonQuery();
+                error = "";
+                return insert;
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+
+
+        }
+
+        public UserModel Login(string userName, string userPass, out string error)
+        {
+            UserModel user = new UserModel();
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+            string sqlString = "SELECT * FROM dbo.Users WHERE (UserName = @UserName OR UserEmail = @UserName) AND UserPass = @UserPass";
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@UserName", userName);
+            dbCommand.Parameters.AddWithValue("@UserPass", userPass);
+
+            try
+            {
+                dbConnection.Open();
+                SqlDataReader reader = dbCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        user.UserID = (int)reader["UserID"];
+                        user.UserName = reader["UserName"].ToString();
+                        user.UserFirstName = reader["UserFirstName"].ToString();
+                        user.UserLastName = reader["UserLastName"].ToString();
+                        user.UserPass = reader["UserPass"].ToString();
+                        user.UserEmail = reader["UserEmail"].ToString();
+                        user.UserType = (int)reader["UserType"];
+                    }
+                    error = "";
+                    Console.WriteLine("User logged innnnnnnnadadadxzcewfwc2123131231");
+                    return user;
+                }
+                else
+                {
+                    error = "Invalid username or password";
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+        }
+
+        public UserModel GetAccount(int userID, out string error)
+        {
+            UserModel user = new UserModel();
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+            string sqlString = "SELECT * FROM dbo.Users WHERE UserID = @UserID";
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@UserID", userID);
+
+            try
+            {
+                dbConnection.Open();
+                SqlDataReader reader = dbCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        user.UserID = (int)reader["UserID"];
+                        user.UserName = reader["UserName"].ToString();
+                        user.UserFirstName = reader["UserFirstName"].ToString();
+                        user.UserLastName = reader["UserLastName"].ToString();
+                        user.UserPass = reader["UserPass"].ToString();
+                        user.UserEmail = reader["UserEmail"].ToString();
+                        user.UserType = (int)reader["UserType"];
+                    }
+                    error = "";
+                    return user;
+                }
+                else
+                {
+                    error = "Invalid username or password";
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
         }
 
            

@@ -4,13 +4,7 @@ using System.Data.SqlClient;
 using Datiov2.Models;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using Datiov2.Models; // Ensure this is the correct namespace for ProductModel
-using System.Data;
-using System.Data.SqlClient;
 using System.Data.Common;
-using Microsoft.Data.SqlClient;
 
 namespace Datiov2.Data
 {

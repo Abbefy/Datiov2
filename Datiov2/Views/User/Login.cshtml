@@ -1,4 +1,4 @@
-﻿@model Datiov2.Models.UserModel
+﻿@model IEnumerable<Datiov2.Models.UserModel>
 
 @{
     ViewData["Title"] = "Login";
@@ -80,6 +80,10 @@
           <a href="@Url.Action("Register", "User")">
             <input id="skapa_konto_knapp" type="button" value="Skapa konto">
           </a>
+          
+          <p>
+              <a asp-action="Register">Skapa nytt kontoOOOOO</a>"
+          </p>
         </div>
       </div>
     </div>

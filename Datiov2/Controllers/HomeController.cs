@@ -24,6 +24,8 @@ namespace Datiov2.Controllers
         {
 
             var categories = categoryMethods.GetAllCategoriesWithProducts();
+            int totalProducts = productMethods.GetNumberOfProducts();
+            ViewBag.TotalProducts = totalProducts;
 
             //List<ProductModel> products = productMethods.GetAllProducts();
 
