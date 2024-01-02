@@ -1453,7 +1453,11 @@ tr:nth-child(odd) {
     }
 
 
+.secondary_button{
+    color: white;
+    text-decoration: none;
 
+}
 
 
 

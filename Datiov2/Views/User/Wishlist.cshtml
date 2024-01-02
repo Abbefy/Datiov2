@@ -182,7 +182,17 @@
 
                     </div>
                     <div class="sum">
-                        <h2 class="cart_sum">Totalt: kr</h2>
+                        @{
+                                                    var sum = 0;
+foreach (var wishlistedProduct in wishlistedProducts)
+                        {
+                            sum += wishlistedProduct.ProductPrice;
+                        }
+
+                        }
+
+
+                        <h2 class="cart_sum">Totalt: @sum kr</h2>
                     </div>
                     <p>
                         <br>

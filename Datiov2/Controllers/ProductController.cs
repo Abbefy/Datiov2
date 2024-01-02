@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Datiov2.Models;
 using Datiov2.Data;
 using System.Linq;
+using Newtonsoft.Json;
 
 
 namespace Datiov2.Controllers
@@ -24,6 +25,49 @@ namespace Datiov2.Controllers
         public ActionResult Product(int id)
         {
             var product = productMethods.GetProductById(id);
+
+            var specifications = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(product.ProductSpecifications);
+            var specifications2 = new Dictionary<string, Dictionary<string, string>>();
+
+            
+
+
+    //        '{
+    //"Processor": {
+    //            "Antal kärnor": "6 kärnor",
+    //    "Antal trådar": "12 trådar",
+    //    "Cache": "38 MB",
+    //    "Cacheinformation": "L3 - 32 MB, L2 - 6 MB",
+    //    "Kvantitet": "1",
+    //    "Klockfrekvens": "3.8 GHz",
+    //    "Max. turbohastighet": "5.1 GHz",
+    //    "Kompatibel processorsockel": "AM5",
+    //    "Tillverkninsprocess": "5 nm",
+    //    "Termisk avledningseffekt": "65 W",
+    //    "PCI-expressrevision": "5.0",
+    //    "Överclockningsstöd": "Ja",
+    //    "Integrerad grafik": "Ja"
+    //},
+    //"Diverse": {
+    //            "Inkluderade tillbehör": "AMD Wraith Stealth Cooler", 
+    //    "Förpackningstyp": "Processor in a Box (PIB)"
+    //},
+    //"Allmänt": {
+    //            "Produkttyp": "Processor",
+    //    "Tillverkare": "AMD",
+    //    "Producentens garanti (månader)": "36"
+    //}
+    //    }'
+
+            //do something with specifications2
+
+
+
+
+
+
+            ViewBag.ProductSpecifications = specifications;
+            ViewBag.ProductSpecifications2 = specifications2;
 
             var random = new Random();
             var randomProducts = new List<ProductModel>();

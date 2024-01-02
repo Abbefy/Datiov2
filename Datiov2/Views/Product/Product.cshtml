@@ -7,6 +7,8 @@
     var product = Model;
     var randomProducts = ViewBag.RandomProducts as List<ProductModel>;
     var productID = product.ProductID;
+    var productSpecs = ViewBag.ProductSpecifications as Dictionary<string, Dictionary<string, string>>;
+    var productSpecs2 = ViewBag.ProductSpecifications2 as Dictionary<string, Dictionary<string, string>>;
 
 }
 
@@ -163,12 +165,9 @@
                             Lägg i kundvagns
                         </button>
                     </div>
-                    <a asp-action="AddToWishlist" asp-controller="Product" asp-route-id="@product.ProductID" class="facts_button">Lägg till önskelistan</a>"
-@*                     ("AddToWishlist", "Product", productID) class="facts_button">Lägg till önskelistan</a>
-            <a asp-action="AddToCart" asp-controller="Product" asp-route-id="@product.ProductID" class="facts_button">Lägg till kundvagn</a>
- *@
-                    <a href="@Url.Action("AddToWishlist", "Product", new { wishlistProductID = product.ProductID })" class="facts_button">Lägg till önskelistan</a>")
-                    
+                    <button class="facts_button" id="facts_support">
+                    <a href="@Url.Action("AddToWishlist", "Product", new { wishlistProductID = product.ProductID })" class="secondary_button" >Lägg till önskelistan</a>
+                    </button>
                 </div>
             </div>
 
@@ -176,34 +175,7 @@
                 <div class="produkt_beskrivning_box">
                     <h2>Produktbeskrivning</h2>
                     <br>
-
-                    <p class="produkt_beskrivning_text">
-                        <span class="bold">Kraftfull prestanda</span><br>
-                        Nya AMD Ryzen 5 7600 processorn driver de mest krävande spelen och
-                        laddar tunga arbetsuppgifter som videorendering snabbare.
-                        Processorn har utrustats med 6 st kärnor, 12 st trådar, boost på
-                        upp till 5,1 GHz och 38 MB cache. Allt du behöver för bättre
-                        spelprestanda och snabbare arbetsflöden.
-                    </p>
-                    <br>
-
-                    <p class="produkt_beskrivning_text">
-                        <span class="bold">Stöd för DDR5</span><br>
-                        Med den senaste DDR-standarden (DDR5) erbjuder Ryzen 7000-serien
-                        en extra boost i prestanda, speciellt ifall du arbetar med stora
-                        videofiler och foton. Processorn stöder RAM-minnen med en frekvens
-                        på upp till 5200MHz.
-                    </p>
-                    <br>
-
-                    <p class="produkt_beskrivning_text">
-                        <span class="bold">De senaste teknologierna</span><br>
-                        7:e generationens Ryzen-processorer har stöd för PCIe 5.0
-                        lagringstöd, AMDs EXPO-teknik, Precision Boost 2 och Precision
-                        Boost Overdrive. Överklocka enkelt processorn i AMDs Ryzen
-                        Master-verktyg med nya one-click överklockning.
-                    </p>
-                    <br>
+                    @Html.Raw(product.ProductDescription)
 
                     <h2>Produktvideor</h2>
                     <br>
@@ -221,111 +193,27 @@
                 <div class="produkt_specifikationer">
                     <h2>Tekniska specifikationer</h2>
                     <br>
-                    <table class="table">
-                        <tr>
-                            <th>Processor</th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <td>Antal kärnor</td>
-                            <td>6 kärnor</td>
-                        </tr>
-                        <tr>
-                            <td>Antal trådar</td>
-                            <td>12 trådar</td>
-                        </tr>
-                        <tr>
-                            <td>Cache</td>
-                            <td>38 MB</td>
-                        </tr>
-                        <tr>
-                            <td>Cacheinformation</td>
-                            <td>
-                                <p>L3 - 32 MB</p>
-                                <p>L2 - 6 MB</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Kvantitet</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>Klockfrekvens</td>
-                            <td>3.8 GHz</td>
-                        </tr>
-                        <tr>
-                            <td>Max. turbohastighet</td>
-                            <td>5.1 GHz</td>
-                        </tr>
-                        <tr>
-                            <td>Kompatibel processorsockel</td>
-                            <td>AM5</td>
-                        </tr>
-                        <tr>
-                            <td>Tillverkninsprocess</td>
-                            <td>5 nm</td>
-                        </tr>
-                        <tr>
-                            <td>Termisk avledningseffekt</td>
-                            <td>65 W</td>
-                        </tr>
-                        <tr>
-                            <td>PCI-expressrevision</td>
-                            <td>5.0</td>
-                        </tr>
-                        <tr>
-                            <td>Överclockningsstöd</td>
-                            <td>Ja</td>
-                        </tr>
-                        <tr>
-                            <td>Integrerad grafik</td>
-                            <td>Ja</td>
-                        </tr>
-                    </table>
-                    <br>
-                    <br>
-                    <br>
+                    @if (productSpecs != null)
+                    {
+                        foreach (var category in productSpecs)
+                        {
+                            <h3>@category.Key</h3>
+                            <table class="table">
+                                @foreach (var spec in category.Value)
+                                {
+                                    <tr>
+                                        <td>@spec.Key</td>
+                                        <td>@spec.Value</td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                    }
+                    else
+                    {
+                        <p>Specifikationer är inte tillgängliga för denna produkt.</p>
+                    }
 
-                    <table class="table">
-                        <tr>
-                            <th>Diverse</th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <td>Inkluderade tillbehör</td>
-                            <td>AMD Wraith Stealth Cooler</td>
-                        </tr>
-                        <tr>
-                            <td>Förpackningstyp</td>
-                            <td>Processor in a box (PIB)</td>
-                        </tr>
-                    </table>
-
-                    <br>
-                    <br>
-                    <br>
-
-
-                    <table class="table">
-                        <tr>
-                            <th>Allmänt</th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <td>Produkttyp</td>
-                            <td>Processor</td>
-                        </tr>
-
-                        <tr>
-                            <td>Tillverkare</td>
-                            <td>AMD</td>
-                        </tr>
-
-                        <tr>
-                            <td>Producentens garanti (månader)</td>
-                            <td>36</td>
-                        </tr>
-                    </table>
                 </div>
             </div>
 

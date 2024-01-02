@@ -34,7 +34,9 @@ namespace Datiov2.Data
                     ProductDescription = dbReader["ProductDescription"].ToString(),
                     ProductPrice = (int)dbReader["ProductPrice"],
                     ProductStock = (int)dbReader["ProductStock"],
-                    ProductCategoryID = (int)dbReader["ProductCategoryID"]
+                    ProductCategoryID = (int)dbReader["ProductCategoryID"],
+                    ProductSpecifications = dbReader["ProductSpecifications"]?.ToString()
+
                 };
                 products.Add(product);
             }
@@ -94,7 +96,9 @@ namespace Datiov2.Data
                     ProductDescription = dbReader["ProductDescription"].ToString(),
                     ProductPrice = (int)dbReader["ProductPrice"],
                     ProductStock = (int)dbReader["ProductStock"],
-                    ProductCategoryID = (int)dbReader["ProductCategoryID"]
+                    ProductCategoryID = (int)dbReader["ProductCategoryID"],
+                    ProductSpecifications = dbReader["ProductSpecifications"]?.ToString()
+
                 };
                 products.Add(product);
             }
@@ -123,6 +127,8 @@ namespace Datiov2.Data
                 product.ProductPrice = (int)dbReader["ProductPrice"];
                 product.ProductStock = (int)dbReader["ProductStock"];
                 product.ProductCategoryID = (int)dbReader["ProductCategoryID"];
+                product.ProductSpecifications = dbReader["ProductSpecifications"]?.ToString() ?? "";
+
             }
             dbConnection.Close();
             return product;
@@ -132,7 +138,7 @@ namespace Datiov2.Data
         {
             SqlConnection dbConnection = new SqlConnection();
             dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
-            string sqlString = "SELECT * FROM Products WHERE ProductName LIKE @search OR ProductDescription LIKE @search";
+            string sqlString = "SELECT * FROM Products WHERE ProductName LIKE @search OR ProductDescription LIKE @search OR ProductSpecifications LIKE @search";
 
             SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
             dbCommand.Parameters.AddWithValue("@search", "%" + search + "%");
@@ -150,7 +156,8 @@ namespace Datiov2.Data
                     ProductDescription = dbReader["ProductDescription"].ToString(),
                     ProductPrice = (int)dbReader["ProductPrice"],
                     ProductStock = (int)dbReader["ProductStock"],
-                    ProductCategoryID = (int)dbReader["ProductCategoryID"]
+                    ProductCategoryID = (int)dbReader["ProductCategoryID"],
+                    ProductSpecifications = dbReader["ProductSpecifications"]?.ToString()
                 };
                 products.Add(product);
             }
@@ -180,7 +187,9 @@ namespace Datiov2.Data
                     ProductDescription = dbReader["ProductDescription"].ToString(),
                     ProductPrice = (int)dbReader["ProductPrice"],
                     ProductStock = (int)dbReader["ProductStock"],
-                    ProductCategoryID = (int)dbReader["ProductCategoryID"]
+                    ProductCategoryID = (int)dbReader["ProductCategoryID"],
+                    ProductSpecifications = dbReader["ProductSpecifications"]?.ToString()
+
                 };
                 products.Add(product);
             }
@@ -211,6 +220,7 @@ namespace Datiov2.Data
             dbCommand.Parameters.AddWithValue("@productName", product.ProductName);
             dbCommand.Parameters.AddWithValue("@productImage", product.ProductImage);
             dbCommand.Parameters.AddWithValue("@productDescription", product.ProductDescription);
+            
             dbCommand.Parameters.AddWithValue("@productPrice", product.ProductPrice);
             dbCommand.Parameters.AddWithValue("@productStock", product.ProductStock);
             dbCommand.Parameters.AddWithValue("@productCategoryID", product.ProductCategoryID);
