@@ -1,6 +1,7 @@
-﻿
-@model Datiov2.Models.UserModel
+﻿@model Datiov2.Models.UserModel
 
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor ContextAccessor
 
 @{
     ViewData["Title"] = "Account";
@@ -138,146 +139,157 @@
 
             <!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
 
+
+
             <div class="main-content">
-                <div class="slides_box">
-                    @* Info part that displays information about the account. It has nothing to do with slides *@
-                <div class="info_box">
-                        <div class="info_box_left">
-                            <h2 class="info_box_text">Mitt konto</h2>
-                            <h3 class="info_box_text">Användarnamn: @Model.UserName</h3>
-                            <h3 class="info_box_text">Förnamn: @Model.UserFirstName</h3>
-                            <h3 class="info_box_text">Efternamn: @Model.UserLastName</h3>
-                            <h3 class="info_box_text">E-postadress: @Model.UserEmail</h3>
-                            <h3 class="info_box_text">Användartyp: @Model.UserType</h3>
+                <div class="account_box">
+                    <div class="account-card">
+                        <div class="account-header">
+                            <h1>Kontoinformation</h1>
+                        </div>
+                        <div class="account-info">
+                            <p><strong>Användarnamn:      </strong>   @Model.UserName</p>
+                            <p><strong>Förnamn:  </strong>   @Model.UserFirstName</p>
+                            <p><strong>Efternamn:  </strong>   @Model.UserLastName</p>
+                            <p><strong>Email:  </strong>   @Model.UserEmail</p>
+                            <p><strong>Kontotyp:  </strong>   @Model.UserType</p>
+                        </div>
+                        @*                         <button class="facts_button">Redigera konto</button>
+                        *@
+                    </div>
+                    
+                    <button class="facts_button">Redigera konto</button>
+                    <button class="facts_button">Logga ut</button>
+
+                    <div class="orders_box">
+                        <div class="orders-card">
+                            <div class="orders-header">
+                                <h1>Mina ordrar</h1>
+                            </div>
                         </div>
 
-@*                         <div class="info_box_right">
-                            <h2 class="info_box_text">Mina ordrar</h2>
-                            <h3 class="info_box_text">Order 1</h3>
-                            <h3 class="info_box_text">Order 2</h3>
-                            <h3 class="info_box_text">Order 3</h3>
-                            <h3 class="info_box_text">Order 4</h3>
-                            <h3 class="info_box_text">Order 5</h3>
-                        </div>
- *@
-                        
+                    </div>
 
+                    @*             @foreach (var category in Model)
+                    {
+                    <h3 class="product_showcase_type_text">@category.CategoryName</h3>
+                    <div class="product_field">
+                    <div class="product_grid">
+                    @foreach (var product in category.Products)
+                    {
+                    <div class="produkt_box">
+                    <a href="@Url.Action("Product", "Product", new { id = product.ProductID })">
+                    <img src="@product.ProductImage" alt="@product.ProductDescription">
+                    <h2>@product.ProductName</h2>
+                    <h3>@product.ProductPrice kr</h3>
+                    <h4 class="stock_text">
+                    <span class="stock_dot"></span> i lager: @product.ProductStock
+                    </h4>
+                    </a>
+                    </div>
+
+
+                    }
+                    </div>
+                    </div>
+                    } *@
 
                 </div>
+                @if (@ContextAccessor.HttpContext.Session.GetInt32("UserType") == 2)
+                {
+                    <div class="fakta">
+                        <ul>
+                            <li class="fakta_text1">
+                                <h3>Adminpanel</h3>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("AddProduct", "Product")" class="facts_button">Skapa produkt</a>
+                            </li>
+                            <li><button class="facts_button">Skapa produktsss</button></li>
+                            <li><button class="facts_button">Skapa produktsss</button></li>
 
-                <div class="fakta">
-                    <ul>
-                        <li class="fakta_text1">Fri frakt vid köp över 499kr</li>
-                        <li>2-3 dagars leveranstid</li>
-                        <li>30 dagars öppet köp</li>
-                        <li>Kunnig kundsupport</li>
-                        <li><button class="facts_button">Våra tjänster</button></li>
-                        <li>
-                            <button class="facts_button" id="facts_support">
-                                <span class="material-icons-outlined" id="support_agent_icon">support_agent</span>
-                                <h5>Kundservice</h5>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+                            <li><button class="facts_button">Skapa kategori</button></li>
+
+
+                        </ul>
+                    </div>
+                }
+
+
+
             </div>
 
-@*             @foreach (var category in Model)
-            {
-                <h3 class="product_showcase_type_text">@category.CategoryName</h3>
-                <div class="product_field">
-                    <div class="product_grid">
-                        @foreach (var product in category.Products)
-                        {
-                            <div class="produkt_box">
-                                <a href="@Url.Action("Product", "Product", new { id = product.ProductID })">
-                                    <img src="@product.ProductImage" alt="@product.ProductDescription">
-                                    <h2>@product.ProductName</h2>
-                                    <h3>@product.ProductPrice kr</h3>
-                                    <h4 class="stock_text">
-                                        <span class="stock_dot"></span> i lager: @product.ProductStock
-                                    </h4>
-                                </a>
-                            </div>
 
 
-                        }
+            <div class="footer">
+                <div class="footer_down">
+                    <div class="footer_box" id="sociala_medier_box">
+                        <h2>Följ oss</h2>
+
+                        <div class="sociala_medier_box">
+                            <a id="yt" class="sociala_medier" href="http://Youtube.com" target="_blank">
+                                <img class="sociala_medier"
+                                     src="/bilder/youtube.png" alt="">
+                            </a>
+
+                            <a class="sociala_medier" href="http://Twitter.com" target="_blank">
+                                <img class="sociala_medier"
+                                     src="/bilder/twitter.png" alt="">
+                            </a>
+
+                            <a class="sociala_medier" href="http://Facebook.com" target="_blank">
+                                <img class="sociala_medier"
+                                     src="/bilder/facebook.png" alt="">
+                            </a>
+
+                            <a class="sociala_medier" href="http://Instagram.com" target="_blank">
+                                <img class="sociala_medier"
+                                     src="/bilder/instagram.png" alt="">
+                            </a>
+                        </div>
+
+                        <h3>Nyhetsbrev</h3>
+
+                        <input id="nyhetsbrev" type="email">
+                        <input id="button_prenumerera" type="button" value="Prenumerera">
+
+                        <h4 id="copyright">Copyright 2023 Datio</h4>
                     </div>
                 </div>
-            } *@
 
-        </div>
-    </div>
+                <div class="footer_upper">
+                    <div class="footer_box" id="kontakt_box">
+                        <h2>Kontakt</h2>
+                        <h3 class="footer_text">
+                            <span class="material-icons-outlined" id="email_icon"> email </span>info@datio.nu
+                        </h3>
+                        <br>
+                        <h3 class="footer_text">
+                            <span class="material-icons-outlined" id="phone_icon"> phone </span>073 725 85 99
+                        </h3>
+                        <br>
+                        <br>
+                        <h4>Måndag - Fredag: 09-18</h4>
+                        <h4>Lördag: 11 - 16</h4>
+                        <h4>Söndag: Stängt</h4>
+                    </div>
 
-    <div class="footer">
-        <div class="footer_down">
-            <div class="footer_box" id="sociala_medier_box">
-                <h2>Följ oss</h2>
+                    <div class="footer_box">
+                        <h2>Information</h2>
 
-                <div class="sociala_medier_box">
-                    <a id="yt" class="sociala_medier" href="http://Youtube.com" target="_blank">
-                        <img class="sociala_medier"
-                             src="/bilder/youtube.png" alt="">
-                    </a>
+                        <a class="information_länk" href="#">FAQ - Frågor och Svar</a>
+                        <a class="information_länk" href="#">Felanmälan och återköp</a>
+                        <a class="information_länk" href="#">Försäljningsvilkor</a>
+                        <a class="information_länk" href="#">Företagsförsäljning</a>
+                        <a class="information_länk" href="#">Om Datio</a>
 
-                    <a class="sociala_medier" href="http://Twitter.com" target="_blank">
-                        <img class="sociala_medier"
-                             src="/bilder/twitter.png" alt="">
-                    </a>
-
-                    <a class="sociala_medier" href="http://Facebook.com" target="_blank">
-                        <img class="sociala_medier"
-                             src="/bilder/facebook.png" alt="">
-                    </a>
-
-                    <a class="sociala_medier" href="http://Instagram.com" target="_blank">
-                        <img class="sociala_medier"
-                             src="/bilder/instagram.png" alt="">
-                    </a>
+                        <img src="bilder/mastercard.png" class="betalningsmetod_logo" alt="">
+                        <img src="bilder/visa.png" class="betalningsmetod_logo" alt="">
+                        <img src="bilder/klarna.png" class="betalningsmetod_logo" alt="">
+                    </div>
                 </div>
-
-                <h3>Nyhetsbrev</h3>
-
-                <input id="nyhetsbrev" type="email">
-                <input id="button_prenumerera" type="button" value="Prenumerera">
-
-                <h4 id="copyright">Copyright 2023 Datio</h4>
             </div>
-        </div>
-
-        <div class="footer_upper">
-            <div class="footer_box" id="kontakt_box">
-                <h2>Kontakt</h2>
-                <h3 class="footer_text">
-                    <span class="material-icons-outlined" id="email_icon"> email </span>info@datio.nu
-                </h3>
-                <br>
-                <h3 class="footer_text">
-                    <span class="material-icons-outlined" id="phone_icon"> phone </span>073 725 85 99
-                </h3>
-                <br>
-                <br>
-                <h4>Måndag - Fredag: 09-18</h4>
-                <h4>Lördag: 11 - 16</h4>
-                <h4>Söndag: Stängt</h4>
-            </div>
-
-            <div class="footer_box">
-                <h2>Information</h2>
-
-                <a class="information_länk" href="#">FAQ - Frågor och Svar</a>
-                <a class="information_länk" href="#">Felanmälan och återköp</a>
-                <a class="information_länk" href="#">Försäljningsvilkor</a>
-                <a class="information_länk" href="#">Företagsförsäljning</a>
-                <a class="information_länk" href="#">Om Datio</a>
-
-                <img src="bilder/mastercard.png" class="betalningsmetod_logo" alt="">
-                <img src="bilder/visa.png" class="betalningsmetod_logo" alt="">
-                <img src="bilder/klarna.png" class="betalningsmetod_logo" alt="">
-            </div>
-        </div>
-    </div>
-    <script src="~/js/script.js"></script>
+            <script src="~/js/script.js"></script>
 
 </body>
 

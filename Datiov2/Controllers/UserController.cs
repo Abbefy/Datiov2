@@ -26,8 +26,15 @@ namespace Datiov2.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
+            if (HttpContext.Session.GetInt32("UserID") != null)
+            {
+                UserModel loggedInUser = userMethods.GetAccount((int)HttpContext.Session.GetInt32("UserID"), out string error);
+
+                return RedirectToAction("Account", "User", loggedInUser);
+            }
 
             return View();
         }
@@ -35,6 +42,10 @@ namespace Datiov2.Controllers
         [HttpPost]
         public IActionResult Login(UserModel user)
         {
+
+
+
+
             UserModel userLogin = new UserModel();
             string error = "";
 
@@ -46,7 +57,8 @@ namespace Datiov2.Controllers
                 return View();
             }
 
-
+           // HttpContext.Session.SetInt32("IsLoggedIn", 1);
+            HttpContext.Session.SetInt32("UserID", userLogin.UserID);
             HttpContext.Session.SetString("UserName", userLogin.UserName);
             HttpContext.Session.SetInt32("UserType", userLogin.UserType);
 
@@ -108,6 +120,11 @@ namespace Datiov2.Controllers
 
             return View(userAccount);
         }
+
+        //[HttpPost]
+        //public IActionResult Wishlist(
+
+
 
         //[HttpPost]
         //public IActionResult Account(UserModel user)

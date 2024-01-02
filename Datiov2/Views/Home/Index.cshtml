@@ -12,14 +12,18 @@ using Microsoft.AspNetCore.Mvc; *@
 
 @model List<Datiov2.Models.CategoryModel>
 
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor ContextAccessor
+
 
 @{
     ViewData["Title"] = "Index";
 
 
-
-
 }
+
+
+
 
 @* <h1>Index</h1>
 
@@ -147,7 +151,7 @@ using Microsoft.AspNetCore.Mvc; *@
                     <span class="material-icons-outlined" id="mobile_menu_icon">menu</span>
 
                     <div class="meny_alternativ">
-                        <a href="kategori.html" class="mobile_category">Datorer</a>
+                        <a href=@Url.Action("AllProducts","Product") class="mobile_category">Datorer</a>
                         <a href="kategori.html" class="mobile_category">Bildskärmar</a>
                         <a href="kategori.html" class="mobile_category">Hem/fritid</a>
                         <a href="kategori.html" class="mobile_category">Kameror</a>
@@ -175,7 +179,15 @@ using Microsoft.AspNetCore.Mvc; *@
                 <form method="get" action="/User/Login" class="form_konto">
                     <button type="submit" class="konto">
                         <span class="material-icons-outlined" id="account_icon">person_outline</span>
-                        <span id="account_text">Mitt konto</span>
+                        
+                        @if (ContextAccessor.HttpContext.Session.GetString("UserName") != null)
+                        {
+                            <span id="account_text">@ContextAccessor.HttpContext.Session.GetString("UserName")</span>
+                        }
+                        else
+                        {
+                            <span id="account_text">Logga in</span>
+                        }
                     </button>
                 </form>
 
@@ -191,7 +203,7 @@ using Microsoft.AspNetCore.Mvc; *@
             <div class="nav">
                 <ul>
                     <li class="navbar" id="menu_link2">
-                        <a href="kategori.html" id="menu_link" onclick="darkmode()">
+                        <a href=@Url.Action("AllProducts","Product") id="menu_link" onclick="darkmode()">
                             <span class="material-icons-outlined"
                                   id="menu_icon">menu</span>
                         </a>

@@ -2,67 +2,170 @@
 
 @{
     ViewData["Title"] = "AddProduct";
+    // var categories = ViewBag.Categories as List<CategoryModel>;
 }
 
-<h1>AddProduct</h1>
+<!doctype html>
+<html lang="en">
 
-<h4>ProductModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddProduct">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ProductID" class="control-label"></label>
-                <input asp-for="ProductID" class="form-control" />
-                <span asp-validation-for="ProductID" class="text-danger"></span>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="~/css/main.css" type="text/css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mängder av teknikprodukter">
+    <meta name="keywords" content="Dator, teknik, hårdvara, datio">
+    <meta name="author" content="Datio">
+
+    <link rel="icon" type="image/x-icon" href="/bilder/icons8-my-computer-16.png">
+
+
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <title>Registrering</title>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="content-container">
+            <div class="header">
+                <!--Mobilmeny-->
+                <div class="mobile_menu_button" onclick="meny_funktion()">
+                    <span class="material-icons-outlined" id="mobile_menu_icon">menu</span>
+
+                    <div class="meny_alternativ">
+                        <a href="kategori.html" class="mobile_category">Datorer</a>
+                        <a href="kategori.html" class="mobile_category">Bildskärmar</a>
+                        <a href="kategori.html" class="mobile_category">Hem/fritid</a>
+                        <a href="kategori.html" class="mobile_category">Kameror</a>
+                        <a href="kategori.html" class="mobile_category">Kontor</a>
+                        <a href="kategori.html" class="mobile_category">Mobil</a>
+                        <a href="favoriter.html" class="mobile_category">Önskelista</a>
+                        <a href="logga_in.html" class="mobile_category">Mitt konto</a>
+                        <a href="#" class="mobile_category">Kundservice</a>
+                        <a href="#" class="mobile_category" onclick="darkmode()">Byt tema</a>
+
+                    </div>
+                </div>
+
+                <a class="login_logo" href="index.html">
+                    <img src="/bilder/logotyp_datio_stor_transparent.png" alt="Datio logotyp"
+                         id="datio_logo">
+                </a>
             </div>
-            <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
-                <input asp-for="ProductName" class="form-control" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>
+
+
+            <div class="main_logga_in">
+                <div class="inloggningsruta">
+                    <h3 id="logga_in_text">Lägg till Produkt</h3>
+                    <form asp-action="AddProduct" method="post" asp-controller="Product">
+                        <input class="inloggning_input" type="text" asp-for="ProductName" required placeholder="Produktnamn">
+@*                         <input class="inloggning_input" type="text" asp-for="ProductImage" placeholder="Bild URL">
+ *@                        <select class="inloggning_input" asp-for="ProductImage">
+                            @foreach (var imageUrl in ViewBag.ImageUrls)
+                            {
+                                <option value="@imageUrl">@imageUrl</option>
+                            }
+                        </select>
+
+
+                        <textarea class="inloggning_input" asp-for="ProductDescription" placeholder="Beskrivning"></textarea>
+                        <input class="inloggning_input" type="number" asp-for="ProductPrice" required placeholder="Pris">
+                        <input class="inloggning_input" type="number" asp-for="ProductStock" required placeholder="Lagerantal">
+                        <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID">
+                        @*                         
+                            <select class="inloggning_input" asp-for="ProductCategoryID">
+                            @foreach (var category in categories)
+                            {
+                                <option value="@category.CategoryID">@category.CategoryName</option>
+                            }
+</select> *@
+                        <input id="skapa_konto_knapp" type="submit" value="Lägg till Produkt">
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ProductCategory" class="control-label"></label>
-                <input asp-for="ProductCategory" class="form-control" />
-                <span asp-validation-for="ProductCategory" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductImage" class="control-label"></label>
-                <input asp-for="ProductImage" class="form-control" />
-                <span asp-validation-for="ProductImage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductDescription" class="control-label"></label>
-                <input asp-for="ProductDescription" class="form-control" />
-                <span asp-validation-for="ProductDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductPrice" class="control-label"></label>
-                <input asp-for="ProductPrice" class="form-control" />
-                <span asp-validation-for="ProductPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductStock" class="control-label"></label>
-                <input asp-for="ProductStock" class="form-control" />
-                <span asp-validation-for="ProductStock" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductCategoryID" class="control-label"></label>
-                <input asp-for="ProductCategoryID" class="form-control" />
-                <span asp-validation-for="ProductCategoryID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="footer">
+        <div class="footer_down">
+            <div class="footer_box" id="sociala_medier_box">
+                <h2>Följ oss</h2>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+                <div class="sociala_medier_box">
+                    <a id="yt" class="sociala_medier" href="http://Youtube.com" target="_blank">
+                        <img class="sociala_medier"
+                             src="/bilder/youtube.png" alt="">
+                    </a>
+
+                    <a class="sociala_medier" href="http://Twitter.com" target="_blank">
+                        <img class="sociala_medier"
+                             src="/bilder/twitter.png" alt="">
+                    </a>
+
+                    <a class="sociala_medier" href="http://Facebook.com" target="_blank">
+                        <img class="sociala_medier"
+                             src="/bilder/facebook.png" alt="">
+                    </a>
+
+                    <a class="sociala_medier" href="http://Instagram.com" target="_blank">
+                        <img class="sociala_medier"
+                             src="/bilder/instagram.png" alt="">
+                    </a>
+                </div>
+
+                <h3>Nyhetsbrev</h3>
+
+                <input id="nyhetsbrev" type="email">
+                <input id="button_prenumerera" type="button" value="Prenumerera">
+
+                <h4 id="copyright"> Copyright 2023 Datio</h4>
+            </div>
+        </div>
+
+        <div class="footer_upper">
+            <div class="footer_box" id="kontakt_box">
+                <h2>Kontakt</h2>
+                <h3 class="footer_text">
+                    <span class="material-icons-outlined" id="email_icon"> email </span>info@datio.nu
+                </h3>
+                <br>
+                <h3 class="footer_text">
+                    <span class="material-icons-outlined" id="phone_icon"> phone </span>073 725 85 99
+                </h3>
+                <br>
+                <br>
+                <h4>Måndag - Fredag: 09-18</h4>
+                <h4>Lördag: 11 - 16</h4>
+                <h4>Söndag: Stängt</h4>
+            </div>
+
+            <div class="footer_box">
+                <h2>Information</h2>
+
+                <a class="information_länk" href="#">FAQ - Frågor och Svar</a>
+                <a class="information_länk" href="#">Felanmälan och återköp</a>
+                <a class="information_länk" href="#">Försäljningsvilkor</a>
+                <a class="information_länk" href="#">Företagsförsäljning</a>
+                <a class="information_länk" href="#">Om Datio</a>
+
+                <img src="/bilder/mastercard.png" class="betalningsmetod_logo" alt="">
+                <img src="/bilder/visa.png" class="betalningsmetod_logo" alt="">
+                <img src="/bilder/klarna.png" class="betalningsmetod_logo" alt="">
+            </div>
+        </div>
+    </div>
+    <script src="~/script.js"></script>
+
+</body>
+
+</html>

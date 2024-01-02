@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Datiov2.Models;
 using Datiov2.Data;
+using System.Linq;
 
 
 namespace Datiov2.Controllers
@@ -62,6 +63,15 @@ namespace Datiov2.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
+            List<string> imageUrls = new List<string>()
+            {
+                "/bilder/black_friday_pic",
+                "/bilder/facebook",
+            };
+            ViewBag.ImageUrls = imageUrls;
+
+
+
             return View();
         }
 
@@ -81,6 +91,13 @@ namespace Datiov2.Controllers
             ViewBag.Search = search;
             return View(foundProducts);
             
+        }
+
+        public IActionResult AllProducts()
+        {
+            List<ProductModel> products = productMethods.GetAllProducts();
+            ViewBag.AllProducts = products;
+            return View(products);
         }
 
 
