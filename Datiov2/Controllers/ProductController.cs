@@ -12,6 +12,7 @@ namespace Datiov2.Controllers
     public class ProductController : Controller
     {
         ProductMethods productMethods = new ProductMethods();
+        WishlistMethods wishlistMethods = new WishlistMethods();
 
 
         // GET: ProductController
@@ -99,6 +100,56 @@ namespace Datiov2.Controllers
             ViewBag.AllProducts = products;
             return View(products);
         }
+
+
+        public IActionResult AddToWishlist(int wishlistProductID)
+        {
+            if (HttpContext.Session.GetInt32("UserID") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            
+            int productID = wishlistProductID;
+
+            int userID = (int)HttpContext.Session.GetInt32("UserID");
+
+            wishlistMethods.AddToWishlist(userID, productID, out string error);
+
+            //if (error != "")
+            //{
+            //    ViewBag.Error = error;
+            //    return View();
+            //}
+            
+            return RedirectToAction("Index", "Home");
+
+            
+        }
+
+        public IActionResult RemoveFromWishlist(int wishlistProductID)
+        {
+            if (HttpContext.Session.GetInt32("UserID") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            int productID = wishlistProductID;
+
+            int userID = (int)HttpContext.Session.GetInt32("UserID");
+
+            wishlistMethods.RemoveProductFromWishlist(userID, productID);
+            return RedirectToAction("Wishlist", "User", userID);
+        }
+
+
+
+
+
+
+
+
+
+
 
 
 

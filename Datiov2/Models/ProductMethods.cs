@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Datiov2.Models; // Ensure this is the correct namespace for ProductModel
+using Datiov2.Models; 
 using System.Data.Common;
 
 
@@ -218,6 +218,10 @@ namespace Datiov2.Data
             dbCommand.ExecuteNonQuery();
             dbConnection.Close();
         }
+
+
+       
+
 
 
 

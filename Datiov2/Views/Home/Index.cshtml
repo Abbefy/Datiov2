@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc; *@
 @inject IHttpContextAccessor ContextAccessor
 
 
+
 @{
     ViewData["Title"] = "Index";
 
@@ -134,7 +135,11 @@ using Microsoft.AspNetCore.Mvc; *@
     <div class="main-container">
         <div class="mini-header">
             <div class="mini_header_content">
-                <a href="favoriter.html"><span class="material-icons-outlined" id="favoriter">favorite_border</span></a>
+                <a href="@Url.Action("Wishlist", "User", new { id = ContextAccessor.HttpContext.Session.GetInt32("UserID") })">
+                    <span class="material-icons-outlined" id="favoriter">favorite_border</span>
+                </a>
+
+
                 <span class="material-icons-outlined" id="light_mode_button" onclick="darkmode()">light_mode</span>
                 <span class="material-icons-outlined" id="dark_mode_button" onclick="darkmode()">dark_mode</span>
 

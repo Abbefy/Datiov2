@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Datiov2.Data;
 
 
 
@@ -15,6 +16,7 @@ namespace Datiov2.Controllers
     public class UserController : Controller
     {
         UserMethods userMethods = new UserMethods();
+        WishlistMethods wishlistMethods = new WishlistMethods();
 
 
 
@@ -121,8 +123,23 @@ namespace Datiov2.Controllers
             return View(userAccount);
         }
 
-        //[HttpPost]
-        //public IActionResult Wishlist(
+        
+        public IActionResult Wishlist()
+        {
+            if (HttpContext.Session.GetString("UserName") == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            int userID = (int)HttpContext.Session.GetInt32("UserID");
+            var products = wishlistMethods.GetWishListProducts(userID);
+            //List<WishlistModel> wishlist = wishlistMethods.ViewWishlist(userID);
+            ViewBag.WishlistProducts = products;
+
+            //ViewBag.Wishlist = wishlist;
+
+            return View(products);
+        }
 
 
 
@@ -150,78 +167,119 @@ namespace Datiov2.Controllers
 
 
 
+//namespace Datiov2.Models
+//    {
+//        public class WishlistMethods
+//        {
+//            public List<WishlistModel> ViewWishlist(int userID)
+//            {
+//                List<WishlistModel> wishlist = new List<WishlistModel>();
+
+//                SqlConnection dbConnection = new SqlConnection();
+//                dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+//                string sqlString = "SELECT * FROM dbo.Wishlist WHERE UserID = @UserID";
+
+//                SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+//                dbCommand.Parameters.AddWithValue("@UserID", userID);
+
+//                try
+//                {
+//                    dbConnection.Open();
+//                    SqlDataReader dbReader = dbCommand.ExecuteReader();
+
+//                    while (dbReader.Read())
+//                    {
+//                        WishlistModel wishlistItem = new WishlistModel();
+
+//                        wishlistItem.WishlistID = (int)dbReader["WishlistID"];
+//                        wishlistItem.WishlistProductID = (int)dbReader["ProductID"];
+//                        wishlistItem.WishlistUserID = (int)dbReader["UserID"];
+
+//                        wishlist.Add(wishlistItem);
+//                    }
+//                    dbConnection.Close();
+//                    return wishlist;
+//                }
+//                catch (Exception ex)
+//                {
+//                    throw ex;
+//                }
+//                finally
+//                {
+//                    dbConnection.Close();
+//                }
+
+
+//            }
+
+//            public int AddToWishlist(int userID, int productID)
+//            {
+//                SqlConnection dbConnection = new SqlConnection();
+//                dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+//                string sqlString = "INSERT INTO dbo.Wishlist (UserID, ProductID) VALUES (@UserID, @ProductID)";
+
+//                SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+//                dbCommand.Parameters.AddWithValue("@UserID", userID);
+//                dbCommand.Parameters.AddWithValue("@ProductID", productID);
+
+//                try
+//                {
+//                    dbConnection.Open();
+//                    int rowsAffected = dbCommand.ExecuteNonQuery();
+//                    dbConnection.Close();
+//                    return rowsAffected;
+//                }
+//                catch (Exception ex)
+//                {
+//                    throw ex;
+//                }
+//                finally
+//                {
+//                    dbConnection.Close();
+//                }
+//            }
+
+//            public int RemoveProductFromWishlist(int UserID, int ProductID)
+//            {
+//                SqlConnection dbConnection = new SqlConnection();
+//                dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+//                string sqlString = "DELETE FROM dbo.Wishlist WHERE UserID = @UserID AND ProductID = @ProductID";
+
+//                SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+//                dbCommand.Parameters.AddWithValue("@UserID", UserID);
+//                dbCommand.Parameters.AddWithValue("@ProductID", ProductID);
+
+//                try
+//                {
+//                    dbConnection.Open();
+//                    int rowsAffected = dbCommand.ExecuteNonQuery();
+//                    dbConnection.Close();
+//                    return rowsAffected;
+//                }
+//                catch (Exception ex)
+//                {
+//                    throw ex;
+//                }
+//                finally
+//                {
+//                    dbConnection.Close();
+//                }
+//            }
 
 
 
 
+//        }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+//    }
 
-        // GET: UserController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: UserController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: UserController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: UserController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-    }
+}
 }

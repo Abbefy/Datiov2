@@ -6,13 +6,14 @@
     ViewData["Title"] = "Product";
     var product = Model;
     var randomProducts = ViewBag.RandomProducts as List<ProductModel>;
+    var productID = product.ProductID;
 
 }
 
 
 
-@* <!DOCTYPE html>
-<html lang="en"> *@
+<!DOCTYPE html>
+<html lang="en"> 
 
 <head>
     <meta charset="UTF-8">
@@ -149,18 +150,25 @@
 
                 <div class="produkt_beställning_box">
                     <h1>@product.ProductName</h1>
-                    <h2>2 990 kr</h2>
-                    <h3>Lagerstatus: <span class="stock_dot_product"></span></h3>
+                    <h2>@product.ProductPrice kr</h2>
+                    <h3>Lagerstatus: @product.ProductStock <span class="stock_dot_product"></span></h3>
                     <h4>
                         Antal:
                         <input type="number" id="antal" min="1" max="100" value="1">
                     </h4>
+                    <h4> ProductID: @product.ProductID  </h4>
 
                     <div class="produkt_knappar">
                         <button type="button" id="produkt_köp_knapp">
-                            Lägg i kundvagn
+                            Lägg i kundvagns
                         </button>
                     </div>
+                    <a asp-action="AddToWishlist" asp-controller="Product" asp-route-id="@product.ProductID" class="facts_button">Lägg till önskelistan</a>"
+@*                     ("AddToWishlist", "Product", productID) class="facts_button">Lägg till önskelistan</a>
+            <a asp-action="AddToCart" asp-controller="Product" asp-route-id="@product.ProductID" class="facts_button">Lägg till kundvagn</a>
+ *@
+                    <a href="@Url.Action("AddToWishlist", "Product", new { wishlistProductID = product.ProductID })" class="facts_button">Lägg till önskelistan</a>")
+                    
                 </div>
             </div>
 
@@ -415,4 +423,4 @@
 
 </body>
 
-@* </html> *@
+</html> 
