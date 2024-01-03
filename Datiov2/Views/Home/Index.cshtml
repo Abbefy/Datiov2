@@ -198,9 +198,17 @@ using Microsoft.AspNetCore.Mvc; *@
 
                 @*                 href="@Url.Action("Login", "User")">
                 *@
-                <form method="get" action="kundvagn.html" class="form_kundvagn">
+                <form method="get" action="/Cart/Cart" class="form_kundvagn">
                     <button type="submit" class="kundvagn" id="shopping_cart_button">
                         <span class="material-icons-outlined" id="shopping_cart_icon" onmouseover="goToCartNudge()">shopping_cart</span>
+@*                         @if (ContextAccessor.HttpContext.Session.GetString("UserName") != null)
+                        {
+                            <span id="account_text">@ContextAccessor.HttpContext.Session.GetString("UserName")</span>
+                        }
+                        else
+                        {
+                            <span id="account_text">Logga in</span>
+                        } *@
                     </button>
                 </form>
             </div>
