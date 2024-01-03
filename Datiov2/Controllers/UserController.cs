@@ -87,6 +87,8 @@ namespace Datiov2.Controllers
 
             insert = userMethods.Register(user, out error);
 
+            int userID = userMethods.GetUserID(user.UserName, out error);
+
 
 
             if (insert == 0)
@@ -96,8 +98,7 @@ namespace Datiov2.Controllers
                 //return View();
             }
 
-            CartMethods.CreateCart(user.UserID);
-
+            CartMethods.CreateCart(userID);
             return RedirectToAction("Index", "Home");
 
 

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlTypes;
 
 
 
@@ -173,45 +174,74 @@ namespace Datiov2.Models
             }
         }
 
-
-
         public int CreateCart(int userID)
         {
             int cartID = 0;
-            int rowsAffected = 0;
 
-            SqlConnection dbConnection = new SqlConnection();
-            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
-            string sqlString = "INSERT INTO dbo.Cart (CartUserID) VALUES (@UserID)";
-
-            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
-
-            dbCommand.Parameters.AddWithValue("@UserID", userID);
-
-            try
+            using (SqlConnection dbConnection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Abbesdb;Integrated Security=True"))
             {
-                dbConnection.Open();
-                rowsAffected = dbCommand.ExecuteNonQuery();
-                dbConnection.Close();
-                cartID = GetCartID(userID);
-                return cartID;
+                string sqlString = "INSERT INTO dbo.Cart (CartUserID) VALUES (@UserID); SELECT SCOPE_IDENTITY();";
+
+                using (SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection))
+                {
+                    dbCommand.Parameters.AddWithValue("@UserID", userID);
+
+                    try
+                    {
+                        dbConnection.Open();
+                        // Use ExecuteScalar to get the last inserted identity value.
+                        cartID = Convert.ToInt32(dbCommand.ExecuteScalar());
+                    }
+                    catch (SqlException ex)
+                    {
+                        // Log exception
+                        // Display or return user-friendly error
+                    }
+                }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                dbConnection.Close();
-            }
+            return cartID;
         }
 
-        public int RemoveFromCart(int cartItemID)
+
+
+        //public int CreateCart(int userID)
+        //{
+        //    int cartID = 0;
+        //    int rowsAffected = 0;
+
+        //    SqlConnection dbConnection = new SqlConnection();
+        //    dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+        //    string sqlString = "INSERT INTO dbo.Cart (CartUserID) VALUES (@UserID)";
+
+        //    SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+        //    dbCommand.Parameters.AddWithValue("@UserID", userID);
+
+        //    try
+        //    {
+        //        dbConnection.Open();
+        //        rowsAffected = dbCommand.ExecuteNonQuery();
+        //        dbConnection.Close();
+        //        cartID = GetCartID(userID);
+        //        return cartID;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        dbConnection.Close();
+        //    }
+        //}
+
+        public void DeleteCartItem(int cartItemID)
         {
-            int rowsAffected = 0;
+               //int rowsAffected = 0;
 
             SqlConnection dbConnection = new SqlConnection();
             dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
             string sqlString = "DELETE FROM dbo.CartItem WHERE CartItemID = @CartItemID";
 
             SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
@@ -221,9 +251,10 @@ namespace Datiov2.Models
             try
             {
                 dbConnection.Open();
-                rowsAffected = dbCommand.ExecuteNonQuery();
+                //rowsAffected = dbCommand.ExecuteNonQuery();
+                dbCommand.ExecuteNonQuery();
                 dbConnection.Close();
-                return rowsAffected;
+                //return rowsAffected;
             }
             catch (Exception ex)
             {
@@ -233,20 +264,115 @@ namespace Datiov2.Models
             {
                 dbConnection.Close();
             }
+
         }
-        
-        public void UpdateCartItemQuantity(int cartItemID, int quantity)
+
+        public int CheckForProductInCart(int cartID, int productID)
         {
+               int rowsAffected = 0;
+
+            SqlConnection dbConnection = new SqlConnection();
+
+        dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+            string sqlString = "SELECT * FROM dbo.CartItem WHERE CartItemCartID = @CartID AND CartItemProductID = @ProductID";
+    
+                SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+    
+                dbCommand.Parameters.AddWithValue("@CartID", cartID);
+                dbCommand.Parameters.AddWithValue("@ProductID", productID);
+    
+                try
+            {
+                    dbConnection.Open();
+                    rowsAffected = dbCommand.ExecuteNonQuery();
+                    dbConnection.Close();
+                    return rowsAffected;
+                }
+                catch (Exception ex)
+            {
+                    throw ex;
+                }
+                finally
+            {
+                    dbConnection.Close();
+                }
+        }
+
+        public int GetCartItemID(int cartID, int productID)
+        {
+            int cartItemID = 0;
+
+            SqlConnection dbConnection = new SqlConnection();
+
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+            string sqlString = "SELECT * FROM dbo.CartItem WHERE CartItemCartID = @CartID AND CartItemProductID = @ProductID";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@CartID", cartID);
+            dbCommand.Parameters.AddWithValue("@ProductID", productID);
+
+            try
+            {
+                dbConnection.Open();
+                SqlDataReader reader = dbCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        cartItemID = (int)reader["CartItemID"];
+                    }
+                    return cartItemID;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+
+        }
+
+
+
+
+            public void UpdateCartItemQuantity(int cartItemID, int quantityToAdd)
+        {
+
             SqlConnection dbConnection = new SqlConnection();
             dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
 
-            SqlCommand command = new SqlCommand();
-            command.Connection = dbConnection;
-            command.CommandText = "UPDATE CartItem SET CartItemQuantity = @quantity WHERE CartItemID = @cartItemID";
-            command.Parameters.AddWithValue("@cartItemID", cartItemID);
-            command.Parameters.AddWithValue("@quantity", quantity);
-            command.ExecuteNonQuery();
+            string sqlString = "UPDATE dbo.CartItem SET CartItemQuantity = CartItemQuantity + @QuantityToAdd WHERE CartItemID = @CartItemID";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@CartItemID", cartItemID);
+            dbCommand.Parameters.AddWithValue("@quantityToAdd", quantityToAdd);
+
+            try
+            {
+                dbConnection.Open();
+                dbCommand.ExecuteNonQuery();
+                //return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+
         }
+          
 
         public void UpdateCartTotal(int cartID)
         {

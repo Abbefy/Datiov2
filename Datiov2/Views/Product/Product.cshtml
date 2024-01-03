@@ -161,12 +161,22 @@
                     <h4> ProductID: @product.ProductID  </h4>
 
                     <div class="produkt_knappar">
-                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                            <input type="hidden" name="productID" value="@product.ProductID" />
-                            <input type="hidden" name="price" value="@product.ProductPrice" />
-                            <input type="number" name="quantity" id="antal" min="1" max="100" value="1" />
-                            <button type="submit" id="produkt_köp_knapp">Lägg i kundvagn</button>
-                        </form>
+                        @if (product.ProductStock > 0)
+                        {
+                            <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                <input type="hidden" name="productID" value="@product.ProductID" />
+                                <input type="hidden" name="price" value="@product.ProductPrice" />
+                                <input type="number" name="quantity" id="antal" min="1" max="100" value="1" />
+                                <button type="submit" id="produkt_köp_knapp">Lägg i kundvagn</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <button type="button" id="produkt_köp_knapp" disabled>
+                                Köp
+                            </button>
+                        }
+                       
 @*                         <button type="button" id="produkt_köp_knapp">
                             Lägg i kundvagns
                         </button> *@

@@ -51,13 +51,35 @@ namespace Datiov2.Controllers
 
             int cartID = cartMethods.GetCartID(userID);
 
-            cartMethods.AddToCart(cartID, productID, quantity, price);
+            int existingCartItemID = cartMethods.GetCartItemID(cartID, productID);
+
+            //if the product is already in the cart, update the quantity
+            if (existingCartItemID > 0)
+            {
+                //int cartItemID = cartMethods.GetCartItemID(cartID, productID);
+                cartMethods.UpdateCartItemQuantity(existingCartItemID, quantity);
+            } else
+            {
+                cartMethods.AddToCart(cartID, productID, quantity, price);
+            }
 
             //if (error != "")
             //{
             //    ViewBag.Error = error;
             //    return View();
             //}
+
+            return RedirectToAction("Cart", "Cart");
+        }
+
+        public IActionResult RemoveFromCart(int cartItemID)
+        {
+
+            int userID = (int)HttpContext.Session.GetInt32("UserID");
+
+            int cartID = cartMethods.GetCartID(userID);
+
+            cartMethods.DeleteCartItem(cartItemID);
 
             return RedirectToAction("Cart", "Cart");
         }

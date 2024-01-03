@@ -140,17 +140,17 @@
 
 
                 <div class="cart_products_box">
-                    <h3 class="product_category_type_text">Önskelista</h3>
-                    <script src="jquery.ui.touch-punch.min.js"></script>
+                    <h3 class="product_category_type_text">Kundvagn</h3>
+                  @*   <script src="jquery.ui.touch-punch.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.3.0/jquery.ui.touch-punch.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+ *@
 
 
-
-                    <div id="sortable_area">
+                    <div id="none">
                         @foreach (var cartItem in cartItems)
                         {
-                            <div class="favorite_item_box">
+                            <div class="cart_item_box">
                                 <div class="cart_product_picture_box">
                                     <a href="@Url.Action("Product", "Product", new { id = cartItem.CartItemProductID })">
 @*                                         <img src="@wishlistedProduct.ProductImage" class="cart_product_image" alt="@wishlistedProduct.ProductDescription">
@@ -160,16 +160,17 @@
                                 <div class="cart_product_info">
                                     <h3>@cartItem.CartProduct.ProductName  </h3>
 
-                                    <h4 class="antal_cart">
-
-                                    </h4>
+              <h4 class="antal_cart">
+                Antal: @cartItem.CartItemQuantity
+                <input type="number" class="antal" min="1" max="100" value="1">
+              </h4>
                                     <h5>
                                         Lagerstatus: <span class="stock_dot_product"> </span>
                                     </h5>
 
-                                    <h2>@cartItem.CartProduct.ProductPrice kr</h2>
+                                    <h2>@(cartItem.CartProduct.ProductPrice*cartItem.CartItemQuantity) kr</h2>
                                     <div class="delete_box">
-                                    <a href="@Url.Action("RemoveFromWishlist", "Product", new { wishlistProductID = cartItem.CartItemProductID })">
+                                    <a href="@Url.Action("RemoveFromCart", "Cart", new { cartItemID = cartItem.CartItemID })">
                                             <span class="material-icons-outlined" id="delete">
                                                 delete_outline
                                             </span</a>
@@ -184,11 +185,12 @@
                     </div>
                     <div class="sum">
                         @{
-                                                    var sum = 0;
-foreach (var cartItem in cartItems)
-                        {
-                            sum += cartItem.CartProduct.ProductPrice;
-                        }
+                            var sum = 0;
+                            foreach (var cartItem in cartItems)
+                            {
+                                var cartItemPrice = cartItem.CartProduct.ProductPrice * cartItem.CartItemQuantity;
+                                sum += cartItemPrice;
+                            }
 
                         }
 

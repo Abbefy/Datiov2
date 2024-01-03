@@ -55,6 +55,47 @@ namespace Datiov2.Models
 
         }
 
+        public int GetUserID(string userName, out string error)
+        {
+            int userID = 0;
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+            string sqlString = "SELECT UserID FROM dbo.Users WHERE UserName = @UserName";
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@UserName", userName);
+
+            try
+            {
+                dbConnection.Open();
+                SqlDataReader reader = dbCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        userID = (int)reader["UserID"];
+                    }
+                    error = "";
+                    return userID;
+                }
+                else
+                {
+                    error = "Invalid username or password";
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+        }
+
         public UserModel Login(string userName, string userPass, out string error)
         {
             UserModel user = new UserModel();
