@@ -17,6 +17,7 @@ namespace Datiov2.Controllers
     {
         UserMethods userMethods = new UserMethods();
         WishlistMethods wishlistMethods = new WishlistMethods();
+        CartMethods CartMethods = new CartMethods();
 
 
 
@@ -94,6 +95,8 @@ namespace Datiov2.Controllers
                 throw new Exception(error);
                 //return View();
             }
+
+            CartMethods.CreateCart(user.UserID);
 
             return RedirectToAction("Index", "Home");
 

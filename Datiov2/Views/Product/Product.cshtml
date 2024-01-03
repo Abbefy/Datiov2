@@ -161,9 +161,15 @@
                     <h4> ProductID: @product.ProductID  </h4>
 
                     <div class="produkt_knappar">
-                        <button type="button" id="produkt_köp_knapp">
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="productID" value="@product.ProductID" />
+                            <input type="hidden" name="price" value="@product.ProductPrice" />
+                            <input type="number" name="quantity" id="antal" min="1" max="100" value="1" />
+                            <button type="submit" id="produkt_köp_knapp">Lägg i kundvagn</button>
+                        </form>
+@*                         <button type="button" id="produkt_köp_knapp">
                             Lägg i kundvagns
-                        </button>
+                        </button> *@
                     </div>
                     <button class="facts_button" id="facts_support">
                     <a href="@Url.Action("AddToWishlist", "Product", new { wishlistProductID = product.ProductID })" class="secondary_button" >Lägg till önskelistan</a>
