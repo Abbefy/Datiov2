@@ -2,14 +2,12 @@
 
 @{
     ViewData["Title"] = "Cart";
-     var wishlistedProducts = ViewBag.WishlistProducts;
+    var wishlistedProducts = ViewBag.WishlistProducts;
     var randomProducts = ViewBag.RandomProducts as List<ProductModel>;
     var cartItems = ViewBag.CartItems as List<CartItemModel>;
-
+    var cartID = ViewBag.CartID;
 
 }
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,37 +16,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="~/css/main.css" type="text/css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
     <script src="jquery.ui.touch-punch.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.3.0/jquery.ui.touch-punch.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
-
     <link rel="icon" type="image/x-icon" href="bilder/icons8-my-computer-16.png">
-
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Mängder av teknikprodukter">
     <meta name="keywords" content="Dator, teknik, hårdvara, datio">
     <meta name="author" content="Datio">
 
-
     <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
-
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
     <title>Önskelista</title>
-    <!--   Thus should only affect the highlight -->
+    <!-- This should only affect the highlight -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
-
-
-
 </head>
 
 <body>
@@ -58,7 +48,6 @@
                 <a href="favoriter.html"><span class="material-icons-outlined" id="favoriter">favorite_border</span></a>
                 <span class="material-icons-outlined" id="light_mode_button" onclick="darkmode()">light_mode</span>
                 <span class="material-icons-outlined" id="dark_mode_button" onclick="darkmode()">dark_mode</span>
-
                 <h6 class="mini_header_text">Privat</h6>
                 <h6 class="mini_header_text" id="mini_header_text_right">Företag</h6>
             </div>
@@ -66,10 +55,9 @@
 
         <div class="content-container">
             <div class="header" id="header_in_cart">
-                <!--Mobilmeny-->
+                <!-- Mobilmeny -->
                 <div class="mobile_menu_button" onclick="meny_funktion()">
                     <span class="material-icons-outlined" id="mobile_menu_icon">menu</span>
-
                     <div class="meny_alternativ">
                         <a href="kategori.html" class="mobile_category">Datorer</a>
                         <a href="kategori.html" class="mobile_category">Bildskärmar</a>
@@ -83,25 +71,19 @@
                         <a href="#" class="mobile_category" onclick="darkmode()">Byt tema</a>
                     </div>
                 </div>
-
-                <a href="@Url.Action("Index", "Home")"> <img src="/bilder/logotyp_datio_stor_transparent.png" alt="Logotyp" id="datio_logo"> </a>
-
-
+                <a href="@Url.Action("Index", "Home")"><img src="/bilder/logotyp_datio_stor_transparent.png" alt="Logotyp" id="datio_logo"></a>
                 <form class="form_search" id="search_in_cart"></form>
-
                 <form method="get" action="logga_in.html" class="form_konto">
                     <button type="submit" class="konto">
                         <span class="material-icons-outlined" id="account_icon">person_outline</span>
                         <span id="account_text">Mitt konto</span>
                     </button>
                 </form>
-
                 <form method="get" action="kundvagn.html" class="form_kundvagn">
                     <button type="submit" class="kundvagn">
                         <span class="material-icons-outlined" id="shopping_cart_icon">shopping_cart</span>
                     </button>
                 </form>
-
             </div>
 
             <div class="nav">
@@ -116,15 +98,12 @@
                     <li class="dropdown">
                         <a href="kategori.html" class="dropdown-knapp">Bildskärmar</a>
                     </li>
-
                     <li class="dropdown">
                         <a href="kategori.html" class="dropdown-knapp">Hem/fritid</a>
                     </li>
-
                     <li class="dropdown">
                         <a href="kategori.html" class="dropdown-knapp">Kameror</a>
                     </li>
-
                     <li class="dropdown">
                         <a href="kategori.html" class="dropdown-knapp">Kontor</a>
                     </li>
@@ -134,115 +113,144 @@
                 </ul>
             </div>
 
-            <!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
+            <!-- MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN -->
 
             <div class="cart_page">
-
-
                 <div class="cart_products_box">
                     <h3 class="product_category_type_text">Kundvagn</h3>
-                  @*   <script src="jquery.ui.touch-punch.min.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.3.0/jquery.ui.touch-punch.min.js"></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
- *@
-
-
-                    <div id="none">
-                        @foreach (var cartItem in cartItems)
-                        {
-                            <div class="cart_item_box">
-                                <div class="cart_product_picture_box">
-                                    <a href="@Url.Action("Product", "Product", new { id = cartItem.CartItemProductID })">
-@*                                         <img src="@wishlistedProduct.ProductImage" class="cart_product_image" alt="@wishlistedProduct.ProductDescription">
- *@                                        <img src="/bilder/1728141-amd-ryzen-65w-5-pib-right-1260x709.webp" class="cart_product_image" />
-                                    </a>
-                                </div>
-                                <div class="cart_product_info">
-                                    <h3>@cartItem.CartProduct.ProductName  </h3>
-
-              <h4 class="antal_cart">
-                Antal: @cartItem.CartItemQuantity
-                <input type="number" class="antal" min="1" max="100" value="1">
-              </h4>
-                                    <h5>
-                                        Lagerstatus: <span class="stock_dot_product"> </span>
-                                    </h5>
-
-                                    <h2>@(cartItem.CartProduct.ProductPrice*cartItem.CartItemQuantity) kr</h2>
-                                    <div class="delete_box">
+                    @foreach (var cartItem in cartItems)
+                    {
+                        <div class="cart_item_box">
+                            <div class="cart_product_picture_box">
+                                <a href="@Url.Action("Product", "Product", new { id = cartItem.CartItemProductID })">
+                                    <img src="/bilder/1728141-amd-ryzen-65w-5-pib-right-1260x709.webp" class="cart_product_image" />
+                                </a>
+                            </div>
+                            <div class="cart_product_info">
+                                <h3>@cartItem.CartProduct.ProductName  </h3>
+                                <h4 class="antal_cart">
+                                    <form method="post" asp-controller="Cart" asp-action="UpdateQuantity">
+                                        <input type="hidden" name="cartItemID" value="@cartItem.CartItemID" />
+                                        <input type="number" class="antal" min="1" max="100" name="quantity" value="@cartItem.CartItemQuantity" />
+                                        <button type="submit" class="btn-outline-primary">Ändra</button>
+                                    </form>
+                                </h4>
+                                <h5>
+                                    Lagerstatus: <span class="stock_dot_product"> </span>
+                                </h5>
+                                <h2>@(cartItem.CartProduct.ProductPrice * cartItem.CartItemQuantity) kr</h2>
+                                <div class="delete_box">
                                     <a href="@Url.Action("RemoveFromCart", "Cart", new { cartItemID = cartItem.CartItemID })">
-                                            <span class="material-icons-outlined" id="delete">
-                                                delete_outline
-                                            </span</a>
-                                    </div>
+                                        <span class="material-icons-outlined" id="delete">delete_outline</span>
+                                    </a>
                                 </div>
                             </div>
-
-
-                        }
-
-
-                    </div>
-                    <div class="sum">
-                        @{
-                            var sum = 0;
-                            foreach (var cartItem in cartItems)
-                            {
-                                var cartItemPrice = cartItem.CartProduct.ProductPrice * cartItem.CartItemQuantity;
-                                sum += cartItemPrice;
-                            }
-
-                        }
-
-
-                        <h2 class="cart_sum">Totalt: @sum kr</h2>
-                    </div>
-                    <p>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-
-
-
-
-
-                    </p>
-
-
-
-
-
-
-
+                        </div>
+                    }
                 </div>
 
-                 <div class="recommended_products">
-                    @* <h3 class="product_showcase_type_text">Rekommenderade produkter</h3>
-                    <div class="product_field">
-                        <div class="product_grid">
-                            @foreach (var randomProduct in randomProducts)
-                            {
-                                <div class="produkt_box">
-                                    <a href="@Url.Action("Product", "Product", new { id = randomProduct.ProductID })">
-                                        <img src="@randomProduct.ProductImage" alt="@randomProduct.ProductDescription">
-                                        <h2>@randomProduct.ProductName</h2>
-                                        <h3>@randomProduct.ProductPrice kr</h3>
-                                        <h4 class="stock_text">
-                                            <span class="stock_dot"></span> i lager: @randomProduct.ProductStock
-                                        </h4>
-                                    </a>
-                                </div>
-                            }
+                <div class="voucher">
+                    <h4 class="voucher_text">Kampanjkod</h4>
+                    <input type="text" name="vouchername" class="voucher_entry" placeholder="Skriv in koden här:">
+                    <button>Använd</button>
+                </div>
 
-                        </div>
-                        <a class="next_products">&#10095;</a> *@
+                <div class="sum">
+                    @{
+                        var sum = 0;
+                        foreach (var cartItem in cartItems)
+                        {
+                            var cartItemPrice = cartItem.CartProduct.ProductPrice * cartItem.CartItemQuantity;
+                            sum += cartItemPrice;
+                        }
+                        ViewBag.TotalPrice = sum;
+                    }
+                    <h2 class="cart_sum">Totalt: @sum kr</h2>
+                    <h5>@cartID</h5>
+                    <h5>@ViewBag.UserID</h5>
+                    <h5>@ViewBag.TotalPrice</h5>
+                </div>
+
+
+@*                 public int CreateOrder(int userID, int cartID, int orderPrice, string orderAddress, string orderFirstName, string orderLastName, int orderPostalCode, string orderCity)
+        {
+            int orderID = 0;
+            int rowsAffected = 0;
+
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+            string sqlString = "INSERT INTO dbo.Orders (OrderUserID, OrderPrice, OrderAddress, OrderFirstName, OrderLastName, OrderPostalCode, OrderCity) VALUES (@UserID, @OrderPrice, @OrderAddress, @OrderFirstName, @OrderLastName, @OrderPostalCode, @OrderCity); SELECT SCOPE_IDENTITY();";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@UserID", userID);
+            dbCommand.Parameters.AddWithValue("@OrderPrice", orderPrice);
+            dbCommand.Parameters.AddWithValue("@OrderAddress", orderAddress);
+            dbCommand.Parameters.AddWithValue("@OrderFirstName", orderFirstName);
+            dbCommand.Parameters.AddWithValue("@OrderLastName", orderLastName);
+            dbCommand.Parameters.AddWithValue("@OrderPostalCode", orderPostalCode);
+            dbCommand.Parameters.AddWithValue("@OrderCity", orderCity);
+
+            try
+            {
+                dbConnection.Open();
+                // Use ExecuteScalar to get the last inserted identity value.
+                orderID = Convert.ToInt32(dbCommand.ExecuteScalar());
+                dbConnection.Close();
+                return orderID;
+            }
+            catch (SqlException ex)
+            {
+                // Log exception
+                // Display or return user-friendly error
+            }
+            return orderID;
+        }
+ *@
+
+@*                 <form asp-action="CreateOrder" method="post" asp-controller="Order"
+                    <div class="order-form">
+                        <h3>Checkout</h3>
+
+                         <input type="text" class="voucher_entry" asp-for="OrderFirstName" name="OrderFirstName" required>
+
+                        <input type="text"  name="OrderLastName" required>
+
+                        <input type="text"  name="OrderAddress" required>
+
+                        <input type="number"  name="OrderPostalCode" required>
+
+                        <input type="text" asp-for="OrderCity" required>
+
+                        <button type="submit" id="produkt_köp_knapp">Slutför Köp</button> 
                     </div>
-                </div> 
+                </form> *@
+
+                <form asp-action="CreateOrder" method="post" asp-controller="Order">
+    <div class="order-form">
+        <h3>Checkout</h3>
+        <input type="hidden" name="userID" value="@ViewBag.UserID" />
+        <input type="hidden" name="cartID" value="@cartID" />
+        <input type="hidden" name="orderPrice" value="@ViewBag.TotalPrice" />
+        <input type="text" name="orderFirstName" placeholder="First Name" required />
+        <input type="text" name="orderLastName" placeholder="Last Name" required />
+        <input type="text" name="orderAddress" placeholder="Address" required />
+        <input type="number" name="orderPostalCode" placeholder="Postal Code" required />
+        <input type="text" name="orderCity" placeholder="City" required />
+        <button type="submit" id="produkt_köp_knapp">Slutför Köp</button> 
+    </div>
+</form>
+
+
+
+@* 
+                <div class="buy">
+                    <div class="produkt_knappar">
+                        <button type="button" id="produkt_köp_knapp">
+                            Slutför köp
+                        </button>
+                    </div>
+                </div> *@
             </div>
         </div>
     </div>
@@ -251,38 +259,26 @@
         <div class="footer_down">
             <div class="footer_box" id="sociala_medier_box">
                 <h2>Följ oss</h2>
-
                 <div class="sociala_medier_box">
                     <a id="yt" class="sociala_medier" href="http://Youtube.com" target="_blank">
-                        <img class="sociala_medier"
-                             src="/bilder/youtube.png" alt="">
+                        <img class="sociala_medier" src="/bilder/youtube.png" alt="">
                     </a>
-
                     <a class="sociala_medier" href="http://Twitter.com" target="_blank">
-                        <img class="sociala_medier"
-                             src="/bilder/twitter.png" alt="">
+                        <img class="sociala_medier" src="/bilder/twitter.png" alt="">
                     </a>
-
                     <a class="sociala_medier" href="http://Facebook.com" target="_blank">
-                        <img class="sociala_medier"
-                             src="/bilder/facebook.png" alt="">
+                        <img class="sociala_medier" src="/bilder/facebook.png" alt="">
                     </a>
-
                     <a class="sociala_medier" href="http://Instagram.com" target="_blank">
-                        <img class="sociala_medier"
-                             src="/bilder/instagram.png" alt="">
+                        <img class="sociala_medier" src="/bilder/instagram.png" alt="">
                     </a>
                 </div>
-
                 <h3>Nyhetsbrev</h3>
-
                 <input id="nyhetsbrev" type="email">
                 <input id="button_prenumerera" type="button" value="Prenumerera">
-
                 <h4 id="copyright"> Copyright 2023 Datio</h4>
             </div>
         </div>
-
         <div class="footer_upper">
             <div class="footer_box" id="kontakt_box">
                 <h2>Kontakt</h2>
@@ -299,16 +295,13 @@
                 <h4>Lördag: 11 - 16</h4>
                 <h4>Söndag: Stängt</h4>
             </div>
-
             <div class="footer_box">
                 <h2>Information</h2>
-
                 <a class="information_länk" href="#">FAQ - Frågor och Svar</a>
                 <a class="information_länk" href="#">Felanmälan och återköp</a>
                 <a class="information_länk" href="#">Försäljningsvilkor</a>
                 <a class="information_länk" href="#">Företagsförsäljning</a>
                 <a class="information_länk" href="#">Om Datio</a>
-
                 <img src="/bilder/mastercard.png" class="betalningsmetod_logo" alt="">
                 <img src="/bilder/visa.png" class="betalningsmetod_logo" alt="">
                 <img src="/bilder/klarna.png" class="betalningsmetod_logo" alt="">
@@ -317,12 +310,6 @@
     </div>
 
     <script src="~/js/script.js"></script>
-
 </body>
 
 </html>
-
-
-
-
-

@@ -372,7 +372,38 @@ namespace Datiov2.Models
             }
 
         }
-          
+
+        public void UpdateCartItemQuantityCheckout(int cartItemID, int quantityToAdd)
+        {
+
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+            string sqlString = "UPDATE dbo.CartItem SET CartItemQuantity = @QuantityToAdd WHERE CartItemID = @CartItemID";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@CartItemID", cartItemID);
+            dbCommand.Parameters.AddWithValue("@quantityToAdd", quantityToAdd);
+
+            try
+            {
+                dbConnection.Open();
+                dbCommand.ExecuteNonQuery();
+                //return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+
+        }
+
+
 
         public void UpdateCartTotal(int cartID)
         {
@@ -403,6 +434,8 @@ namespace Datiov2.Models
             command.Parameters.AddWithValue("@cartItemCount", cartItemCount);
             command.ExecuteNonQuery();
         }
+
+
 
 
 

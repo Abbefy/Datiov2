@@ -35,6 +35,10 @@ namespace Datiov2.Controllers
             
             ViewBag.CartItems = cartItems;
 
+            ViewBag.CartID = cartID;
+
+            ViewBag.UserID = userID;
+
             
             return View(cartItems);
         }
@@ -80,6 +84,13 @@ namespace Datiov2.Controllers
             int cartID = cartMethods.GetCartID(userID);
 
             cartMethods.DeleteCartItem(cartItemID);
+
+            return RedirectToAction("Cart", "Cart");
+        }
+
+        public IActionResult UpdateQuantity(int cartItemID, int quantity)
+        {
+            cartMethods.UpdateCartItemQuantityCheckout(cartItemID, quantity);
 
             return RedirectToAction("Cart", "Cart");
         }
