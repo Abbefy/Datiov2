@@ -6,6 +6,8 @@
 @{
     ViewData["Title"] = "Account";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var orders = ViewBag.Orders as List<OrderModel>;
 
 
 }
@@ -14,7 +16,9 @@
 
 
 
-<!DOCTYPE html>
+
+
+@* <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -41,10 +45,11 @@
     <title>Datorer och teknik</title>
 
 
-</head>
+</head> 
 
-<body>
-    <div class="main-container">
+<body> 
+
+     <div class="main-container">
         <div class="mini-header">
             <div class="mini_header_content">
                 <a href="favoriter.html"><span class="material-icons-outlined" id="favoriter">favorite_border</span></a>
@@ -94,11 +99,11 @@
                         <span class="material-icons-outlined" id="account_icon">person_outline</span>
                         <span id="account_text">Mitt konto</span>
                     </button>
-                </form>
+                </form> 
 
-                @*                 href="@Url.Action("Login", "User")">
-                *@
-                <form method="get" action="kundvagn.html" class="form_kundvagn">
+                                 href="@Url.Action("Login", "User")">
+                
+                 <form method="get" action="kundvagn.html" class="form_kundvagn">
                     <button type="submit" class="kundvagn" id="shopping_cart_button">
                         <span class="material-icons-outlined" id="shopping_cart_icon" onmouseover="goToCartNudge()">shopping_cart</span>
                     </button>
@@ -136,9 +141,8 @@
                         <a href="kategori.html" class="navbar-knapp">Mobil</a>
                     </li>
                 </ul>
-            </div>
+            </div> *@
 
-            <!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
 
 
 
@@ -158,18 +162,69 @@
                         @*                         <button class="facts_button">Redigera konto</button>
                         *@
                     </div>
-                    
-                    <button class="facts_button">Redigera konto</button>
-                    <button class="facts_button">Logga ut</button>
 
-                    <div class="orders_box">
+                    
+@*                     <button class="facts_button">Redigera konto</button>
+                    <button class="facts_button">Logga ut</button> *@
+
+@*                     <div class="orders_box">
                         <div class="orders-card">
                             <div class="orders-header">
                                 <h1>Mina ordrar</h1>
+                                @foreach (var order in orders)
+                                {
+                                    <div class="order">
+                                    <p><strong>OrderID: </strong> @order.OrderID</p>
+                                    <p><strong>Orderbelopp: </strong> @order.OrderPrice</p>
+                                    <p><strong>Orderdatum: </strong> @order.OrderDate</p>
+
+                                    <a href="@Url.Action("Order", "Order", new { OrderID = order.OrderID })">Se order</a>
+                                    </div>
+                                }
+
                             </div>
                         </div>
 
-                    </div>
+                    </div> *@
+
+
+
+
+        <div class="orders-box">
+            <div class="orders-card">
+                <div class="orders-header">
+                    <h2>Mina order</h2>
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>OrderID</th>
+                                <th>Orderbelopp</th>
+                                <th>Orderdatum</th>
+                                <th>Orderlänk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in orders)
+                            {
+                                <tr class="order">
+                                    <td>@order.OrderID</td>
+                                    <td>@order.OrderPrice kr</td>
+                                    <td>@order.OrderDate</td>
+                                    <td><a href="@Url.Action("Order", "Order", new { OrderID = order.OrderID })" class="view-order-link">Se order</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
 
                     @*             @foreach (var category in Model)
                     {
@@ -195,33 +250,72 @@
                     </div>
                     } *@
 
+
                 </div>
-                @if (@ContextAccessor.HttpContext.Session.GetInt32("UserType") == 2)
-                {
-                    <div class="fakta">
-                        <ul>
-                            <li class="fakta_text1">
-                                <h3>Adminpanel</h3>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("AddProduct", "Product")" class="facts_button">Skapa produkt</a>
-                            </li>
-                            <li><button class="facts_button">Skapa produktsss</button></li>
-                            <li><button class="facts_button">Skapa produktsss</button></li>
+    @if (@ContextAccessor.HttpContext.Session.GetInt32("UserType") == 2)
+    {
+        <div class="Panel-box">
+            <ul class="Panel-card">
+                <li>
+                </li>
 
-                            <li><button class="facts_button">Skapa kategori</button></li>
+                <li>
 
+                    <form asp-action="AddProduct" asp-controller="Product" method="get">
+                        <button class="secondary_button" type="submit">Skapa produkt </button>
+                    </form>
+                </li>
+                <li>
 
-                        </ul>
-                    </div>
-                }
+                    <form asp-action="EditAccount" asp-controller="User" method="post">
+                        <button class="secondary_button" type="submit">Radera produkt </button>
+                    </form>
+                </li>
+                <li>
+
+                    <form asp-action="Logout" asp-controller="User" method="post">
+                        <button class="secondary_button" type="submit">Logga ut</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    }
+
+    @if (@ContextAccessor.HttpContext.Session.GetInt32("UserType") == 1)
+    {
+        <div class="Panel-box">
+            <ul class="Panel-card">
+<li>
+</li>
+                
+                <li>
+
+                    <form asp-action="RemoveAccount" asp-controller="User" method="post">
+                        <button class="secondary_button" id="delete_button" type="submit">Radera konto </button>
+                    </form>
+                </li>
+                <li>
+
+                    <form asp-action="EditAccount" asp-controller="User" method="post">
+                        <button class="secondary_button" type="submit">Redigera konto </button>
+                    </form>
+                </li>
+                <li>
+
+                    <form asp-action="Logout" asp-controller="User" method="post">
+                        <button class="secondary_button" type="submit">Logga ut</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    }
 
 
 
             </div>
 
 
-
+@* 
             <div class="footer">
                 <div class="footer_down">
                     <div class="footer_box" id="sociala_medier_box">
@@ -290,8 +384,8 @@
                     </div>
                 </div>
             </div>
-            <script src="~/js/script.js"></script>
+            <script src="~/js/script.js"></script> 
 
-</body>
+ </body>
 
-</html>
+</html> *@

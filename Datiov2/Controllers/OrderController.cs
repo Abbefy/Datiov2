@@ -23,12 +23,16 @@ namespace Datiov2.Controllers
                 return RedirectToAction("Login", "User");
             }
 
-            OrderModel order = orderMethods.GetOrder(orderID);
+            order = orderMethods.GetOrder(orderID);
+
+            int orderIDForViewbag = order.OrderID;
+            ViewBag.OrderID = orderID;
 
             ViewBag.Order = order;
 
-            var orderItems = cartMethods.GetCartItems(order.OrderCartID);
-            ViewBag.CartItems = orderItems;
+            var orderDetails = orderMethods.GetOrderDetails(orderID);
+
+            ViewBag.OrderDetails = orderDetails;
 
 
             int userID = (int)HttpContext.Session.GetInt32("UserID");
@@ -38,7 +42,7 @@ namespace Datiov2.Controllers
             //var cartItems = cartMethods.GetCartItems(cartID);
 
 
-            return View();
+            return View(order);
         }
 
         //public int CreateOrder(int userID, int cartID, int orderPrice, string orderAddress, string orderFirstName, string orderLastName, int orderPostalCode, string orderCity)

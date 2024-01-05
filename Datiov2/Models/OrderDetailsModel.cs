@@ -7,7 +7,7 @@
         public int OrderDetailsProductID { get; set; }
         public int OrderDetailsQuantity { get; set; }
         public int OrderDetailsPrice { get; set; }
-        public ProductModel OrderProduct { get; set; }
+        public ProductModel OrderDetailsProduct { get; set; }
 
 
     }

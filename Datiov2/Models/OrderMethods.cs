@@ -530,7 +530,7 @@ namespace Datiov2.Models
                             OrderLastName = dbReader.GetString(dbReader.GetOrdinal("OrderLastName")),
                             OrderPostalCode = dbReader.GetInt32(dbReader.GetOrdinal("OrderPostalCode")),
                             OrderCity = dbReader.GetString(dbReader.GetOrdinal("OrderCity")),
-                            OrderDate = dbReader.GetDateTime(dbReader.GetOrdinal("OrderDate")).ToString("MMMM dd, yyyy")
+                            OrderDate = dbReader.GetDateTime(dbReader.GetOrdinal("OrderDate")).ToString("yyyy-MM-dd  HH:mm")
 
                         };
                         orders.Add(order);
@@ -541,6 +541,7 @@ namespace Datiov2.Models
             return orders;
         }
 
+
         public OrderModel GetOrder(int orderID)
         {
             OrderModel order = new OrderModel();
@@ -550,11 +551,44 @@ namespace Datiov2.Models
             string sqlString = "SELECT * FROM dbo.Orders WHERE OrderID = @OrderID";
 
             SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
-            dbConnection.Open();
-            dbCommand.Parameters.AddWithValue("@OrderID", orderID);
-            dbCommand.ExecuteNonQuery();
-            return order;
-        }
+            try
+            {
+                dbConnection.Open();
+                dbCommand.Parameters.AddWithValue("@OrderID", orderID);
+                SqlDataReader reader = dbCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        order.OrderID = (int)reader["OrderID"];
+                        order.OrderCartID = (int)reader["OrderCartID"];
+                        order.OrderUserID = (int)reader["OrderUserID"];
+                        order.OrderPrice = (int)reader["OrderPrice"];
+                        order.OrderAddress = (string)reader["OrderAddress"];
+                        order.OrderFirstName = (string)reader["OrderFirstName"];
+                        order.OrderLastName = (string)reader["OrderLastName"];
+                        order.OrderPostalCode = (int)reader["OrderPostalCode"];
+                        order.OrderCity = (string)reader["OrderCity"];
+                        order.OrderDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")).ToString("yyyy-MM-dd  HH:mm");
+                    }
+                    return order;
+                }
+                else
+                {
+                    return order;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+            }
+
+
 
         public int CreateOrder(int userID, int cartID, int orderPrice, string orderAddress, string orderFirstName, string orderLastName, int orderPostalCode, string orderCity)
         {
@@ -590,170 +624,6 @@ namespace Datiov2.Models
                 // Display or return user-friendly error
             }
             return orderID;
-        }
-
-        public void TransferCartItemsToOrderDetailsOG(int OrderID, int cartID)
-        {
-            List<CartItemModel> cartItems = new List<CartItemModel>();
-            SqlConnection dbConnection = new SqlConnection();
-            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
-
-            string getCartItemsString = "SELECT * FROM dbo.CartItem WHERE CartItemCartID = @CartID";
-
-            SqlCommand dbCommand = new SqlCommand(getCartItemsString, dbConnection);
-
-            dbCommand.Parameters.AddWithValue("@CartID", cartID);
-
-            try
-            {
-                dbConnection.Open();
-                SqlDataReader reader = dbCommand.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        cartItems.Add(new CartItemModel
-                        {
-                            CartItemID = (int)reader["CartItemID"],
-                            CartItemProductID = (int)reader["CartItemProductID"],
-                            CartItemQuantity = (int)reader["CartItemQuantity"],
-                            CartItemPrice = (int)reader["CartItemPrice"]
-                        });
-                    }
-                }
-                else
-                {
-                    //return 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                dbConnection.Close();
-            }
-
-            //using (SqlCommand getCartItemsCommand = new SqlCommand(getCartItemsString, dbConnection))
-            //{
-            //    getCartItemsCommand.Parameters.AddWithValue("@CartID", cartID);
-            //    dbConnection.Open();
-            //    using (SqlDataReader reader = getCartItemsCommand.ExecuteReader())
-            //    {
-            //        while (reader.Read())
-            //        {
-            //            cartItems.Add(new CartItemModel
-            //            {
-            //                CartItemID = (int)reader["CartItemID"],
-            //                CartItemProductID = (int)reader["CartItemProductID"],
-            //                CartItemQuantity = (int)reader["CartItemQuantity"],
-            //                CartItemPrice = (int)reader["CartItemPrice"]
-            //            });
-            //        }
-
-            //    }
-            //    dbConnection.Close();
-            //}
-
-            foreach (var item in cartItems)
-            {
-                //cartItems.Remove(item);
-
-
-                string insertOrderDetailsString = "INSERT INTO dbo.OrderDetails (OrderDetailsOrderID, OrderDetailsProductID, OrderDetailsQuantity, OrderDetailsPrice) VALUES (@OrderID, @ProductID, @Quantity, @Price)";
-                SqlCommand dbCommand2 = new SqlCommand(insertOrderDetailsString, dbConnection);
-
-                dbCommand2.Parameters.AddWithValue("@OrderID", OrderID);
-                dbCommand2.Parameters.AddWithValue("@ProductID", item.CartItemProductID);
-                dbCommand2.Parameters.AddWithValue("@Quantity", item.CartItemQuantity);
-                dbCommand2.Parameters.AddWithValue("@Price", item.CartItemPrice);
-
-                dbConnection.Open();
-                dbCommand2.ExecuteNonQuery();
-                dbConnection.Close();
-
-
-
-                //using (SqlCommand insertOrderDetailsCommand = new SqlCommand(insertOrderDetailsString, dbConnection))
-                //{
-                //    insertOrderDetailsCommand.Parameters.AddWithValue("@OrderID", OrderID);
-                //    insertOrderDetailsCommand.Parameters.AddWithValue("@ProductID", item.CartItemProductID);
-                //    insertOrderDetailsCommand.Parameters.AddWithValue("@Quantity", item.CartItemQuantity);
-                //    insertOrderDetailsCommand.Parameters.AddWithValue("@Price", item.CartItemPrice);
-
-                //    dbConnection.Open();
-                //    insertOrderDetailsCommand.ExecuteNonQuery();
-                //    dbConnection.Close();
-                //}
-            }
-
-        }
-
-
-        public void TransferCartItemsToOrderDetailsWORK(int OrderID, int cartID)
-        {
-            List<CartItemModel> cartItems = new List<CartItemModel>();
-
-            SqlConnection dbConnection = new SqlConnection();
-            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
-
-            string getCartItemsString = "SELECT * FROM dbo.CartItem WHERE CartItemCartID = @CartID";
-            SqlCommand dbCommand = new SqlCommand(getCartItemsString, dbConnection);
-            dbCommand.Parameters.AddWithValue("@CartID", cartID);
-
-            try
-            {
-                dbConnection.Open();
-                using (SqlDataReader reader = dbCommand.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        cartItems.Add(new CartItemModel
-                        {
-                            CartItemID = (int)reader["CartItemID"],
-                            CartItemProductID = (int)reader["CartItemProductID"],
-                            CartItemQuantity = (int)reader["CartItemQuantity"],
-                            CartItemPrice = (int)reader["CartItemPrice"]
-                        });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exception
-                throw ex;
-            }
-            finally
-            {
-                dbConnection.Close();
-            }
-
-            foreach (var item in cartItems)
-            {
-                string insertOrderDetailsString = "INSERT INTO dbo.OrderDetails (OrderDetailsOrderID, OrderDetailsProductID, OrderDetailsQuantity, OrderDetailsPrice) VALUES (@OrderID, @ProductID, @Quantity, @Price)";
-
-                SqlCommand insertCommand = new SqlCommand(insertOrderDetailsString, dbConnection);
-                insertCommand.Parameters.AddWithValue("@OrderID", OrderID);
-                insertCommand.Parameters.AddWithValue("@ProductID", item.CartItemProductID);
-                insertCommand.Parameters.AddWithValue("@Quantity", item.CartItemQuantity);
-                insertCommand.Parameters.AddWithValue("@Price", item.CartItemPrice);
-
-                try
-                {
-                    dbConnection.Open();
-                    insertCommand.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    // Handle exception
-                    throw ex;
-                }
-                finally
-                {
-                    dbConnection.Close();
-                }
-            }
         }
 
 
@@ -800,6 +670,95 @@ namespace Datiov2.Models
                 }
             }
         }
+
+        //public List<CartItemModel> GetCartItems(int cartID)
+        //{
+        //    List<CartItemModel> cartItems = new List<CartItemModel>();
+
+        //    using (SqlConnection dbConnection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=Abbesdb; Integrated Security=True"))
+        //    {
+        //        string sqlString = @"
+        //    SELECT ci.*, p.ProductName, p.ProductPrice, p.ProductImage, p.ProductStock 
+        //    FROM dbo.CartItem ci
+        //    INNER JOIN dbo.Products p ON ci.CartItemProductID = p.ProductID
+        //    WHERE ci.CartItemCartID = @CartID";
+
+        //        SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+        //        dbCommand.Parameters.AddWithValue("@CartID", cartID);
+
+        //        dbConnection.Open();
+        //        using (SqlDataReader dbReader = dbCommand.ExecuteReader())
+        //        {
+        //            while (dbReader.Read())
+        //            {
+        //                CartItemModel cartItem = new CartItemModel
+        //                {
+        //                    CartItemID = dbReader.GetInt32(dbReader.GetOrdinal("CartItemID")),
+        //                    CartItemCartID = dbReader.GetInt32(dbReader.GetOrdinal("CartItemCartID")),
+        //                    CartItemProductID = dbReader.GetInt32(dbReader.GetOrdinal("CartItemProductID")),
+        //                    CartItemQuantity = dbReader.GetInt32(dbReader.GetOrdinal("CartItemQuantity")),
+        //                    CartItemPrice = dbReader.GetInt32(dbReader.GetOrdinal("CartItemPrice")),
+        //                    CartProduct = new ProductModel
+        //                    {
+        //                        ProductName = dbReader.GetString(dbReader.GetOrdinal("ProductName")),
+        //                        ProductPrice = dbReader.GetInt32(dbReader.GetOrdinal("ProductPrice")),
+        //                        ProductImage = dbReader.GetString(dbReader.GetOrdinal("ProductImage")),
+        //                        ProductStock = dbReader.GetInt32(dbReader.GetOrdinal("ProductStock"))
+
+
+        //                    }
+        //                };
+        //                cartItems.Add(cartItem);
+        //            }
+        //        }
+        //    }
+
+        //    return cartItems;
+        //}
+
+
+        public List<OrderDetailsModel> GetOrderDetails(int orderID)
+        {
+            List<OrderDetailsModel> orderDetails = new List<OrderDetailsModel>();
+
+            using (SqlConnection dbConnection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=Abbesdb; Integrated Security=True"))
+            {
+                string sqlString = @" SELECT od.*, p.ProductName, p.ProductPrice, p.ProductImage, p.ProductStock FROM dbo.OrderDetails od INNER JOIN dbo.Products p ON od.OrderDetailsProductID = p.ProductID WHERE od.OrderDetailsOrderID = @OrderID";
+
+                SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+                dbCommand.Parameters.AddWithValue("@OrderID", orderID);
+
+                dbConnection.Open();
+                using (SqlDataReader dbReader = dbCommand.ExecuteReader())
+                {
+                    while (dbReader.Read())
+                    {
+                        OrderDetailsModel orderDetail = new OrderDetailsModel
+                        {
+                            OrderDetailsID = dbReader.GetInt32(dbReader.GetOrdinal("OrderDetailsID")),
+                            OrderDetailsOrderID = dbReader.GetInt32(dbReader.GetOrdinal("OrderDetailsOrderID")),
+                            OrderDetailsProductID = dbReader.GetInt32(dbReader.GetOrdinal("OrderDetailsProductID")),
+                            OrderDetailsQuantity = dbReader.GetInt32(dbReader.GetOrdinal("OrderDetailsQuantity")),
+                            OrderDetailsPrice = dbReader.GetInt32(dbReader.GetOrdinal("OrderDetailsPrice")),
+                            OrderDetailsProduct = new ProductModel
+                            {
+                                ProductName = dbReader.GetString(dbReader.GetOrdinal("ProductName")),
+                                ProductPrice = dbReader.GetInt32(dbReader.GetOrdinal("ProductPrice")),
+                                ProductImage = dbReader.GetString(dbReader.GetOrdinal("ProductImage")),
+                                ProductStock = dbReader.GetInt32(dbReader.GetOrdinal("ProductStock"))
+                            }
+                        };
+                        orderDetails.Add(orderDetail);
+                    }
+                }
+                dbConnection.Close();
+
+            }
+
+            return orderDetails;
+        }
+
+           
 
 
 

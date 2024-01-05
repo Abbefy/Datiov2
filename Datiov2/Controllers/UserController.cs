@@ -18,6 +18,7 @@ namespace Datiov2.Controllers
         UserMethods userMethods = new UserMethods();
         WishlistMethods wishlistMethods = new WishlistMethods();
         CartMethods CartMethods = new CartMethods();
+        OrderMethods orderMethods = new OrderMethods();
 
 
 
@@ -124,6 +125,9 @@ namespace Datiov2.Controllers
                 return View();
             }
 
+            List<OrderModel> orders = orderMethods.GetOrders(user.UserID);
+            ViewBag.Orders = orders;
+
             return View(userAccount);
         }
 
@@ -143,6 +147,12 @@ namespace Datiov2.Controllers
             //ViewBag.Wishlist = wishlist;
 
             return View(products);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
 

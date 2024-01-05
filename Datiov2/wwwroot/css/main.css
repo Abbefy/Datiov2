@@ -435,6 +435,8 @@ li a:hover,
   margin-left: -1px;
 }
 
+
+
 .facts_button:hover {
   background: #ff620038;
   cursor: pointer;
@@ -1396,18 +1398,17 @@ tr:nth-child(odd) {
   
 }
 
-
-
 /* ACCOUNT DEL*/
 .account_box {
     float: left;
     max-width: 1500px;
-    width: 70%;
+    width: 50%;
     margin: 30px 5px 5px 3px;
     border: 1px solid white;
     border-radius: 5px;
-    max-height: 800px;
-}
+    margin: 3% auto;
+/*    max-height: 800px; NEW
+*/ }
 
     .account_box button {
         float: left;
@@ -1426,18 +1427,17 @@ tr:nth-child(odd) {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 100%;
-    max-width: 700px;
     margin: 0% 3%;
 }
 
 .account-header h1 {
-    color: #ff6200;
+    color: #125478;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 .account-header  {
-    padding: 5px;
-    background: #fafafa;
+    padding: 1px;
+    background: #fbfbfb;
 }
 
 
@@ -1449,29 +1449,173 @@ tr:nth-child(odd) {
 }
 
     .account-info p strong {
-        color: #007bff;
+        color: #125478;
     }
 
 
-.secondary_button{
-    color: white;
-    text-decoration: none;
 
+.secondary_button {
+    color: white;
+    display: flex;
+    height: 65px;
+    border: 0.5px solid #c0c0c0;
+    border-radius: 5px;
+    background: #007bff;
+    display: block;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    text-decoration: none;
+    width: 66%;
+    margin: 5% auto;
+    display: block;
 }
 
 
+    .secondary_button:hover {
+        background: #125478;
+        cursor: pointer;
+    }
+
+.third_button {
+    color: white;
+    display: flex;
+    margin-left: 60px;
+    height: 55px;
+    min-width: 175px;
+    border: 1.5px solid #c0c0c0;
+    border-radius: 5px;
+    background: #125478;
+    display: block;
+    box-shadow: 2px 2px #2e2e2e;
+    font-size: 18px;
+    margin-left: -1px;
+    text-decoration: none;
+}
+
+
+    .third:hover {
+        background: #ff620038;
+        cursor: pointer;
+    }
+
+
+#delete_button {
+    background: #9b091f;
+}
+
+
+.orders-box {
+    /*    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+
+    float: left;
+    max-width: 1500px;
+    width: 70%;
+    margin: 30px 5px 5px 3px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    margin: 3% 3%;
+}
+
+.orders-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.orders-header h2 {
+    background-color: #fbfbfb;
+    color: #125478;
+    text-align: center;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+    .orders-table th,
+    .orders-table td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .orders-table th {
+        background-color: #125478;
+        color: white;
+    }
+
+.view-order-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .view-order-link:hover {
+        text-decoration: underline;
+    }
 
 
 
+.Panel-box {
+    float: left;
+    width: 30%;
+    margin: 3px 5px 5px 3px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 700px;
+    margin: 3% 3%;
+    text-decoration: none;
+    
+    display: block;
+    font-size: 18px;
+    text-align: center;
+    margin: 3% auto;
 
+}
 
+.Panel-card {
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    
+    display: flex;
+    display: block;
+    font-size: 20px;
 
+}
 
+.Panel-box ul {
 
+    list-style-type: none;
+margin: 0;
+padding: 0;
 
+}
 
-
-
+.Panel-box h3 {
+    color: #125478;
+    text-align: center;
+    margin: 3%;
+    padding: 15px 0;
+}
 
 
 
