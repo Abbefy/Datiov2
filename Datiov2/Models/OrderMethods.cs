@@ -592,6 +592,223 @@ namespace Datiov2.Models
             return orderID;
         }
 
+        public void TransferCartItemsToOrderDetailsOG(int OrderID, int cartID)
+        {
+            List<CartItemModel> cartItems = new List<CartItemModel>();
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+            string getCartItemsString = "SELECT * FROM dbo.CartItem WHERE CartItemCartID = @CartID";
+
+            SqlCommand dbCommand = new SqlCommand(getCartItemsString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@CartID", cartID);
+
+            try
+            {
+                dbConnection.Open();
+                SqlDataReader reader = dbCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        cartItems.Add(new CartItemModel
+                        {
+                            CartItemID = (int)reader["CartItemID"],
+                            CartItemProductID = (int)reader["CartItemProductID"],
+                            CartItemQuantity = (int)reader["CartItemQuantity"],
+                            CartItemPrice = (int)reader["CartItemPrice"]
+                        });
+                    }
+                }
+                else
+                {
+                    //return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+
+            //using (SqlCommand getCartItemsCommand = new SqlCommand(getCartItemsString, dbConnection))
+            //{
+            //    getCartItemsCommand.Parameters.AddWithValue("@CartID", cartID);
+            //    dbConnection.Open();
+            //    using (SqlDataReader reader = getCartItemsCommand.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            cartItems.Add(new CartItemModel
+            //            {
+            //                CartItemID = (int)reader["CartItemID"],
+            //                CartItemProductID = (int)reader["CartItemProductID"],
+            //                CartItemQuantity = (int)reader["CartItemQuantity"],
+            //                CartItemPrice = (int)reader["CartItemPrice"]
+            //            });
+            //        }
+
+            //    }
+            //    dbConnection.Close();
+            //}
+
+            foreach (var item in cartItems)
+            {
+                //cartItems.Remove(item);
+
+
+                string insertOrderDetailsString = "INSERT INTO dbo.OrderDetails (OrderDetailsOrderID, OrderDetailsProductID, OrderDetailsQuantity, OrderDetailsPrice) VALUES (@OrderID, @ProductID, @Quantity, @Price)";
+                SqlCommand dbCommand2 = new SqlCommand(insertOrderDetailsString, dbConnection);
+
+                dbCommand2.Parameters.AddWithValue("@OrderID", OrderID);
+                dbCommand2.Parameters.AddWithValue("@ProductID", item.CartItemProductID);
+                dbCommand2.Parameters.AddWithValue("@Quantity", item.CartItemQuantity);
+                dbCommand2.Parameters.AddWithValue("@Price", item.CartItemPrice);
+
+                dbConnection.Open();
+                dbCommand2.ExecuteNonQuery();
+                dbConnection.Close();
+
+
+
+                //using (SqlCommand insertOrderDetailsCommand = new SqlCommand(insertOrderDetailsString, dbConnection))
+                //{
+                //    insertOrderDetailsCommand.Parameters.AddWithValue("@OrderID", OrderID);
+                //    insertOrderDetailsCommand.Parameters.AddWithValue("@ProductID", item.CartItemProductID);
+                //    insertOrderDetailsCommand.Parameters.AddWithValue("@Quantity", item.CartItemQuantity);
+                //    insertOrderDetailsCommand.Parameters.AddWithValue("@Price", item.CartItemPrice);
+
+                //    dbConnection.Open();
+                //    insertOrderDetailsCommand.ExecuteNonQuery();
+                //    dbConnection.Close();
+                //}
+            }
+
+        }
+
+
+        public void TransferCartItemsToOrderDetailsWORK(int OrderID, int cartID)
+        {
+            List<CartItemModel> cartItems = new List<CartItemModel>();
+
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+            string getCartItemsString = "SELECT * FROM dbo.CartItem WHERE CartItemCartID = @CartID";
+            SqlCommand dbCommand = new SqlCommand(getCartItemsString, dbConnection);
+            dbCommand.Parameters.AddWithValue("@CartID", cartID);
+
+            try
+            {
+                dbConnection.Open();
+                using (SqlDataReader reader = dbCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        cartItems.Add(new CartItemModel
+                        {
+                            CartItemID = (int)reader["CartItemID"],
+                            CartItemProductID = (int)reader["CartItemProductID"],
+                            CartItemQuantity = (int)reader["CartItemQuantity"],
+                            CartItemPrice = (int)reader["CartItemPrice"]
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+
+            foreach (var item in cartItems)
+            {
+                string insertOrderDetailsString = "INSERT INTO dbo.OrderDetails (OrderDetailsOrderID, OrderDetailsProductID, OrderDetailsQuantity, OrderDetailsPrice) VALUES (@OrderID, @ProductID, @Quantity, @Price)";
+
+                SqlCommand insertCommand = new SqlCommand(insertOrderDetailsString, dbConnection);
+                insertCommand.Parameters.AddWithValue("@OrderID", OrderID);
+                insertCommand.Parameters.AddWithValue("@ProductID", item.CartItemProductID);
+                insertCommand.Parameters.AddWithValue("@Quantity", item.CartItemQuantity);
+                insertCommand.Parameters.AddWithValue("@Price", item.CartItemPrice);
+
+                try
+                {
+                    dbConnection.Open();
+                    insertCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception
+                    throw ex;
+                }
+                finally
+                {
+                    dbConnection.Close();
+                }
+            }
+        }
+
+
+        public void TransferCartItemsToOrderDetails(int OrderID, int cartID)
+        {
+            List<CartItemModel> cartItems = new List<CartItemModel>();
+            SqlConnection dbConnection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Abbesdb;Integrated Security=True");
+
+            string getCartItemsString = "SELECT * FROM dbo.CartItem WHERE CartItemCartID = @CartID";
+
+            using (SqlCommand getCartItemsCommand = new SqlCommand(getCartItemsString, dbConnection))
+            {
+                getCartItemsCommand.Parameters.AddWithValue("@CartID", cartID);
+                dbConnection.Open();
+                using (SqlDataReader reader = getCartItemsCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        cartItems.Add(new CartItemModel
+                        {
+                            CartItemID = (int)reader["CartItemID"],
+                            CartItemProductID = (int)reader["CartItemProductID"],
+                            CartItemQuantity = (int)reader["CartItemQuantity"],
+                            CartItemPrice = (int)reader["CartItemPrice"]
+                        });
+                    }
+                }
+                dbConnection.Close();
+            }
+
+            foreach (var item in cartItems)
+            {
+                string insertOrderDetailsString = "INSERT INTO dbo.OrderDetails (OrderDetailsOrderID, OrderDetailsProductID, OrderDetailsQuantity, OrderDetailsPrice) VALUES (@OrderID, @ProductID, @Quantity, @Price)";
+                using (SqlCommand insertOrderDetailsCommand = new SqlCommand(insertOrderDetailsString, dbConnection))
+                {
+                    insertOrderDetailsCommand.Parameters.AddWithValue("@OrderID", OrderID);
+                    insertOrderDetailsCommand.Parameters.AddWithValue("@ProductID", item.CartItemProductID);
+                    insertOrderDetailsCommand.Parameters.AddWithValue("@Quantity", item.CartItemQuantity);
+                    insertOrderDetailsCommand.Parameters.AddWithValue("@Price", item.CartItemPrice);
+
+                    dbConnection.Open();
+                    insertOrderDetailsCommand.ExecuteNonQuery();
+                    dbConnection.Close();
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
 
     }
 }

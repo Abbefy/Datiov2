@@ -23,13 +23,20 @@ namespace Datiov2.Controllers
                 return RedirectToAction("Login", "User");
             }
 
+            OrderModel order = orderMethods.GetOrder(orderID);
+
+            ViewBag.Order = order;
+
+            var orderItems = cartMethods.GetCartItems(order.OrderCartID);
+            ViewBag.CartItems = orderItems;
+
+
             int userID = (int)HttpContext.Session.GetInt32("UserID");
 
-            int cartID = cartMethods.GetCartID(userID);
+            //int cartID = cartMethods.GetCartID(userID);
 
-            var cartItems = cartMethods.GetCartItems(cartID);
+            //var cartItems = cartMethods.GetCartItems(cartID);
 
-            ViewBag.CartItems = cartItems;
 
             return View();
         }
@@ -97,6 +104,8 @@ namespace Datiov2.Controllers
 
                 if (orderID > 0)
                 {
+
+                    orderMethods.TransferCartItemsToOrderDetails(orderID, cartID);
                     return RedirectToAction("Order", "Order", new { orderID = orderID });
                     //return RedirectToAction("Order", "Order", 
                 }
