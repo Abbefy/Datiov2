@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc; *@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 
 
 }
@@ -102,7 +104,7 @@ using Microsoft.AspNetCore.Mvc; *@
 
 
 
-<!DOCTYPE html>
+@* <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -129,8 +131,8 @@ using Microsoft.AspNetCore.Mvc; *@
     <title>Datorer och teknik</title>
 
 
-</head>
-
+</head> *@
+@* 
 <body>
     <div class="main-container">
         <div class="mini-header">
@@ -194,13 +196,13 @@ using Microsoft.AspNetCore.Mvc; *@
                             <span id="account_text">Logga in</span>
                         }
                     </button>
-                </form>
+                </form> *@
 
                 @*                 href="@Url.Action("Login", "User")">
                 *@
-                <form method="get" action="/Cart/Cart" class="form_kundvagn">
+                @* <form method="get" action="/Cart/Cart" class="form_kundvagn">
                     <button type="submit" class="kundvagn" id="shopping_cart_button">
-                        <span class="material-icons-outlined" id="shopping_cart_icon" onmouseover="goToCartNudge()">shopping_cart</span>
+                        <span class="material-icons-outlined" id="shopping_cart_icon" onmouseover="goToCartNudge()">shopping_cart</span> *@
 @*                         @if (ContextAccessor.HttpContext.Session.GetString("UserName") != null)
                         {
                             <span id="account_text">@ContextAccessor.HttpContext.Session.GetString("UserName")</span>
@@ -210,7 +212,7 @@ using Microsoft.AspNetCore.Mvc; *@
                             <span id="account_text">Logga in</span>
                         } *@
                     </button>
-                </form>
+             @*    </form>
             </div>
 
             <div class="nav">
@@ -244,7 +246,7 @@ using Microsoft.AspNetCore.Mvc; *@
                         <a href="kategori.html" class="navbar-knapp">Mobil</a>
                     </li>
                 </ul>
-            </div>
+            </div> *@ 
 
             <!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
 
@@ -314,7 +316,7 @@ using Microsoft.AspNetCore.Mvc; *@
         </div>
     </div>
 
-    <div class="footer">
+@*     <div class="footer">
         <div class="footer_down">
             <div class="footer_box" id="sociala_medier_box">
                 <h2>Följ oss</h2>
@@ -382,8 +384,8 @@ using Microsoft.AspNetCore.Mvc; *@
             </div>
         </div>
     </div>
-    <script src="~/js/script.js"></script>
+    <script src="~/js/script.js"></script> *@
 
-</body>
+@* </body>
 
-</html>
+</html> *@
