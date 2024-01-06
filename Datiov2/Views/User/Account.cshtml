@@ -257,6 +257,17 @@
         <div class="Panel-box">
             <ul class="Panel-card">
                 <li>
+
+                    <form asp-action="RemoveAccount" asp-controller="User" method="post">
+                        <button class="secondary_button" id="delete_button" type="submit">Radera konto </button>
+                    </form>
+                </li>
+
+                <li>
+
+                    <form asp-action="EditAccount" asp-controller="User" method="post">
+                        <button class="secondary_button" type="submit">Redigera konto </button>
+                    </form>
                 </li>
 
                 <li>

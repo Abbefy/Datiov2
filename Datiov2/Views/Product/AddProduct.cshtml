@@ -79,7 +79,26 @@
 
 
                         <textarea class="inloggning_input" asp-for="ProductDescription" placeholder="Beskrivning"></textarea>
-                        <textarea class="inloggning_input" asp-for="ProductSpecifications" placeholder="Specifikationer"></textarea>
+@*                         <textarea class="inloggning_input" asp-for="ProductSpecifications" placeholder="Specifikationer"></textarea>
+ *@
+                        <textarea class="inloggning_input" asp-for="ProductSpecifications" value='{
+  "Processor": {
+    "Antal kärnor": "Ex: 6 kärnor",
+    "Antal trådar": "Ex: 12 trådar",
+    
+  },
+  "Diverse": {
+    "Inkluderade tillbehör": "Ex: AMD Wraith Stealth Cooler",
+    
+  },
+  "Allmänt": {
+    "Produkttyp": "Ex: Processor",
+    
+  }
+}'>Specifikationer i JSON format</textarea>
+
+
+
                         <input class="inloggning_input" type="number" asp-for="ProductPrice" required placeholder="Pris">
                         <input class="inloggning_input" type="number" asp-for="ProductStock" required placeholder="Lagerantal">
                         <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID">

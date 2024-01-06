@@ -33,6 +33,54 @@ namespace Datiov2.Controllers
             return View(categories);
         }
 
+//        public IActionResult ToggleDarkMode()
+//        {
+//            var darkMode = HttpContext.Session.GetString("DarkMode");
+//            if (HttpContext.Session.GetString("DarkMode") == null)
+//            {
+//                HttpContext.Session.SetString("DarkMode", "true");
+//            }
+//            else if (HttpContext.Session.GetString("DarkMode") == "true")
+//            {
+//                HttpContext.Session.SetString("DarkMode", "false");
+//            }
+//            else if (HttpContext.Session.GetString("DarkMode") == "false")
+//{
+//                HttpContext.Session.SetString("DarkMode", "true");
+//            }
+
+//            return RedirectToAction("Index", "Home");
+//        }
+
+        public IActionResult ToggleDarkMode1()
+        {
+            // Check if DarkMode is set in session and toggle its value
+            var darkMode = HttpContext.Session.GetString("DarkMode") ?? "false";
+            HttpContext.Session.SetString("DarkMode", darkMode == "false" ? "true" : "false");
+
+            // Redirect to the previous page
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        public IActionResult ToggleDarkMode()
+        {
+            var darkMode = HttpContext.Session.GetString("DarkMode") ?? "false";
+            HttpContext.Session.SetString("DarkMode", darkMode == "false" ? "true" : "false");
+
+            return Redirect(Request.Headers["Referer"].ToString());
+
+
+        }
+
+
+
+
+
+
+
+
+
         //public IActionResult Product(int id)
         //{
         //    var product = productMethods.GetProductById(id); 

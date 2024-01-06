@@ -26,8 +26,18 @@ namespace Datiov2.Controllers
         {
             var product = productMethods.GetProductById(id);
 
-            var specifications = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(product.ProductSpecifications);
-            var specifications2 = new Dictionary<string, Dictionary<string, string>>();
+            try
+            {
+                var specifications = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(product.ProductSpecifications);
+                ViewBag.ProductSpecifications = specifications;
+
+            }
+            catch (Exception)
+            {
+                ViewBag.ProductSpecifications = null;
+            }
+
+            //var specifications2 = new Dictionary<string, Dictionary<string, string>>();
 
             
 
@@ -66,8 +76,7 @@ namespace Datiov2.Controllers
 
 
 
-            ViewBag.ProductSpecifications = specifications;
-            ViewBag.ProductSpecifications2 = specifications2;
+            //ViewBag.ProductSpecifications2 = specifications2;
 
             var random = new Random();
             var randomProducts = new List<ProductModel>();
@@ -110,9 +119,10 @@ namespace Datiov2.Controllers
         {
             List<string> imageUrls = new List<string>()
             {
-                "~/bilder/black_friday_pic",
+                "~/bilder/black_friday_pic.jpg",
                 "~/bilder/facebook",
-                "~/bilder/ps5_product_image",
+                "/bilder/ps5_product_image.jpg",
+                "/bilder/AMD_R7.webp",
             };
             ViewBag.ImageUrls = imageUrls;
 

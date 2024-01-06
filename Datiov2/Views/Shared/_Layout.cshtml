@@ -92,9 +92,26 @@
                     <span class="material-icons-outlined" id="favoriter">favorite_border</span>
                 </a>
 
+@*                 <span class="material-icons-outlined" id="light_mode_button">light_mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle" onchange="location.href='@Url.Action("ToggleDarkMode", "Home")'">
+                    <span class="slider round"></span>
+                </label>
+                <span class="material-icons-outlined" id="dark_mode_button" >dark_mode</span> *@
 
-                <span class="material-icons-outlined" id="light_mode_button" onclick="darkmode()">light_mode</span>
-                <span class="material-icons-outlined" id="dark_mode_button" onclick="darkmode()">dark_mode</span>
+@*                 <form id="lightModeForm" method="post" action="@Url.Action("ToggleDarkMode", "Home")">
+                    <button type="submit" class="material-icons-outlined" id="light_mode_button">contrast</button>
+                </form> *@
+
+                <form id="darkModeForm" method="post" action="@Url.Action("ToggleDarkMode", "Home")">
+                    <button type="submit" class="material-icons-outlined" id="dark_mode_button">contrast</button>
+                </form>
+
+
+
+@*                 <span class="material-icons-outlined" id="light_mode_button" onclick="darkmode()">light_mode</span>
+                <button onclick="location.href='@Url.Action("ToggleDarkMode", "Home")'">Toggle Dark Mode</button>
+                <span class="material-icons-outlined" id="dark_mode_button" onclick="darkmode()">dark_mode</span> *@
 
                 <h6 class="mini_header_text">Privat</h6>
                 <h6 class="mini_header_text" id="mini_header_text_right">Företag</h6>
@@ -274,6 +291,14 @@
         </div>
     </div>
     <script src="~/js/script.js"></script>
+    <script>
+        window.onload = function () {
+            var darkMode = '@ContextAccessor.HttpContext.Session.GetString("DarkMode")';
+            if (darkMode === 'true') {
+                darkmode(); 
+            }
+        };
+    </script>
 
 </body>
 
