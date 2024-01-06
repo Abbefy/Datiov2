@@ -142,6 +142,51 @@ namespace Datiov2.Models
 
         }
 
+        //should calculate the quantity of items in the cart as well
+        public int GetCartItemCount(int cartID)
+        {
+            int cartItemCount = 0;
+
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+            string sqlString = "SELECT * FROM dbo.CartItem WHERE CartItemCartID = @CartID";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@CartID", cartID);
+
+            try
+            {
+                dbConnection.Open();
+                SqlDataReader reader = dbCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        cartItemCount += (int)reader["CartItemQuantity"];
+                    }
+                    return cartItemCount;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+
+        }
+
+
+
+
+
         public int AddToCart(int cartID, int productID, int quantity, int price)
         {
             int rowsAffected = 0;

@@ -13,6 +13,7 @@ namespace Datiov2.Controllers
         private readonly ILogger<HomeController> _logger;
         ProductMethods productMethods = new ProductMethods();
         CategoryMethods categoryMethods = new CategoryMethods();
+        CartMethods cartMethods = new CartMethods();
 
 
         public HomeController(ILogger<HomeController> logger)
@@ -27,6 +28,8 @@ namespace Datiov2.Controllers
             int totalProducts = productMethods.GetNumberOfProducts();
             ViewBag.TotalProducts = totalProducts;
             ViewBag.Categories = categories;
+
+
 
             //List<ProductModel> products = productMethods.GetAllProducts();
 

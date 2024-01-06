@@ -150,12 +150,10 @@ function meny_funktion() {
 
 function darkmode() {
 
-    var darkMode = HttpContext.Session.GetString("DarkMode") ?? "false";
-    HttpContext.Session.SetString("DarkMode", darkMode == "false" ? "true" : "false");
 
     var darkmode = document.querySelectorAll(".header, .form_search, .content-container, .produkt_beställning_box, .produkt_sida_upper, .produkt_beskrivning_box, .produkt_specifikationer, .produkt_sida_down, .Panel-box, .account-card, .orders-box")
     var darkmode_dark = document.querySelectorAll(".main-container, .produkt_box, body, .Panel-box, .account-box, .account-card, .orders-box");
-  var darkmode_light = document.querySelectorAll(".produkt_box, .next_products,  .sök_knapp, .search, .konto, .kundvagn, .product_category_box");
+    var darkmode_light = document.querySelectorAll(".produkt_box, .next_products,  .sök_knapp, .search, .konto, .kundvagn, .product_category_box, .Panel-box, .account-box, .account-card, .orders-box");
 
   var darkmode_light_color = document.querySelectorAll(".product_showcase_type_text, .produkt_beskrivning_text, .produkt_specifikationer, .produkt_beställning_box");
     var darkmode_dark_color = document.querySelectorAll(".produkt_specifikationer");

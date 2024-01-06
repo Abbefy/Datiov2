@@ -196,6 +196,31 @@ namespace Datiov2.Controllers
             return RedirectToAction("Wishlist", "User", userID);
         }
 
+        [HttpPost]
+        public IActionResult DeleteProduct(int productID)
+        {
+
+            productMethods.DeleteProduct(productID);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult UpdateProduct(int productID)
+        {
+
+            ProductModel product = productMethods.GetProductById(productID);
+
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProduct(ProductModel product)
+        {
+            productMethods.UpdateProduct(product);
+
+            return RedirectToAction("Product", "Product", product.ProductID);
+        }
+
 
 
 

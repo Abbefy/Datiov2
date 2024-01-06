@@ -67,6 +67,13 @@ namespace Datiov2.Controllers
                 cartMethods.AddToCart(cartID, productID, quantity, price);
             }
 
+            //<span class="cart-item-count">@ContextAccessor.HttpContext.Session.GetInt32("CartItemCount")</span>
+            HttpContext.Session.SetInt32("CartItemCount", cartMethods.GetCartItemCount(cartID));
+
+
+
+
+
             //if (error != "")
             //{
             //    ViewBag.Error = error;

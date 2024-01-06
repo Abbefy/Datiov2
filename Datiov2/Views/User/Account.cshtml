@@ -296,8 +296,19 @@
     {
         <div class="Panel-box">
             <ul class="Panel-card">
+                <li>
+<form asp-action="ToggleDarkMode" asp-controller="Home" method="post">
+                            <button class="secondary_button" type="submit">Byt Tema </button>
+                        </form>
+                </li>
+
 <li>
+    <form asp-controller="User" asp-action="Wishlist" asp-route-id="@ContextAccessor.HttpContext.Session.GetInt32("UserID") method="post">
+<button class="secondary_button" type="submit">Önskelista</button>
+</form>
+    
 </li>
+<br />
                 
                 <li>
 

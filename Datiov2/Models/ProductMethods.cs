@@ -229,6 +229,41 @@ namespace Datiov2.Data
             dbConnection.Close();
         }
 
+        public void UpdateProduct(ProductModel product)
+        {
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+            string sqlString = "UPDATE Products SET ProductName = @productName, ProductImage = @productImage, ProductDescription = @productDescription, ProductSpecifications = @productSpecifications, ProductPrice = @productPrice, ProductStock = @productStock, ProductCategoryID = @productCategoryID WHERE ProductID = @productID";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+            dbCommand.Parameters.AddWithValue("@productID", product.ProductID);
+            dbCommand.Parameters.AddWithValue("@productName", product.ProductName);
+            dbCommand.Parameters.AddWithValue("@productImage", product.ProductImage);
+            dbCommand.Parameters.AddWithValue("@productDescription", product.ProductDescription);
+            dbCommand.Parameters.AddWithValue("@productSpecifications", product.ProductSpecifications);
+            dbCommand.Parameters.AddWithValue("@productPrice", product.ProductPrice);
+            dbCommand.Parameters.AddWithValue("@productStock", product.ProductStock);
+            dbCommand.Parameters.AddWithValue("@productCategoryID", product.ProductCategoryID);
+            dbConnection.Open();
+            dbCommand.ExecuteNonQuery();
+            dbConnection.Close();
+        }
+
+        public void DeleteProduct(int productID)
+        {
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+            string sqlString = "DELETE FROM Products WHERE ProductID = @productID";
+
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+            dbCommand.Parameters.AddWithValue("@productID", productID);
+            dbConnection.Open();
+            dbCommand.ExecuteNonQuery();
+            dbConnection.Close();
+        }
+
 
        
 

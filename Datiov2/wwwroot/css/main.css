@@ -79,6 +79,24 @@ body {
 }
 
 
+.cart-item-count {
+    position: absolute;
+    background: #4848480c;
+    color: black;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    margin-top: -60px;
+    margin-left: 60px;
+    margin-top: -65px;
+    margin-left: 30px;
+}
 
 
 /*containers*/
@@ -216,8 +234,9 @@ body {
 }
 
 #account_icon {
-  margin: 0;
-  font-size: 32px;
+    margin: 0;
+    font-size: 32px;
+    color: #272727;
 }
 
 .kundvagn {
@@ -249,8 +268,9 @@ body {
 
 #shopping_cart_icon {
   font-size: 42px;
-  color: black;
+  color: #272727;
   margin-left: 5px;
+  margin-top: 28px;
 }
 
 .nav {
@@ -776,10 +796,22 @@ li a:hover,
   margin-top: 7px;
   height: 15px;
   width: 15px;
-  background: rgb(110, 253, 110);
+  background: #26ac5e;
+margin-left: -16px;
   border-radius: 50%;
   display: inline-block;
 }
+
+.stock_dot_product_soldout {
+    margin-top: 7px;
+    height: 15px;
+    width: 15px;
+    background: #d54747;
+    margin-left: 5px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
 
 .produkt_beställning_box h4 {
   text-align: center;
@@ -818,21 +850,32 @@ li a:hover,
 }
 
 #produkt_köp_knapp {
-  padding: 1.25rem 0.8rem;
+  padding: 1.25rem 1.2rem;
   border: 1px solid green;
   border-radius: 5px;
   color: whitesmoke;
   font-size: 1.5rem;
-  margin-top: 1rem;
-  background-image: linear-gradient(to right bottom, #00a700, #018010);
+  margin-top: 1.5rem;
+  background-image: linear-gradient(to right bottom, #00a700, #008f11);
   border: 1px solid darkgreen;
   cursor: pointer;
   box-shadow: 2px 3px #cfcece7e;
 }
 
+#produkt_köp_knapp_soldout {
+    padding: 1.25rem 1.1rem;
+    border-radius: 5px;
+    color: #484848;
+    font-size: 1.5rem;
+    opacity: 75%;
+    margin-top: 1rem;
+    border: 1px solid #d54747;
+    cursor: pointer;
+}
+
 #produkt_köp_knapp:hover {
-  background-image: linear-gradient(to right bottom, #1acf1a, #009e12);
-  transform: scale(1.025);
+    background-image: linear-gradient(to right bottom, #1acf1a, #009e12);
+    transform: scale(1.025);
 }
 
 .antal {
@@ -922,6 +965,39 @@ tr:nth-child(odd) {
   height: 315px;
   width: 560px;
 }
+
+
+.product-admin-box {
+    /* Optional: Add styling for the box if needed */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.product-admin-buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+}
+
+.product-admin-buttons {
+    list-style-type: none;
+    width: 100%;
+
+}
+
+    .product-admin-buttons li {
+        margin-right: 10px; /* Add spacing between buttons */
+        display: inline-block;
+        width: 25%;
+        float: right;
+    }
+
+
+
 
 /* LOGGA IN LOGGA IN LOGGA IN LOGGA IN LOGGA IN LOGGA IN LOGGA IN*/
 .login_logo {

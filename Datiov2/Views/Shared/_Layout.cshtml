@@ -171,6 +171,8 @@
                 <form method="get" action="/Cart/Cart" class="form_kundvagn">
                     <button type="submit" class="kundvagn" id="shopping_cart_button">
                         <span class="material-icons-outlined" id="shopping_cart_icon" onmouseover="goToCartNudge()">shopping_cart</span>
+                        <span class="cart-item-count">@ContextAccessor.HttpContext.Session.GetInt32("CartItemCount")</span>
+
                         @*                         @if (ContextAccessor.HttpContext.Session.GetString("UserName") != null)
                         {
                         <span id="account_text">@ContextAccessor.HttpContext.Session.GetString("UserName")</span>

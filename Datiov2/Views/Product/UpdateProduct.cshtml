@@ -1,20 +1,10 @@
-﻿@model Datiov2.Models.ProductModel
+﻿@* @model Datiov2.Models.ProductModel
+
+
 
 @{
-    ViewData["Title"] = "AddProduct";
-    // var categories = ViewBag.Categories as List<CategoryModel>;
-    string jsonContent = @"{
-            ""Processor"": {
-                ""Antal kärnor"": ""6 kärnor"",
-                ""Antal trådar"": ""12 trådar""
-            },
-            ""Diverse"": {
-                ""Inkluderade tillbehör"": ""AMD Wraith Stealth Cooler""
-            },
-            ""Allmänt"": {
-                ""Produkttyp"": ""Ex: Processor""
-            }
-        }";
+    ViewData["Title"] = "UpdateProduct";
+
 
 }
 
@@ -79,10 +69,12 @@
 
             <div class="main_logga_in">
                 <div class="inloggningsruta">
-                    <h3 id="logga_in_text">Lägg till Produkt</h3>
+                    <h3 id="logga_in_text">Redigera Produkt </h3>
 
-                    <form asp-action="AddProduct" method="post" asp-controller="Product">
-                        <input class="inloggning_input" type="text" asp-for="ProductName" required placeholder="Produktnamn">
+                    <form asp-action="UpdateProduct" method="post" asp-controller="Product">
+                        <input type="hidden" asp-for="ProductID" />
+
+                        <input class="inloggning_input" type="text" asp-for="ProductName" required placeholder="Produktnamn" value="@Model.ProductName">
                         <select class="inloggning_input" asp-for="ProductImage">
                             @foreach (var imageUrl in ViewBag.ImageUrls)
                             {
@@ -90,13 +82,13 @@
                             }
                         </select>
 
-                        <textarea class="inloggning_input" asp-for="ProductDescription" placeholder="Beskrivning"></textarea>
+                        <textarea class="inloggning_input" asp-for="ProductDescription" placeholder="Beskrivning">@Model.ProductDescription</textarea>
 
-                        <textarea class="inloggning_input" id="ProductSpecifications" name="ProductSpecifications">@jsonContent</textarea>
+                        <textarea class="inloggning_input" id="ProductSpecifications" name="ProductSpecifications">@Model.ProductSpecifications</textarea>
 
-                        <input class="inloggning_input" type="number" asp-for="ProductPrice" required placeholder="Pris">
-                        <input class="inloggning_input" type="number" asp-for="ProductStock" required placeholder="Lagerantal">
-                        <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID">
+                        <input class="inloggning_input" type="number" asp-for="ProductPrice" required placeholder="Pris" value="@Model.ProductPrice />
+                        <input class="inloggning_input" type="number" asp-for="ProductStock" placeholder="Lagerantal" value="@Model.ProductStock" required />  
+                        <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID" value="@Model.ProductCategoryID" />
 
                         <input id="skapa_konto_knapp" type="submit" value="Lägg till Produkt">
                     </form>
@@ -107,13 +99,6 @@
         </div>
     </div>
 
-    @*
-    <select class="inloggning_input" asp-for="ProductCategoryID">
-    @foreach (var category in categories)
-    {
-    <option value="@category.CategoryID">@category.CategoryName</option>
-    }
-    </select> *@
 
     <div class="footer">
         <div class="footer_down">
@@ -188,3 +173,4 @@
 </body>
 
 </html>
+ *@

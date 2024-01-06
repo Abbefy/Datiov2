@@ -24,6 +24,7 @@ namespace Datiov2.Controllers
 
 
 
+
         // GET: UserController
         public IActionResult Index()
         {
@@ -61,10 +62,15 @@ namespace Datiov2.Controllers
                 return View();
             }
 
+            int cartID = CartMethods.GetCartID(userLogin.UserID);
+
            // HttpContext.Session.SetInt32("IsLoggedIn", 1);
             HttpContext.Session.SetInt32("UserID", userLogin.UserID);
             HttpContext.Session.SetString("UserName", userLogin.UserName);
             HttpContext.Session.SetInt32("UserType", userLogin.UserType);
+
+            HttpContext.Session.SetInt32("CartItemCount", CartMethods.GetCartItemCount(cartID));
+
 
             return RedirectToAction("Account", "User", userLogin);
 

@@ -1,9 +1,12 @@
-﻿@using Datiov2.Models
-
+﻿
 @model Datiov2.Models.ProductModel
+
+@using Datiov2.Models
+@inject IHttpContextAccessor ContextAccessor
 
 @{
     ViewData["Title"] = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     var product = Model;
     var randomProducts = ViewBag.RandomProducts as List<ProductModel>;
     var productID = product.ProductID;
@@ -14,7 +17,7 @@
 
 }
 
-
+@* 
 
 <!DOCTYPE html>
 <html lang="en"> 
@@ -45,7 +48,7 @@
     <title>AMD Ryzen 5 7600</title>
 </head>
 
-<body>
+<body> 
     <div class="main-container">
         <div class="mini-header">
             <div class="mini_header_content">
@@ -134,7 +137,7 @@
                         <a href="kategori.html" class="dropdown-knapp">Mobil</a>
                     </li>
                 </ul>
-            </div>
+            </div>*@
 
             <!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
 
@@ -153,41 +156,54 @@
                 </h4> *@
 
                 <div class="produkt_beställning_box">
-                    <h1>@product.ProductName</h1>
-                    <h2>@product.ProductPrice kr</h2>
-                    <h3>Lagerstatus: @product.ProductStock <span class="stock_dot_product"></span></h3>
-                    <h4>
-                        Antal:
-                        <input type="number" id="antal" min="1" max="100" value="1">
-                    </h4>
-                    <h4> ProductID: @product.ProductID  </h4>
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="productID" value="@product.ProductID" />
+                        <input type="hidden" name="price" value="@product.ProductPrice" />
 
-                    <div class="produkt_knappar">
-                        @if (product.ProductStock > 0)
-                        {
-                            <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                                <input type="hidden" name="productID" value="@product.ProductID" />
-                                <input type="hidden" name="price" value="@product.ProductPrice" />
+
+                    <h1>@product.ProductName</h1>
+
+                    <h2>@product.ProductPrice kr</h2>
+
+                    @if (product.ProductStock > 0)
+                    {
+@*                         <h3>Lagerstatus: @product.ProductStock <span class="stock_dot_product"></span></h3>
+                            <h3>Lagerstatus: <span class="stock_dot_product"></span> @product.ProductStock st i lager</h3> *@
+                            <h3><span class="stock_dot_product"></span>  @product.ProductStock st i lager</h3>
+
+                            <h4>
+                                Antal:
                                 <input type="number" name="quantity" id="antal" min="1" max="100" value="1" />
+
+                            </h4>
+                            <div class="produkt_knappar">
                                 <button type="submit" id="produkt_köp_knapp">Lägg i kundvagn</button>
-                            </form>
-                        }
-                        else
-                        {
-                            <button type="button" id="produkt_köp_knapp" disabled>
-                                Köp
-                            </button>
-                        }
-                       
-@*                         <button type="button" id="produkt_köp_knapp">
-                            Lägg i kundvagns
-                        </button> *@
-                    </div>
-                    <button class="facts_button" id="facts_support">
+                            </div>
+
+                    }
+                    else
+                    {
+                        <h3>Lagerstatus: @product.ProductStock <span class="stock_dot_product_soldout"></span></h3>
+                            <div class="produkt_knappar">
+                                <button type="button" id="produkt_köp_knapp_soldout" disabled>
+                                    Slutsåld
+                                </button>
+                            </div>
+                    }
+
+
+</form>
+@*                     <button class="facts_button" id="facts_support">
                     <a href="@Url.Action("AddToWishlist", "Product", new { wishlistProductID = product.ProductID })" class="secondary_button" >Lägg till önskelistan</a>
-                    </button>
+                    </button> *@
                 </div>
+
             </div>
+
+@*             <a href="@Url.Action("AddToWishlist", "Product", new { wishlistProductID = product.ProductID })" class="secondary_button">Lägg till önskelistan</a>
+            <form asp-action="ToggleDarkMode" asp-controller="Home" method="post">
+                <button class="secondary_button" type="submit">Byt Tema </button>
+            </form> *@
 
             <div class="produkt_sida_down">
                 <div class="produkt_beskrivning_box">
@@ -233,9 +249,35 @@
                     }
 
                 </div>
-            </div>
 
-            <h3 class="product_showcase_type_text">Liknande produkter</h3>
+            </div>
+@*                 <a href="@Url.Action("AddToWishlist", "Product", new { wishlistProductID = product.ProductID })" class="secondary_button">Lägg till önskelistan</a>
+ *@
+@if (@ContextAccessor.HttpContext.Session.GetInt32("UserType") == 2)
+{
+    <div class="product-admin-box">
+        <div class="product-admin-buttons-container">
+            <ul class="product-admin-buttons">
+                <li>
+                    <form asp-action="DeleteProduct" asp-controller="Product" asp-route-id="@product.ProductID" method="post">
+                        <button class="secondary_button" id="delete_button" type="submit">Radera produkt </button>
+                    </form>
+                </li>
+                <li>
+                    <form asp-controller="Product" asp-action="UpdateProduct" asp-route-id="@product.ProductID method="get">
+                        <button class="secondary_button" type="submit">Redigera produkt</button>
+                    </form>
+                </li>
+              
+
+            </ul>
+        </div>
+    </div>
+
+}
+
+
+            <h3 class="product_showcase_type_text">Andra produkter</h3>
             <div class="product_field">
                 <div class="product_grid">
                     @foreach (var randomProduct in randomProducts)
@@ -256,7 +298,7 @@
             </div>
         </div>
     </div>
-
+@* 
     <div class="footer">
         <div class="footer_down">
             <div class="footer_box" id="sociala_medier_box">
@@ -329,4 +371,4 @@
 
 </body>
 
-</html> 
+</html>  *@
