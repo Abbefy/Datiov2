@@ -110,8 +110,9 @@ namespace Datiov2.Controllers
         {
             List<string> imageUrls = new List<string>()
             {
-                "/bilder/black_friday_pic",
-                "/bilder/facebook",
+                "~/bilder/black_friday_pic",
+                "~/bilder/facebook",
+                "~/bilder/ps5_product_image",
             };
             ViewBag.ImageUrls = imageUrls;
 

@@ -214,13 +214,13 @@ namespace Datiov2.Data
         {
             SqlConnection dbConnection = new SqlConnection();
             dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
-            string sqlString = "INSERT INTO Products (ProductName, ProductImage, ProductDescription, ProductPrice, ProductStock, ProductCategoryID) VALUES (@productName, @productImage, @productDescription, @productPrice, @productStock, @productCategoryID)";
+            string sqlString = "INSERT INTO Products (ProductName, ProductImage, ProductDescription, ProductSpecifications, ProductPrice, ProductStock, ProductCategoryID) VALUES (@productName, @productImage, @productDescription, @productSpecifications, @productPrice, @productStock, @productCategoryID)";
 
             SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
             dbCommand.Parameters.AddWithValue("@productName", product.ProductName);
             dbCommand.Parameters.AddWithValue("@productImage", product.ProductImage);
             dbCommand.Parameters.AddWithValue("@productDescription", product.ProductDescription);
-            
+            dbCommand.Parameters.AddWithValue("@productSpecifications", product.ProductSpecifications);
             dbCommand.Parameters.AddWithValue("@productPrice", product.ProductPrice);
             dbCommand.Parameters.AddWithValue("@productStock", product.ProductStock);
             dbCommand.Parameters.AddWithValue("@productCategoryID", product.ProductCategoryID);

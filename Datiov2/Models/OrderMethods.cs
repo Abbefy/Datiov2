@@ -657,6 +657,7 @@ namespace Datiov2.Models
             foreach (var item in cartItems)
             {
                 string insertOrderDetailsString = "INSERT INTO dbo.OrderDetails (OrderDetailsOrderID, OrderDetailsProductID, OrderDetailsQuantity, OrderDetailsPrice) VALUES (@OrderID, @ProductID, @Quantity, @Price)";
+                dbConnection.Open();
                 using (SqlCommand insertOrderDetailsCommand = new SqlCommand(insertOrderDetailsString, dbConnection))
                 {
                     insertOrderDetailsCommand.Parameters.AddWithValue("@OrderID", OrderID);
@@ -664,10 +665,24 @@ namespace Datiov2.Models
                     insertOrderDetailsCommand.Parameters.AddWithValue("@Quantity", item.CartItemQuantity);
                     insertOrderDetailsCommand.Parameters.AddWithValue("@Price", item.CartItemPrice);
 
-                    dbConnection.Open();
                     insertOrderDetailsCommand.ExecuteNonQuery();
-                    dbConnection.Close();
                 }
+
+                string deleteCartItemString = "DELETE FROM dbo.CartItem WHERE CartItemID = @CartItemID";
+                using (SqlCommand deleteCartItemCommand = new SqlCommand(deleteCartItemString, dbConnection))
+                {
+                    deleteCartItemCommand.Parameters.AddWithValue("@CartItemID", item.CartItemID);
+                    deleteCartItemCommand.ExecuteNonQuery();
+                }
+
+                string updateProductStockString = "UPDATE dbo.Products SET ProductStock = ProductStock - @Quantity WHERE ProductID = @ProductID";
+                using (SqlCommand updateProductStockCommand = new SqlCommand(updateProductStockString, dbConnection))
+                {
+                    updateProductStockCommand.Parameters.AddWithValue("@Quantity", item.CartItemQuantity);
+                    updateProductStockCommand.Parameters.AddWithValue("@ProductID", item.CartItemProductID);
+                    updateProductStockCommand.ExecuteNonQuery();
+                }
+                dbConnection.Close();
             }
         }
 
