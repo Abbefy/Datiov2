@@ -110,6 +110,7 @@ namespace Datiov2.Controllers
                 {
 
                     orderMethods.TransferCartItemsToOrderDetails(orderID, cartID);
+                    HttpContext.Session.SetInt32("CartItemCount", cartMethods.GetCartItemCount(cartID));
                     return RedirectToAction("Order", "Order", new { orderID = orderID });
                     //return RedirectToAction("Order", "Order", 
                 }

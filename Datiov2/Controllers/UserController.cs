@@ -23,14 +23,6 @@ namespace Datiov2.Controllers
 
 
 
-
-
-        // GET: UserController
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -159,6 +151,40 @@ namespace Datiov2.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult DeleteAccount(int userID)
+        {
+            int delete = userMethods.DeleteAccount(userID, out string error);
+
+            if (delete == 0)
+            {
+                ViewBag.Error = error;
+                return View();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult UpdateAccount(int userID)
+        {
+            UserModel user = userMethods.GetAccount(userID, out string error);
+
+            return View(user);
+        }
+        public IActionResult UpdateAccount(UserModel user)
+        {
+            int update = userMethods.UpdateAccount(user, out string error);
+
+            if (update == 0)
+            {
+                ViewBag.Error = error;
+                return View();
+            }
+
+
+            return RedirectToAction("Account", "User", user);
         }
 
 

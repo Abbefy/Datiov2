@@ -259,17 +259,25 @@
         <div class="product-admin-buttons-container">
             <ul class="product-admin-buttons">
                 <li>
-                    <form asp-action="DeleteProduct" asp-controller="Product" asp-route-id="@product.ProductID" method="post">
+@*                     <form asp-controller="Product" asp-action="DeleteProduct" method="post">
+                        <input type="hidden" name="productID" value="@product.ProductID" />
                         <button class="secondary_button" id="delete_button" type="submit">Radera produkt </button>
-                    </form>
+                    </form> *@
+@*                     public IActionResult DeleteProduct(int productID)
+                    {
+                    productMethods.DeleteProduct(productID);
+                    return RedirectToAction("Index", "Home");
+                    } *@
+                    <a href="@Url.Action("DeleteProduct", "Product", new { productID = product.ProductID })" class="secondary_button">Radera produkt</a>
                 </li>
                 <li>
-                    <form asp-controller="Product" asp-action="UpdateProduct" asp-route-id="@product.ProductID method="get">
-                        <button class="secondary_button" type="submit">Redigera produkt</button>
+<form asp-action="UpdateProduct" asp-controller="Product" method="get">
+                        <input type="hidden" name="productID" value="@product.ProductID" />
+                        <button class="secondary_button" type="submit">Redigera produkt </button>
                     </form>
-                </li>
-              
 
+                </li>
+             
             </ul>
         </div>
     </div>

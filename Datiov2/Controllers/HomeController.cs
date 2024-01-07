@@ -29,6 +29,18 @@ namespace Datiov2.Controllers
             ViewBag.TotalProducts = totalProducts;
             ViewBag.Categories = categories;
 
+            ViewBag.DarkMode = HttpContext.Session.GetString("DarkMode");
+
+            if (HttpContext.Session.GetInt32("UserID") != null)
+            {
+                ViewBag.CartItems = cartMethods.GetCartItems((int)HttpContext.Session.GetInt32("UserID"));
+            }
+            else
+            {
+                ViewBag.CartItems = null;
+            }
+
+
 
 
             //List<ProductModel> products = productMethods.GetAllProducts();

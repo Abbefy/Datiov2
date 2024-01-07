@@ -192,6 +192,65 @@ namespace Datiov2.Models
             }
         }
 
+        public int UpdateAccount(UserModel user, out string error)
+        {
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+
+            string sqlString = "UPDATE dbo.Users SET UserName = @UserName, UserFirstName = @UserFirstName, UserLastName = @UserLastName, UserPass = @UserPass, UserEmail = @UserEmail WHERE UserID = @UserID";
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+
+            dbCommand.Parameters.AddWithValue("@UserID", user.UserID);
+            dbCommand.Parameters.AddWithValue("@UserName", user.UserName);
+            dbCommand.Parameters.AddWithValue("@UserFirstName", user.UserFirstName);
+            dbCommand.Parameters.AddWithValue("@UserLastName", user.UserLastName);
+            dbCommand.Parameters.AddWithValue("@UserPass", user.UserPass);
+            dbCommand.Parameters.AddWithValue("@UserEmail", user.UserEmail);
+
+            try
+            {
+                dbConnection.Open();
+                int update = dbCommand.ExecuteNonQuery();
+                error = "";
+                return update;
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+        }
+
+        public int DeleteAccount(int userID, out string error)
+        {
+            int rowsAffected = 0;
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
+            string sqlString = "DELETE FROM dbo.Users WHERE UserID = @UserID";
+            SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
+            dbCommand.Parameters.AddWithValue("@UserID", userID);
+            try
+            {
+                dbConnection.Open();
+                rowsAffected = dbCommand.ExecuteNonQuery();
+                error = "";
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+        }
+
 
 
            

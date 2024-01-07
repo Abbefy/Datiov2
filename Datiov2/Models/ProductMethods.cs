@@ -250,8 +250,9 @@ namespace Datiov2.Data
             dbConnection.Close();
         }
 
-        public void DeleteProduct(int productID)
+        public int DeleteProduct(int productID)
         {
+            int deletedProduct = 0;
             SqlConnection dbConnection = new SqlConnection();
             dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
 
@@ -259,15 +260,14 @@ namespace Datiov2.Data
 
             SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
             dbCommand.Parameters.AddWithValue("@productID", productID);
+
             dbConnection.Open();
-            dbCommand.ExecuteNonQuery();
+            deletedProduct = dbCommand.ExecuteNonQuery();
             dbConnection.Close();
+
+            return deletedProduct;
+
         }
-
-
-       
-
-
 
 
 

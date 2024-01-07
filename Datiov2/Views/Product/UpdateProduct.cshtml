@@ -1,10 +1,10 @@
-﻿@* @model Datiov2.Models.ProductModel
+﻿
+@model Datiov2.Models.ProductModel
 
 
 
 @{
     ViewData["Title"] = "UpdateProduct";
-
 
 }
 
@@ -74,7 +74,8 @@
                     <form asp-action="UpdateProduct" method="post" asp-controller="Product">
                         <input type="hidden" asp-for="ProductID" />
 
-                        <input class="inloggning_input" type="text" asp-for="ProductName" required placeholder="Produktnamn" value="@Model.ProductName">
+                        <input class="inloggning_input" type="text" asp-for="ProductName" required value="@Model.ProductName" />
+
                         <select class="inloggning_input" asp-for="ProductImage">
                             @foreach (var imageUrl in ViewBag.ImageUrls)
                             {
@@ -84,13 +85,13 @@
 
                         <textarea class="inloggning_input" asp-for="ProductDescription" placeholder="Beskrivning">@Model.ProductDescription</textarea>
 
-                        <textarea class="inloggning_input" id="ProductSpecifications" name="ProductSpecifications">@Model.ProductSpecifications</textarea>
+                        <textarea class="inloggning_input" asp-for="ProductDescription">@Model.ProductSpecifications</textarea>
 
-                        <input class="inloggning_input" type="number" asp-for="ProductPrice" required placeholder="Pris" value="@Model.ProductPrice />
-                        <input class="inloggning_input" type="number" asp-for="ProductStock" placeholder="Lagerantal" value="@Model.ProductStock" required />  
-                        <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID" value="@Model.ProductCategoryID" />
+                        <input class="inloggning_input" type="number" asp-for="ProductPrice" required placeholder="Pris" value="@Model.ProductPrice" >
+                        <input class="inloggning_input" type="number" asp-for="ProductStock" placeholder="Lagerantal" value="@Model.ProductStock" required >  
+                        <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID" value="@Model.ProductCategoryID" >
 
-                        <input id="skapa_konto_knapp" type="submit" value="Lägg till Produkt">
+                        <input id="skapa_konto_knapp" type="submit" value="Uppdatera">
                     </form>
 
 
@@ -173,4 +174,3 @@
 </body>
 
 </html>
- *@

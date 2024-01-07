@@ -15,6 +15,14 @@ namespace Datiov2.Controllers
         ProductMethods productMethods = new ProductMethods();
         WishlistMethods wishlistMethods = new WishlistMethods();
 
+        List<string> imageUrls = new List<string>()
+            {
+                "~/bilder/black_friday_pic.jpg",
+                "~/bilder/facebook",
+                "/bilder/ps5_product_image.jpg",
+                "/bilder/AMD_R7.webp",
+            };
+
 
         // GET: ProductController
         public ActionResult Index()
@@ -117,13 +125,7 @@ namespace Datiov2.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            List<string> imageUrls = new List<string>()
-            {
-                "~/bilder/black_friday_pic.jpg",
-                "~/bilder/facebook",
-                "/bilder/ps5_product_image.jpg",
-                "/bilder/AMD_R7.webp",
-            };
+
             ViewBag.ImageUrls = imageUrls;
 
 
@@ -196,11 +198,15 @@ namespace Datiov2.Controllers
             return RedirectToAction("Wishlist", "User", userID);
         }
 
-        [HttpPost]
         public IActionResult DeleteProduct(int productID)
         {
+            int deletedProductID = productMethods.DeleteProduct(productID);
+            if (deletedProductID == 0)
+            {
+                ViewBag.Error = "Produkten kunde inte tas bort";
+                return View();
+            }
 
-            productMethods.DeleteProduct(productID);
             return RedirectToAction("Index", "Home");
         }
 
@@ -209,6 +215,8 @@ namespace Datiov2.Controllers
         {
 
             ProductModel product = productMethods.GetProductById(productID);
+            ViewBag.ImageUrls = imageUrls;
+            ViewBag.Product = product;
 
             return View(product);
         }
