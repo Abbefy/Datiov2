@@ -1,5 +1,11 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor ContextAccessor
 
+@using Datiov2.Models
+
+@{
+    var categories = ViewBag.Categories as List<CategoryModel>;
+
+}
 
 @* <!DOCTYPE html>
 <html lang="en">
@@ -91,6 +97,7 @@
                 <a href="@Url.Action("Wishlist", "User", new { id = ContextAccessor.HttpContext.Session.GetInt32("UserID") })">
                     <span class="material-icons-outlined" id="favoriter">favorite_border</span>
                 </a>
+
 
 @*                 <span class="material-icons-outlined" id="light_mode_button">light_mode</span>
                 <label class="switch">
@@ -188,13 +195,23 @@
             <div class="nav">
                 <ul>
                     <li class="navbar" id="menu_link2">
-                        <a href=@Url.Action("AllProducts","Product") id="menu_link" onclick="darkmode()">
+                        <a href=@Url.Action("AllProducts","Product") id="menu_link"">
                             <span class="material-icons-outlined"
                                   id="menu_icon">menu</span>
                         </a>
-                        <a href="kategori.html" class="navbar-knapp" id="all_categories_text">Alla kategorier &#8964;</a>
+                        <a href="kategori.html" class="navbar-knapp" id="all_categories_text">Alla kategorier @* &#8964; *@ </a>
                     </li>
-                    <li class="navbar">
+
+                    @foreach (var category in categories.Where(c => c.CategoryRank == 2))
+                    {
+                        <li class="navbar">
+                            <a href=@Url.Action("Category", "Product", new { CategoryID = category.CategoryID }) class="navbar-knapp">@category.CategoryName</a>
+                        </li>
+                    }
+
+
+
+@*                     <li class="navbar">
                         <a href="kategori.html" class="navbar-knapp">Datorer</a>
                     </li>
                     <li class="navbar">
@@ -214,7 +231,7 @@
                     </li>
                     <li class="navbar">
                         <a href="kategori.html" class="navbar-knapp">Mobil</a>
-                    </li>
+                    </li> *@
                 </ul>
             </div>
 

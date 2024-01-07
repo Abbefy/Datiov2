@@ -291,7 +291,8 @@
                     @foreach (var randomProduct in randomProducts)
                     {
                         <div class="produkt_box">
-                            <a href="@Url.Action("Product", "Product", new { id = randomProduct.ProductID })">
+                            @* NEW CHANGE  *@
+                            <a href="@Url.Action("Product", "Product", new { ProductID = randomProduct.ProductID })">
                                 <img src="@randomProduct.ProductImage" alt="@randomProduct.ProductDescription">
                                 <h2>@randomProduct.ProductName</h2>
                                 <h3>@randomProduct.ProductPrice kr</h3>

@@ -264,7 +264,7 @@
 
                 <li>
 
-                    <form asp-action="UpdateAccount" asp-controller="User" method="post">
+                    <form asp-action="UpdateAccount" asp-controller="User" method="get">
                         <button class="secondary_button" type="submit">Redigera konto </button>
                     </form>
                 </li>
@@ -281,6 +281,15 @@
                         <button class="secondary_button" type="submit">Radera produkt </button>
                     </form>
                 </li>
+
+                <li>
+                    <form asp-action="AddCategory" asp-controller="Product" method="get">
+                            <button class="secondary_button" type="submit">Sakapa produktkategori</button>
+                    </form>
+
+                </li>
+
+
                 <li>
 
                     <form asp-action="Logout" asp-controller="User" method="post">
@@ -312,12 +321,14 @@
                 <li>
 
                     <form asp-action="DeleteAccount" asp-controller="User" method="post">
+                        <input type="hidden" name="userID" value="@Model.UserID" />
+
                         <button class="secondary_button" id="delete_button" type="submit">Radera konto </button>
                     </form>
                 </li>
                 <li>
 
-                    <form asp-action="UpdateAccount" asp-controller="User" method="post">
+                    <form asp-action="UpdateAccount" asp-controller="User" method="get">
                         <button class="secondary_button" type="submit">Redigera konto </button>
                     </form>
                 </li>

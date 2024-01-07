@@ -8,17 +8,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Datiov2.Data;
+using Microsoft.EntityFrameworkCore;
+using Datiov2.Data;
 
 
 
 namespace Datiov2.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         UserMethods userMethods = new UserMethods();
         WishlistMethods wishlistMethods = new WishlistMethods();
         CartMethods CartMethods = new CartMethods();
         OrderMethods orderMethods = new OrderMethods();
+
+
 
 
 
@@ -155,16 +159,75 @@ namespace Datiov2.Controllers
 
         public IActionResult DeleteAccount(int userID)
         {
+            HttpContext.Session.Clear();
             int delete = userMethods.DeleteAccount(userID, out string error);
 
             if (delete == 0)
             {
-                ViewBag.Error = error;
                 return View();
             }
 
             return RedirectToAction("Index", "Home");
         }
+
+
+        //public IActionResult DeleteAccount(int userID)
+        //{
+        //    string error = string.Empty;
+        //    int rowsAffected = 0;
+
+        //    try
+        //    {
+        //        // Begin a database transaction
+        //        using (var dbContextTransaction = dbContext.Database.BeginTransaction())
+        //        {
+        //            // Delete the user from the Users table
+        //            rowsAffected = userMethods.DeleteAccount(userID, out error);
+
+        //            if (rowsAffected > 0)
+        //            {
+        //                // Find and update the related orders
+        //                var ordersToUpdate = dbContext.Orders.Where(o => o.OrderUserID == userID).ToList();
+
+        //                foreach (var order in ordersToUpdate)
+        //                {
+        //                    order.OrderUserID = null; // Set to NULL or another default value
+        //                }
+
+        //                // Save changes to the database
+        //                dbContext.SaveChanges();
+
+        //                // Commit the transaction
+        //                dbContextTransaction.Commit();
+        //            }
+        //            else
+        //            {
+        //                // If the user deletion failed, roll back the transaction
+        //                dbContextTransaction.Rollback();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        error = ex.Message;
+        //    }
+
+        //    if (!string.IsNullOrEmpty(error))
+        //    {
+        //        ViewBag.Error = error;
+        //        return View();
+        //    }
+
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+
+
+
+
+
+
+
 
         [HttpGet]
         public IActionResult UpdateAccount(int userID)

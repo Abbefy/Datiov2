@@ -25,6 +25,11 @@ namespace Datiov2.Models
             SqlConnection dbConnection = new SqlConnection();
             dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
 
+            //SqlConnection dbConnection = new SqlConnection(GetConnection().GetSection("ConnectionStrings").GetSection("DefaultConnection").Value);
+            // use default connection string from appsettings.json
+            //dbConnection.ConnectionString 
+
+
             string sqlString = "INSERT INTO dbo.Users (UserName, UserFirstName, UserLastName, UserPass, UserEmail, UserType) VALUES (@UserName, @UserFirstName, @UserLastName, @UserPass, @UserEmail, @UserType)";
             SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
 
@@ -225,7 +230,7 @@ namespace Datiov2.Models
             }
         }
 
-        public int DeleteAccount(int userID, out string error)
+        public int DeleteAccountOG(int userID, out string error)
         {
             int rowsAffected = 0;
             SqlConnection dbConnection = new SqlConnection();
@@ -252,8 +257,106 @@ namespace Datiov2.Models
         }
 
 
+        public int DeleteAccount(int userID, out string error)
+        {
+            int rowsAffected = 0;
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Abbesdb;Integrated Security=True";
 
-           
+
+
+            try
+            {
+                // Delete related orders first
+                string deleteOrdersSql = "DELETE FROM dbo.Orders WHERE OrderUserID = @UserID";
+                SqlCommand deleteOrdersCommand = new SqlCommand(deleteOrdersSql, dbConnection);
+                deleteOrdersCommand.Parameters.AddWithValue("@UserID", userID);
+
+                dbConnection.Open();
+                deleteOrdersCommand.ExecuteNonQuery();
+
+                // Now delete the user
+                string deleteUserSql = "DELETE FROM dbo.Users WHERE UserID = @UserID";
+                SqlCommand deleteUserCommand = new SqlCommand(deleteUserSql, dbConnection);
+                deleteUserCommand.Parameters.AddWithValue("@UserID", userID);
+
+                rowsAffected = deleteUserCommand.ExecuteNonQuery();
+                error = "";
+
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+        }
+
+
+
+        public int DeleteAccount33(int userID, out string error)
+        {
+            int rowsAffected = 0;
+            SqlConnection dbConnection = new SqlConnection();
+            dbConnection.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Abbesdb;Integrated Security=True";
+
+            try
+            {
+                dbConnection.Open();
+                using (SqlTransaction transaction = dbConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Delete related orders first
+                        string deleteOrdersSql = "DELETE FROM dbo.Orders WHERE UserID = @UserID";
+                        SqlCommand deleteOrdersCommand = new SqlCommand(deleteOrdersSql, dbConnection, transaction);
+                        deleteOrdersCommand.Parameters.AddWithValue("@UserID", userID);
+
+                        deleteOrdersCommand.ExecuteNonQuery();
+
+                        // Now delete the user
+                        string deleteUserSql = "DELETE FROM dbo.Users WHERE UserID = @UserID";
+                        SqlCommand deleteUserCommand = new SqlCommand(deleteUserSql, dbConnection, transaction);
+                        deleteUserCommand.Parameters.AddWithValue("@UserID", userID);
+
+                        rowsAffected = deleteUserCommand.ExecuteNonQuery();
+                        error = "";
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        error = ex.Message;
+                        throw ex;
+                    }
+                }
+
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                throw ex;
+            }
+            finally
+            {
+                dbConnection.Close();
+            }
+        }
+
+
+
+
+
+
+
+
+
 
 
     }

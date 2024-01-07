@@ -169,7 +169,11 @@ namespace Datiov2.Data
         {
             SqlConnection dbConnection = new SqlConnection();
             dbConnection.ConnectionString = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = Abbesdb; Integrated Security = True";
-            string sqlString = "SELECT TOP (@amountOfRandomProducts) * FROM Products ORDER BY NEWID()";
+            //string sqlString = "SELECT TOP (@amountOfRandomProducts) * FROM Products ORDER BY NEWID()";
+            //select only COMPLETELY RANDOM products that are not NULL AND that do not have ProductID = 0
+            //string sqlString = "SELECT TOP (@amountOfRandomProducts) * FROM Products WHERE ProductImage IS NOT NULL AND ProductID != 0 ORDER BY NEWID()";
+
+            string sqlString = "SELECT TOP (@amountOfRandomProducts) * FROM Products WHERE ProductImage IS NOT NULL AND ProductID != 0 AND ProductStock > 0 ORDER BY NEWID()";
 
             SqlCommand dbCommand = new SqlCommand(sqlString, dbConnection);
             dbCommand.Parameters.AddWithValue("@amountOfRandomProducts", amountOfRandomProducts);

@@ -236,7 +236,7 @@ body {
 #account_icon {
     margin: 0;
     font-size: 32px;
-    color: #272727;
+    color: #063048;
 }
 
 .kundvagn {
@@ -267,10 +267,10 @@ body {
 
 
 #shopping_cart_icon {
-  font-size: 42px;
-  color: #272727;
-  margin-left: 5px;
-  margin-top: 28px;
+    font-size: 42px;
+    color: #063048;
+    margin-left: 5px;
+    margin-top: 28px;
 }
 
 .nav {
@@ -1476,7 +1476,7 @@ tr:nth-child(odd) {
 }
 
 .dark-mode-light{
-  background: #c2c2c2;
+  background: #d4d2cfff;
 
 }
 
@@ -1551,7 +1551,7 @@ tr:nth-child(odd) {
     height: 65px;
     border: 0.5px solid #c0c0c0;
     border-radius: 5px;
-    background: #007bff;
+    background: #125478;
     display: block;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     font-size: 18px;

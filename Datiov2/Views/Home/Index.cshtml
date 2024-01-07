@@ -289,7 +289,7 @@ using Microsoft.AspNetCore.Mvc; *@
                 </div>
             </div>
 
-            @foreach (var category in Model)
+@foreach (var category in Model.Where(c => c.CategoryRank == 1))
             {
                 <h3 class="product_showcase_type_text">@category.CategoryName</h3>
                 <div class="product_field">

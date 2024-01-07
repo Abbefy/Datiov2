@@ -1,7 +1,17 @@
+using Datiov2.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSession();
+
+//builder.Services.AddDbContext<Datiov2Context>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+
 
 
 // Läggs till för att starta sessionshantering på servern

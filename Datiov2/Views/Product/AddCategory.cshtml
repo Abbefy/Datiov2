@@ -1,23 +1,97 @@
-﻿@model Datiov2.Models.ProductModel
+﻿@model Datiov2.Models.CategoryModel
 
 @{
-    ViewData["Title"] = "AddProduct";
-    var categories = ViewBag.Categories as List<CategoryModel>;
+    ViewData["Title"] = "Add Category";
+    // var categories = ViewBag.Categories as List<CategoryModel>;
 
-    string jsonContent = @"{
-            ""Processor"": {
-                ""Antal kärnor"": ""6 kärnor"",
-                ""Antal trådar"": ""12 trådar""
-            },
-            ""Diverse"": {
-                ""Inkluderade tillbehör"": ""AMD Wraith Stealth Cooler""
-            },
-            ""Allmänt"": {
-                ""Produkttyp"": ""Ex: Processor""
-            }
-        }";
 
 }
+
+
+
+
+@* 
+namespace Datiov2.Data
+{
+    public class CategoryMethods
+    {
+        private string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=Abbesdb; Integrated Security=True";
+
+        public List<CategoryModel> GetAllCategoriesWithProducts()
+        {
+            List<CategoryModel> categories = new List<CategoryModel>();
+
+            using (SqlConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+                const string categoryQuery = "SELECT * FROM Categories";
+                SqlCommand categoryCommand = new SqlCommand(categoryQuery, dbConnection);
+                SqlDataReader categoryReader = categoryCommand.ExecuteReader();
+
+                while (categoryReader.Read())
+                {
+                    int categoryId = (int)categoryReader["CategoryID"];
+                    string categoryName = categoryReader["CategoryName"].ToString();
+                    bool categoryMainpage = (bool)categoryReader["CategoryMainpage"];
+
+
+                    CategoryModel category = new CategoryModel
+                    {
+                        CategoryID = categoryId,
+                        CategoryName = categoryName,
+                        CategoryMainpage = categoryMainpage,
+                        Products = GetProductsByCategory(categoryId)
+                    };
+                    categories.Add(category);
+                }
+                dbConnection.Close();
+            }
+            return categories;
+        }
+
+        private List<ProductModel> GetProductsByCategory(int categoryID)
+        {
+            ProductMethods productMethods = new ProductMethods();
+            return productMethods.GetProductsByCategory(categoryID);
+        }
+
+        public void CreateCategory(string categoryName, bool categoryMainpage)
+        {
+            using (SqlConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+                const string categoryQuery = "INSERT INTO Categories (CategoryName, CategoryMainpage) VALUES (@CategoryName, @CategoryMainpage)";
+                SqlCommand categoryCommand = new SqlCommand(categoryQuery, dbConnection);
+                categoryCommand.Parameters.AddWithValue("@CategoryName", categoryName);
+                categoryCommand.Parameters.AddWithValue("@CategoryMainpage", categoryMainpage);
+                categoryCommand.ExecuteNonQuery();
+                dbConnection.Close();
+            }
+        }
+
+
+
+        namespace Datiov2.Models
+{
+    public class CategoryModel
+    {
+        public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
+        public bool CategoryMainpage { get; set; }
+        public List<ProductModel> Products { get; set; }
+    }
+}
+
+
+
+ *@
+
+
+
+
+
+
+
 
 <!doctype html>
 <html lang="en">
@@ -80,9 +154,9 @@
 
             <div class="main_logga_in">
                 <div class="inloggningsruta">
-                    <h3 id="logga_in_text">Lägg till Produkt</h3>
+                    <h3 id="logga_in_text">Skapa ny produktkategori</h3>
 
-                    <form asp-action="AddProduct" method="post" asp-controller="Product">
+@*                     <form asp-action="AddProduct" method="post" asp-controller="Product">
                         <input class="inloggning_input" type="text" asp-for="ProductName" required placeholder="Produktnamn">
                         <select class="inloggning_input" asp-for="ProductImage">
                             @foreach (var imageUrl in ViewBag.ImageUrls)
@@ -97,17 +171,22 @@
 
                         <input class="inloggning_input" type="number" asp-for="ProductPrice" required placeholder="Pris">
                         <input class="inloggning_input" type="number" asp-for="ProductStock" required placeholder="Lagerantal">
-@*                         <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID">
- *@
-                        <select class="inloggning_input" asp-for="ProductCategoryID">
-                            @foreach (var category in categories)
-                            {
-                                <option value="@category.CategoryID">@category.CategoryName</option>
-                            }
-</select>
+                        <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID">
 
                         <input id="skapa_konto_knapp" type="submit" value="Lägg till Produkt">
-                    </form>
+                    </form> *@
+
+<form asp-action="AddCategory" method="post" asp-controller="Product">
+                        <input class="inloggning_input" type="text" asp-for="CategoryName" required placeholder="Kategorinamn">
+
+        <select class="inloggning_input" asp-for="CategoryRank">
+                            <option value="3">Minikategori</option>
+                            <option value="2">NAVbar</option>
+                            <option value="1">Startsida display</option>
+
+</select>
+                        <input id="skapa_konto_knapp" type="submit" value="Lägg till Kategori">
+</form>
 
 
                 </div>
