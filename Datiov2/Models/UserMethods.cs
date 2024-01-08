@@ -197,6 +197,7 @@ namespace Datiov2.Models
             }
         }
 
+
         public int UpdateAccount(UserModel user, out string error)
         {
             SqlConnection dbConnection = new SqlConnection();

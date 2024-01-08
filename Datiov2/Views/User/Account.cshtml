@@ -9,6 +9,7 @@
     var orders = ViewBag.Orders as List<OrderModel>;
 
 
+
 }
 
 
@@ -265,6 +266,7 @@
                 <li>
 
                     <form asp-action="UpdateAccount" asp-controller="User" method="get">
+                        <input type="hidden" name="userID" value="@Model.UserID" />
                         <button class="secondary_button" type="submit">Redigera konto </button>
                     </form>
                 </li>
@@ -283,12 +285,18 @@
                 </li>
 
                 <li>
-                    <form asp-action="AddCategory" asp-controller="Product" method="get">
-                            <button class="secondary_button" type="submit">Sakapa produktkategori</button>
+                    <form asp-action="AddCategory" asp-controller="Category" method="get">
+                            <button class="secondary_button" type="submit">Skapa produktkategori</button>
                     </form>
 
                 </li>
 
+<li>
+                    <form asp-action="UpdateCategory" asp-controller="Category" method="get">
+                            <button class="secondary_button" type="submit">Redigera produktkategori</button>
+                    </form>
+
+</li>
 
                 <li>
 
@@ -329,6 +337,7 @@
                 <li>
 
                     <form asp-action="UpdateAccount" asp-controller="User" method="get">
+<input type="hidden" name="userID" value="@Model.UserID" />
                         <button class="secondary_button" type="submit">Redigera konto </button>
                     </form>
                 </li>

@@ -240,6 +240,9 @@ namespace Datiov2.Controllers
         {
             int update = userMethods.UpdateAccount(user, out string error);
 
+            //change session username
+            HttpContext.Session.SetString("UserName", user.UserName);
+
             if (update == 0)
             {
                 ViewBag.Error = error;
