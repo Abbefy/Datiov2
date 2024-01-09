@@ -235,38 +235,38 @@ namespace Datiov2.Controllers
             return RedirectToAction("Product", "Product", product.ProductID);
         }
 
-        [HttpGet]
-        public IActionResult AddCategory()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult AddCategory()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public IActionResult AddCategory(CategoryModel category)
-        {
-            categoryMethods.CreateCategory(category.CategoryName , category.CategoryRank);
-            return RedirectToAction("Index", "Home");
-        }
+        //[HttpPost]
+        //public IActionResult AddCategory(CategoryModel category)
+        //{
+        //    categoryMethods.CreateCategory(category.CategoryName , category.CategoryRank);
+        //    return RedirectToAction("Index", "Home");
+        //}
 
-        public IActionResult DeleteCategory(int categoryID)
-        {
-            categoryMethods.DeleteCategory(categoryID);
-            return RedirectToAction("Index", "Home");
-        }
+        //public IActionResult DeleteCategory(int categoryID)
+        //{
+        //    categoryMethods.DeleteCategory(categoryID);
+        //    return RedirectToAction("Index", "Home");
+        //}
 
-        public IActionResult UpdateCategory(int categoryID)
-        {
-            CategoryModel category = categoryMethods.GetCategory(categoryID);
-            ViewBag.Category = category;
-            return View(category);
-        }
+        //public IActionResult UpdateCategory(int categoryID)
+        //{
+        //    CategoryModel category = categoryMethods.GetCategory(categoryID);
+        //    ViewBag.Category = category;
+        //    return View(category);
+        //}
 
-        [HttpPost]
-        public IActionResult UpdateCategory(CategoryModel category)
-        {
-            categoryMethods.UpdateCategory(category);
-            return RedirectToAction("Index", "Home");
-        }
+        //[HttpPost]
+        //public IActionResult UpdateCategory(CategoryModel category)
+        //{
+        //    categoryMethods.UpdateCategory(category);
+        //    return RedirectToAction("Index", "Home");
+        //}
 
         public IActionResult Category(int categoryID)
         {

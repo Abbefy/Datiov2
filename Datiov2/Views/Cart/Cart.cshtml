@@ -121,11 +121,20 @@
                     @foreach (var cartItem in cartItems)
                     {
                         <div class="cart_item_box">
-                            <div class="cart_product_picture_box">
+@*                             <div class="cart_product_picture_box_2">   
                                 <a href="@Url.Action("Product", "Product", new { id = cartItem.CartItemProductID })">
-                                    <img src="/bilder/1728141-amd-ryzen-65w-5-pib-right-1260x709.webp" class="cart_product_image" />
+                                       <img src="@cartItem.CartProduct.ProductImage" class="cart_product_image_2" />
+                                </a
+                            </div> *@
+
+<div class="cart_product_picture_box">
+                                <a href="@Url.Action("Product", "Product", new { id = cartItem.CartItemProductID })">
+                                    <img src="@cartItem.CartProduct.ProductImage" class="cart_product_image" />
                                 </a>
-                            </div>
+</div>
+
+
+
                             <div class="cart_product_info">
                                 <h3>@cartItem.CartProduct.ProductName  </h3>
                                 <h4 class="antal_cart">

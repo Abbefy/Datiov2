@@ -10,7 +10,7 @@
 
 
 
-@*
+@* 
 namespace Datiov2.Data
 {
     public class CategoryMethods
@@ -156,37 +156,37 @@ namespace Datiov2.Data
                 <div class="inloggningsruta">
                     <h3 id="logga_in_text">Skapa ny produktkategori</h3>
 
-                    @*                     <form asp-action="AddProduct" method="post" asp-controller="Product">
-                    <input class="inloggning_input" type="text" asp-for="ProductName" required placeholder="Produktnamn">
-                    <select class="inloggning_input" asp-for="ProductImage">
-                    @foreach (var imageUrl in ViewBag.ImageUrls)
-                    {
-                    <option value="@imageUrl">@imageUrl</option>
-                    }
-                    </select>
+@*                     <form asp-action="AddProduct" method="post" asp-controller="Product">
+                        <input class="inloggning_input" type="text" asp-for="ProductName" required placeholder="Produktnamn">
+                        <select class="inloggning_input" asp-for="ProductImage">
+                            @foreach (var imageUrl in ViewBag.ImageUrls)
+                            {
+                                <option value="@imageUrl">@imageUrl</option>
+                            }
+                        </select>
 
-                    <textarea class="inloggning_input" asp-for="ProductDescription" placeholder="Beskrivning"></textarea>
+                        <textarea class="inloggning_input" asp-for="ProductDescription" placeholder="Beskrivning"></textarea>
 
-                    <textarea class="inloggning_input" id="ProductSpecifications" name="ProductSpecifications">@jsonContent</textarea>
+                        <textarea class="inloggning_input" id="ProductSpecifications" name="ProductSpecifications">@jsonContent</textarea>
 
-                    <input class="inloggning_input" type="number" asp-for="ProductPrice" required placeholder="Pris">
-                    <input class="inloggning_input" type="number" asp-for="ProductStock" required placeholder="Lagerantal">
-                    <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID">
+                        <input class="inloggning_input" type="number" asp-for="ProductPrice" required placeholder="Pris">
+                        <input class="inloggning_input" type="number" asp-for="ProductStock" required placeholder="Lagerantal">
+                        <input class="inloggning_input" type="number" asp-for="ProductCategoryID" required placeholder="KategoriID">
 
-                    <input id="skapa_konto_knapp" type="submit" value="Lägg till Produkt">
+                        <input id="skapa_konto_knapp" type="submit" value="Lägg till Produkt">
                     </form> *@
 
-                    <form asp-action="AddCategory" method="post" asp-controller="Product">
+<form asp-action="AddCategory" method="post" asp-controller="Category">
                         <input class="inloggning_input" type="text" asp-for="CategoryName" required placeholder="Kategorinamn">
 
-                        <select class="inloggning_input" asp-for="CategoryRank">
+        <select class="inloggning_input" asp-for="CategoryRank">
                             <option value="3">Minikategori</option>
                             <option value="2">NAVbar</option>
                             <option value="1">Startsida display</option>
 
-                        </select>
+</select>
                         <input id="skapa_konto_knapp" type="submit" value="Lägg till Kategori">
-                    </form>
+</form>
 
 
                 </div>

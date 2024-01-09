@@ -113,14 +113,14 @@ namespace Datiov2.Data
             }
         }
 
-        public void DeleteCategory(int categoryID)
+        public void DeleteCategory(CategoryModel category)
         {
             using (SqlConnection dbConnection = new SqlConnection(_connectionString))
             {
                 dbConnection.Open();
                 const string categoryQuery = "DELETE FROM Categories WHERE CategoryID = @CategoryID";
                 SqlCommand categoryCommand = new SqlCommand(categoryQuery, dbConnection);
-                categoryCommand.Parameters.AddWithValue("@CategoryID", categoryID);
+                categoryCommand.Parameters.AddWithValue("@CategoryID", category.CategoryID);
 
                 categoryCommand.ExecuteNonQuery();
 

@@ -32,9 +32,18 @@ namespace Datiov2.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
         public IActionResult DeleteCategory(int categoryID)
         {
-            categoryMethods.DeleteCategory(categoryID);
+            CategoryModel category = categoryMethods.GetCategory(categoryID);
+            ViewBag.Category = category;
+            return View(category);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCategory(CategoryModel category)
+        {
+            categoryMethods.DeleteCategory(category);
             return RedirectToAction("Index", "Home");
         }
 
