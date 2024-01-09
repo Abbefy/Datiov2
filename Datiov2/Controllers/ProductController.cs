@@ -23,6 +23,7 @@ namespace Datiov2.Controllers
                 "~/bilder/facebook",
                 "/bilder/ps5_product_image.jpg",
                 "/bilder/AMD_R7.webp",
+                "/bilder/meta_quest_2.webp",
             };
 
 
@@ -152,7 +153,9 @@ namespace Datiov2.Controllers
         {
             List<ProductModel> foundProducts = productMethods.SearchForProducts(search);
             ViewBag.FoundProducts = foundProducts;
+            ViewBag.NumberOfProducts = foundProducts.Count;
             ViewBag.Search = search;
+
             return View(foundProducts);
             
         }
@@ -161,6 +164,8 @@ namespace Datiov2.Controllers
         {
             List<ProductModel> products = productMethods.GetAllProducts();
             ViewBag.AllProducts = products;
+            ViewBag.NumberOfProducts = products.Count;
+         
             return View(products);
         }
 
@@ -232,7 +237,8 @@ namespace Datiov2.Controllers
         {
             productMethods.UpdateProduct(product);
 
-            return RedirectToAction("Product", "Product", product.ProductID);
+            //return RedirectToAction("Product", "Product", product.ProductID);
+            return RedirectToAction("Index", "Home");
         }
 
         //[HttpGet]
@@ -272,6 +278,13 @@ namespace Datiov2.Controllers
         {
             List<ProductModel> products = productMethods.GetProductsByCategory(categoryID);
             ViewBag.ProductsWithCategory = products;
+            ViewBag.NumberOfProducts = products.Count;
+
+            string categoryName = categoryMethods.GetCategory(categoryID).CategoryName;
+            ViewBag.CategoryName = categoryName;
+
+            //ViewBag.Category = categoryMethods.GetCategory(categoryID);
+
             return View(products);
         }
 

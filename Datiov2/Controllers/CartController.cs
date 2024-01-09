@@ -9,7 +9,7 @@ using Datiov2.Data;
 
 namespace Datiov2.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         CartMethods cartMethods = new CartMethods();
         ProductMethods productMethods = new ProductMethods();

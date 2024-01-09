@@ -132,7 +132,7 @@ using Microsoft.AspNetCore.Mvc; *@
 
 
 </head> *@
-@* 
+@*
 <body>
     <div class="main-container">
         <div class="mini-header">
@@ -186,7 +186,7 @@ using Microsoft.AspNetCore.Mvc; *@
                 <form method="get" action="/User/Login" class="form_konto">
                     <button type="submit" class="konto">
                         <span class="material-icons-outlined" id="account_icon">person_outline</span>
-                        
+
                         @if (ContextAccessor.HttpContext.Session.GetString("UserName") != null)
                         {
                             <span id="account_text">@ContextAccessor.HttpContext.Session.GetString("UserName")</span>
@@ -198,9 +198,9 @@ using Microsoft.AspNetCore.Mvc; *@
                     </button>
                 </form> *@
 
-                @*                 href="@Url.Action("Login", "User")">
+@*                 href="@Url.Action("Login", "User")">
                 *@
-                @* <form method="get" action="/Cart/Cart" class="form_kundvagn">
+@* <form method="get" action="/Cart/Cart" class="form_kundvagn">
                     <button type="submit" class="kundvagn" id="shopping_cart_button">
                         <span class="material-icons-outlined" id="shopping_cart_icon" onmouseover="goToCartNudge()">shopping_cart</span> *@
 @*                         @if (ContextAccessor.HttpContext.Session.GetString("UserName") != null)
@@ -212,7 +212,7 @@ using Microsoft.AspNetCore.Mvc; *@
                             <span id="account_text">Logga in</span>
                         } *@
                     </button>
-             @*    </form>
+@*    </form>
             </div>
 
             <div class="nav">
@@ -246,72 +246,76 @@ using Microsoft.AspNetCore.Mvc; *@
                         <a href="kategori.html" class="navbar-knapp">Mobil</a>
                     </li>
                 </ul>
-            </div> *@ 
+            </div> *@
 
-            <!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
+<!--MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN-->
 
-            <div class="main-content">
-                <div class="slides_box">
-                    <div class="slide">
-                        <a href="produkt.html">
-                            <img class="slides_pictures" id="ps5_ad" src="bilder/ps5_ad_banner2.png"
-                                 alt="PS5 kampanjbild kampanjbild">
-                        </a>
-                    </div>
-                    <div class="slide">
-                        <a href="produkt.html">
-                            <img class="slides_pictures" src="bilder/meta_quest_ad(Large).png" alt="Meta Quest 2 kampanjbild">
-                        </a>
-                    </div>
-                    <div class="slide">
-                        <a href="kategori.html">
-                            <img class="slides_pictures" src="bilder/black_friday_pic.jpg" alt="Black Friday kampanjbild">
-                        </a>
-                    </div>
-                    <a class="prev" id="prevy" onclick="prevSlide()">&#10094;</a>
-                    <a class="next" onclick="nextSlide()">&#10095;</a>
-                </div>
+<div class="main-content">
+    <div class="slides_box">
+        <div class="slide">
+            <a href="produkt.html">
+                <img class="slides_pictures" id="ps5_ad" src="bilder/ps5_ad_banner2.png"
+                     alt="PS5 kampanjbild kampanjbild">
+            </a>
+        </div>
+        <div class="slide">
+            <a href="produkt.html">
+                <img class="slides_pictures" src="bilder/meta_quest_ad(Large).png" alt="Meta Quest 2 kampanjbild">
+            </a>
+        </div>
+        <div class="slide">
+            <a href="kategori.html">
+                <img class="slides_pictures" src="bilder/black_friday_pic.jpg" alt="Black Friday kampanjbild">
+            </a>
+        </div>
+        <a class="prev" id="prevy" onclick="prevSlide()">&#10094;</a>
+        <a class="next" onclick="nextSlide()">&#10095;</a>
+    </div>
 
-                <div class="fakta">
-                    <ul>
-                        <li class="fakta_text1">Fri frakt vid köp över 499kr</li>
-                        <li>2-3 dagars leveranstid</li>
-                        <li>30 dagars öppet köp</li>
-                        <li>Kunnig kundsupport</li>
-                        <li><button class="facts_button">Våra tjänster</button></li>
-                        <li>
-                            <button class="facts_button" id="facts_support">
-                                <span class="material-icons-outlined" id="support_agent_icon">support_agent</span>
-                                <h5>Kundservice</h5>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <div class="fakta">
+        <ul>
+            <li class="fakta_text1">Fri frakt vid köp över 499kr</li>
+            <li>2-3 dagars leveranstid</li>
+            <li>30 dagars öppet köp</li>
+            <li>Kunnig kundsupport</li>
+            <li><button class="facts_button">Våra tjänster</button></li>
+            <li>
+                <button class="facts_button" id="facts_support">
+                    <span class="material-icons-outlined" id="support_agent_icon">support_agent</span>
+                    <h5>Kundservice</h5>
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
 
 @foreach (var category in Model.Where(c => c.CategoryRank == 1))
+{
+    <h3 class="product_showcase_type_text">@category.CategoryName</h3>
+    <div class="product_field">
+        <div class="product_grid">
+            @foreach (var product in category.Products)
             {
-                <h3 class="product_showcase_type_text">@category.CategoryName</h3>
-                <div class="product_field">
-                    <div class="product_grid">
-                        @foreach (var product in category.Products)
-                        {
-                            <div class="produkt_box">
-                                <a href="@Url.Action("Product", "Product", new { id = product.ProductID })">
-                                    <img src="@product.ProductImage" alt="@product.ProductDescription">
-                                    <h2>@product.ProductName</h2>
-                                    <h3>@product.ProductPrice kr</h3>
-                                    <h4 class="stock_text">
-                                        <span class="stock_dot"></span> i lager: @product.ProductStock
-                                    </h4>
-                                </a>
-                            </div>
+                <div class="produkt_box">
+                    <a href="@Url.Action("Product", "Product", new { id = product.ProductID })" class="produkt_box_a_box">
+                        <div class="produkt_box_bildbox">
+                            <img src="@product.ProductImage" alt="@product.ProductDescription" class="produkt_box_img" />
+                        </div>
 
-
-                        }
-                    </div>
+                        <h2>@product.ProductName</h2>
+                        <h3>@product.ProductPrice kr</h3>
+                        <h4 class="stock_text">
+                            <span class="stock_dot"></span> i lager: @product.ProductStock
+                        </h4>
+                    </a>
                 </div>
+
+
             }
+        </div>
+        <a class="next_products">&#10095;</a>
+    </div>
+}
 
         </div>
     </div>

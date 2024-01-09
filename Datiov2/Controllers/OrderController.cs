@@ -8,7 +8,7 @@ using Datiov2.Data;
 
 namespace Datiov2.Controllers
 {
-    public class OrderController : Controller
+    public class OrderController : BaseController
     {
         OrderMethods orderMethods = new OrderMethods();
         ProductMethods productMethods = new ProductMethods();

@@ -516,6 +516,7 @@ li a:hover,
   width: 100%;
   margin: auto;
   margin-right: -25px;
+
 }
 .produkt_box {
   grid-row: 1;
@@ -564,6 +565,28 @@ li a:hover,
   margin: auto;
   display: flex;
   justify-content: center;
+}
+
+.produkt_box_bildbox{
+    max-height: 60%;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 60%;
+    width: 100%;
+/*    min-width: 100%;
+*/    max-width: 200px;
+
+}
+
+.produkt_box_img {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
 }
 
 .produkt_box a {
@@ -1339,6 +1362,7 @@ tr:nth-child(odd) {
   flex-direction: column;
   float: left;
   border: 1px solid #eeeeee;
+  width: 100%;
 }
 .cart_products_box {
   display: flex;
@@ -1401,10 +1425,8 @@ tr:nth-child(odd) {
 
 .cart_product_picture_box_2 {
     width: 25%;
-    height: 130px !important;
-    background: blue;
+    height: 130px;
     padding: 5px;
-margin: 5px;
 }
 
 .cart_product_image_2 {
@@ -1412,6 +1434,7 @@ margin: 5px;
     height: 100%;
     object-fit: contain;
     background: transparent;
+
 }
 
     .cart_product_image_2:hover {
@@ -1427,6 +1450,12 @@ margin: 5px;
   padding-top: 20px;
   justify-content: space-between;
 }
+
+.cart_product_info h3 {
+    width: 20%;
+
+}
+
 .product_name {
   font-weight: 400;
 }
@@ -2006,10 +2035,10 @@ padding: 0;
     overflow: hidden;
     max-width: 100%;
   }
-  .produkt_box h2 {
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
+    .produkt_box h2 {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
 
   .produkt_box h3 {
     font-size: 18px;
@@ -2193,11 +2222,13 @@ padding: 0;
   }
   .product_category_box {
     margin-bottom: 30px;
+
   }
 
   /*Kategori.html*/
   .cart_page{
     max-width: 100vw;
+
   }
 
   .voucher_entry {

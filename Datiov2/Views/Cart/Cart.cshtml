@@ -2,13 +2,15 @@
 
 @{
     ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     var wishlistedProducts = ViewBag.WishlistProducts;
     var randomProducts = ViewBag.RandomProducts as List<ProductModel>;
     var cartItems = ViewBag.CartItems as List<CartItemModel>;
     var cartID = ViewBag.CartID;
 
-}
 
+}
+@* 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,8 +42,8 @@
     <!-- This should only affect the highlight -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/smoothness/jquery-ui.css">
 </head>
-
 <body>
+    
     <div class="main-container">
         <div class="mini-header">
             <div class="mini_header_content">
@@ -112,13 +114,14 @@
                     </li>
                 </ul>
             </div>
+            *@
 
             <!-- MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN -->
 
-            <div class="cart_page">
+            <div class="cart_page" style="width: 100%; ">
                 <div class="cart_products_box">
-                    <h3 class="product_category_type_text">Kundvagn</h3>
-                    @foreach (var cartItem in cartItems)
+                     <h3 class="product_category_type_text">Kundvagn</h3>
+                     @foreach (var cartItem in cartItems)
                     {
                         <div class="cart_item_box">
 @*                             <div class="cart_product_picture_box_2">   
@@ -127,11 +130,18 @@
                                 </a
                             </div> *@
 
-<div class="cart_product_picture_box">
+@*                             <div class="cart_product_picture_box_2">
                                 <a href="@Url.Action("Product", "Product", new { id = cartItem.CartItemProductID })">
-                                    <img src="@cartItem.CartProduct.ProductImage" class="cart_product_image" />
+                                    <img src="@cartItem.CartProduct.ProductImage" class="cart_product_image_2" />
                                 </a>
-</div>
+</div> *@
+
+                            <div class="cart_product_picture_box_2" style="width: 20%; height: 132px; padding: 5px;">
+                                <a href="@Url.Action("Product", "Product", new { id = cartItem.CartItemProductID })">
+                                    <img src="@cartItem.CartProduct.ProductImage" class="cart_product_image_2" style="width: 100%; height: 100%; object-fit: contain; background: transparent;" />
+                                </a>
+                            </div>
+
 
 
 
@@ -144,8 +154,8 @@
                                         <button type="submit" class="btn-outline-primary">Ändra</button>
                                     </form>
                                 </h4>
-                                <h5>
-                                    Lagerstatus: <span class="stock_dot_product"> </span>
+                                <h5>                       
+                                    <span class="stock_dot_product"></span>  @cartItem.CartProduct.ProductStock st i lager
                                 </h5>
                                 <h2>@(cartItem.CartProduct.ProductPrice * cartItem.CartItemQuantity) kr</h2>
                                 <div class="delete_box">
@@ -175,9 +185,6 @@
                         ViewBag.TotalPrice = sum;
                     }
                     <h2 class="cart_sum">Totalt: @sum kr</h2>
-                    <h5>@cartID</h5>
-                    <h5>@ViewBag.UserID</h5>
-                    <h5>@ViewBag.TotalPrice</h5>
                 </div>
 
 
@@ -264,7 +271,7 @@
         </div>
     </div>
 
-    <div class="footer">
+@*     <div class="footer">
         <div class="footer_down">
             <div class="footer_box" id="sociala_medier_box">
                 <h2>Följ oss</h2>
@@ -321,4 +328,4 @@
     <script src="~/js/script.js"></script>
 </body>
 
-</html>
+</html> *@
