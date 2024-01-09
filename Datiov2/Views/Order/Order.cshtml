@@ -139,26 +139,23 @@ namespace Datiov2.Models
             <!-- MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN -->
 
             <div class="cart_page">
-                <div class="cart_products_box">
+                <div class="order_products_box">
+                    <h1 class="product_category_type_text">Tack för din beställning! </h1>
+
                     <h1 class="product_category_type_text">Orderbekräftelse &nbsp; @Model.OrderID </h1>
                     @foreach (var orderItem in orderDetails)
                     {
-                        <div class="cart_item_box">
-                            <div class="cart_product_picture_box">
+                        <div class="order_item_box">
+                            <div class="cart_product_picture_box_2">
                                 <a href="@Url.Action("Product", "Product", new { id = orderItem.OrderDetailsProductID })">
-                                    <img src="/bilder/1728141-amd-ryzen-65w-5-pib-right-1260x709.webp" class="cart_product_image" />
-                                </a>
+@*                                     <img src="/bilder/1728141-amd-ryzen-65w-5-pib-right-1260x709.webp" class="cart_product_image" />
+ *@
+<img src="@orderItem.OrderDetailsProduct.ProductImage" class="cart_product_image_2" />
+</a>
                             </div>
-                            <div class="cart_product_info">
-                                <h3>@orderItem.OrderDetailsProduct.ProductName  </h3>
-                                <h2 class="antal_cart">
-                                Antal: @orderItem.OrderDetailsQuantity
-@*                                     <form method="post" asp-controller="Cart" asp-action="UpdateQuantity">
-                                        <input type="hidden" name="cartItemID" value="@orderItem.CartItemID" />
-                                        <input type="number" class="antal" min="1" max="100" name="quantity" value="@orderItem.OrderDetailsQuantity" />
-                                        <button type="submit" class="btn-outline-primary">Ändra</button>
-                                    </form> *@
-                                </h2>
+                            <div class="order_product_info">
+                                <h3> @orderItem.OrderDetailsQuantity st  @orderItem.OrderDetailsProduct.ProductName  </h3>
+
 @*                                 <h5>
                                     Lagerstatus: <span class="stock_dot_product"> </span>
                                 </h5> *@
@@ -182,18 +179,7 @@ namespace Datiov2.Models
 @*                     <h2 class="cart_sum">Totalt: @orderSum kr</h2>
  *@                </div>
 
-                @* Display order information *@
-                 <div class="order_information">
-@* <h3>Orderbekräftelse</h3>
-                    <h3>OrderID: @Model.OrderID</h3>
-                    <h3>OrderDatum: @Model.OrderDate</h3>
-                    <h3>OrderSumma: @Model.OrderPrice</h3>
-                    <h3>OrderAdress: @Model.OrderAddress</h3>
-                    <h3>OrderFörnamn: @Model.OrderFirstName</h3>
-                    <h3>OrderEfternamn: @Model.OrderLastName</h3>
-                    <h3>OrderPostnummer: @Model.OrderPostalCode</h3>
-                    <h3>OrderStad: @Model.OrderCity</h3>
-</div> *@
+
 
 
                 <div class="order_information">
@@ -212,7 +198,7 @@ namespace Datiov2.Models
                         @foreach (var orderItem in orderDetails)
                         {
                             <div class="order_item">
-                                    <h4>@orderItem.OrderDetailsQuantity st &nbsp; @orderItem.OrderDetailsProduct.ProductName &nbsp; &nbsp; &nbsp; @(orderItem.OrderDetailsProduct.ProductPrice * orderItem.OrderDetailsQuantity) kr </h4>
+                                    <h4>@orderItem.OrderDetailsQuantity st &nbsp; @orderItem.OrderDetailsProduct.ProductName </h4>
                             </div>
                         }
                         <p></p>
