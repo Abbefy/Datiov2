@@ -147,16 +147,16 @@
 
                             <div class="cart_product_info">
                                 <h3>@cartItem.CartProduct.ProductName  </h3>
+                    <h5>
+                        <span class="stock_dot_product"></span>  @cartItem.CartProduct.ProductStock st i lager
+                    </h5>
                                 <h4 class="antal_cart">
                                     <form method="post" asp-controller="Cart" asp-action="UpdateQuantity">
                                         <input type="hidden" name="cartItemID" value="@cartItem.CartItemID" />
                                         <input type="number" class="antal" min="1" max="100" name="quantity" value="@cartItem.CartItemQuantity" />
-                                        <button type="submit" class="btn-outline-primary">Ändra</button>
+                                        <button type="submit" class="antal_knapp">Ändra</button>
                                     </form>
                                 </h4>
-                                <h5>                       
-                                    <span class="stock_dot_product"></span>  @cartItem.CartProduct.ProductStock st i lager
-                                </h5>
                                 <h2>@(cartItem.CartProduct.ProductPrice * cartItem.CartItemQuantity) kr</h2>
                                 <div class="delete_box">
                                     <a href="@Url.Action("RemoveFromCart", "Cart", new { cartItemID = cartItem.CartItemID })">
@@ -242,20 +242,50 @@
                     </div>
                 </form> *@
 
-                <form asp-action="CreateOrder" method="post" asp-controller="Order">
+@*                 <form asp-action="CreateOrder" method="post" asp-controller="Order">
     <div class="order-form">
         <h3>Checkout</h3>
         <input type="hidden" name="userID" value="@ViewBag.UserID" />
         <input type="hidden" name="cartID" value="@cartID" />
         <input type="hidden" name="orderPrice" value="@ViewBag.TotalPrice" />
-        <input type="text" name="orderFirstName" placeholder="First Name" required />
-        <input type="text" name="orderLastName" placeholder="Last Name" required />
-        <input type="text" name="orderAddress" placeholder="Address" required />
-        <input type="number" name="orderPostalCode" placeholder="Postal Code" required />
-        <input type="text" name="orderCity" placeholder="City" required />
-        <button type="submit" id="produkt_köp_knapp">Slutför Köp</button> 
+        
+            <input type="text" class="voucher_entry" name="orderFirstName" placeholder="Förnamn" required />
+            <input type="text" class="voucher_entry" name="orderLastName" placeholder="Efternamn" required />
+            <input type="text" class="voucher_entry" name="orderAddress" placeholder="Adress" required />
+            <input type="number" class="voucher_entry" name="orderPostalCode" placeholder="Postnummer" required />
+            <input type="text" class="voucher_entry" name="orderCity" placeholder="Stad" required />
+        <button type="submit" id="produkt_köp_knapp_order">Slutför Köp</button> 
+    </div>
+</form> *@
+<form asp-action="CreateOrder" method="post" asp-controller="Order">
+    <div class="order-form">
+         <h3>Leverans och betalning</h3>
+<input type="hidden" name="userID" value="@ViewBag.UserID" />
+        <input type="hidden" name="cartID" value="@cartID" />
+<input type="hidden" name="orderPrice" value="@ViewBag.TotalPrice" />
+         <fieldset>
+            <legend>Dina uppgifter</legend>
+            <label for="orderFirstName">Förnamn:</label>
+            <input type="text" id="orderFirstName" class="form-input" name="orderFirstName" placeholder="Förnamn" required />
+
+            <label for="orderLastName">Efternamn:</label>
+            <input type="text" id="orderLastName" class="form-input" name="orderLastName" placeholder="Efternamn" required />
+
+            <label for="orderAddress">Adress:</label>
+            <input type="text" id="orderAddress" class="form-input" name="orderAddress" placeholder="Adress" required />
+
+            <label for="orderPostalCode">Postnummer:</label>
+            <input type="number" id="orderPostalCode" class="form-input" name="orderPostalCode" placeholder="Postnummer" required />
+
+            <label for="orderCity">Stad:</label>
+            <input type="text" id="orderCity" class="form-input" name="orderCity" placeholder="Stad" required />
+
+            <h3> Att betala: @ViewBag.TotalPrice kr</h3>
+        </fieldset>
+        <button type="submit" id="produkt_köp_knapp_order">Slutför Köp</button>
     </div>
 </form>
+
 
 
 

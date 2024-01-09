@@ -305,7 +305,19 @@ using Microsoft.AspNetCore.Mvc; *@
                         <h2>@product.ProductName</h2>
                         <h3>@product.ProductPrice kr</h3>
                         <h4 class="stock_text">
-                            <span class="stock_dot"></span> i lager: @product.ProductStock
+                            @if (product.ProductStock > 0)
+                            {
+
+                                <span class="stock_dot"></span> @product.ProductStock <span>st</span>
+
+                            }
+                            
+                            else
+                            {
+                                <span class="stock_dot" id="stock_dot_red"></span> @product.ProductStock <span>st</span>
+
+                            }
+
                         </h4>
                     </a>
                 </div>

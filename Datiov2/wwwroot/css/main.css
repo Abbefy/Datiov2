@@ -630,11 +630,15 @@ li a:hover,
 .stock_dot {
   margin: 0;
   margin-top: 7px;
-  height: 15px;
-  width: 15px;
-  background: rgb(110, 253, 110);
+  height: 12px;
+  width: 12px;
+  background: #26ac5e;
   border-radius: 50%;
   display: inline-block;
+}
+
+#stock_dot_red {
+    background: #d54747; 
 }
 
 /*FOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOTER*/
@@ -869,9 +873,12 @@ overflow: hidden;*/
 
 }
 
-.antal {
+/*.antal {
   margin: auto;
-}
+  font-size: 1.25rem;
+  font-weight: 500;
+  
+}*/
 
 .stock_dot_product {
   margin-top: 7px;
@@ -943,6 +950,22 @@ margin-left: -16px;
   box-shadow: 2px 3px #cfcece7e;
 }
 
+#produkt_köp_knapp_order {
+    padding: 1.5rem 1.4rem;
+    border: 1px solid green;
+    border-radius: 5px;
+    color: whitesmoke;
+    font-size: 1.75rem;
+    margin-top: 1.5rem;
+    background-image: linear-gradient(to right bottom, #00a700, #008f11);
+    border: 1px solid darkgreen;
+    cursor: pointer;
+    box-shadow: 2px 3px #cfcece7e;
+    margin: 125px auto 20px auto;
+    display: block;
+
+}
+
 #produkt_köp_knapp_soldout {
     padding: 1.25rem 1.1rem;
     border-radius: 5px;
@@ -960,22 +983,40 @@ margin-left: -16px;
 }
 
 .antal {
-  border: 1px solid #ff620059;
-  box-shadow: 1px 1px #f1f1f1;
-  padding: 0.5rem 0.5rem 0.5rem 0.25rem;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 25px;
+    margin: 0 auto;
+    font-size: 1.25rem;
+    font-weight: 500;
+    border: 1px solid #125478ff;
+    box-shadow: 1px 1px #f1f1f1;
+    padding: 0.5rem 0rem 0.5rem 2rem;
+    width: 20%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.antal_knapp{
+border: 1px solid #125478ff;
+    box-shadow: 1px 1px #f1f1f1;
+    padding: 0.75rem 1rem 0.55rem 1rem;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    background: #fafafa;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 300;
 }
 
 .produkt_sida_down {
-  background: #fafafa;
-  display: flex;
-  flex-direction: row;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-  margin-top: 64px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: row;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    margin-top: 64px;
 }
 
 .produkt_beskrivning_box {
@@ -1447,21 +1488,36 @@ tr:nth-child(odd) {
 .cart_product_info {
   width: 80%;
   display: flex;
-  padding-top: 20px;
+  padding-top: 33px;
   justify-content: space-between;
 }
 
-.cart_product_info h3 {
+.cart_product_info h3  {
     width: 20%;
+    font-size: 21px;
+    font-weight: 500;
+    margin-top: 27px;
 
 }
+
+    .cart_product_info h2 {
+        font-size: 26px;
+        font-weight: 590;
+        margin: 27px 0px 0px 0px;
+    }
+
+    .cart_product_info h5 {
+        font-size: 16px;
+        font-weight: 400;
+        margin: 25px 0px 18px 15px;
+    }
 
 .product_name {
   font-weight: 400;
 }
 .antal_cart {
-  font-weight: 300;
-  margin-left: 40%;
+  font-weight: 500;
+  margin-left: 20%;
   transform: scale(0.8);
   font-size: 16px;
 }
@@ -1470,7 +1526,8 @@ tr:nth-child(odd) {
   font-size: 26px;
 }
 #delete {
-  font-size: 28px;
+  font-size: 30px;
+  margin: -5px 5px 5px 5px;
   opacity: 60%;
 }
 #delete:hover {
@@ -1546,6 +1603,109 @@ tr:nth-child(odd) {
 .recommended_products {
   float: left;
 }
+
+
+
+
+.order-form {
+    max-width: 900px; 
+    width: 50%;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.order-form h3{
+    text-align: center; 
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+    .order-form fieldset {
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .order-form legend {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+    .order-form label {
+        display: block; /* Makes the label take up the full width */
+        margin-top: 15px;
+    }
+
+    .order-form .form-input {
+        width: calc(100% - 20px); /* Full width minus padding */
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px; /* Space between input fields */
+        font-size: 16px;
+        border: 1px solid #ddd; /* Light border for inputs */
+        border-radius: 5px;
+    }
+
+#produkt_köp_knapp_order:hover {
+    background: #0cc40e;
+}
+
+#produkt_köp_knapp_order {
+    display: block; /* Center button */
+    width: 50%; /* Full width */
+    padding: 18px;
+    margin-top: 10px;
+    color: white;
+    font-size: 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 2px 3px #cfcece7e;
+}
+
+
+/* Clear floats after the inputs */
+/*.order-form::after {
+    content: "";
+    display: table;
+    clear: both;
+}*/
+
+/*@media (max-width: 768px) {
+    .order-form .form-input,
+    #produkt_köp_knapp_order {
+        width: 100%; 
+    }
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*Mobilmeny Mobilmeny Mobilmeny Mobilmeny Mobilmeny Mobilmeny*/
